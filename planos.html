@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Escolha seu Plano</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #d4af37;
+            /* Dourado */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .plan {
+            background-color: #1c1c1c;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .plan h2 {
+            color: #fff;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .button {
+            background-color: #d4af37;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        .button:hover {
+            background-color: #b89e34;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        ul li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li i {
+            margin-right: 10px;
+        }
+
+        .locked {
+            color: #ff4d4d;
+        }
+
+        .unlocked {
+            color: #32cd32;
+        }
+    </style>
+
+    <!-- Adicionando a biblioteca de ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+    <h1>Escolha seu Caminho para o Sucesso</h1>
+
+    <div class="container">
+        <!-- Plano Starter -->
+        <div class="plan">
+            <h2>De Cria</h2>
+            <p>Para vendedores que querem expandir seus negócios com recursos ampliados.</p>
+            <p class="price">R$8.00/mês</p>
+            <p>Faturado anualmente: R$95.99</p>
+            <button class="button">Iniciar teste gratuito de 7 dias</button>
+            <ul>
+                <li><i class="fas fa-lock locked"></i> Página Pro Customizada</li>
+                <li><i class="fas fa-lock locked"></i> Domínio Personalizado</li>
+                <li><i class="fas fa-lock locked"></i> Content ID e mais (em breve)*</li>
+                <li><i class="fas fa-lock locked"></i> Ofereça Assinaturas</li>
+                <li><i class="fas fa-lock locked"></i> Publicações em Blog</li>
+                <li><i class="fas fa-lock locked"></i> Integrações Avançadas de Marketing</li>
+                <li><i class="fas fa-lock locked"></i> Venda Produtos Personalizados</li>
+                <li><i class="fas fa-lock locked"></i> Agência de Direitos dos Criadores*</li>
+                <li><i class="fas fa-lock locked"></i> Integração com TikTok Pixel</li>
+                <li><i class="fas fa-lock locked"></i> Desconto de 5% no Promote*</li>
+                <li><i class="fas fa-check unlocked"></i> Créditos de Promote Anual</li>
+                <li><i class="fas fa-check unlocked"></i> Upload de Stem</li>
+                <li><i class="fas fa-check unlocked"></i> Uploads Ilimitados de Kits de Som</li>
+            </ul>
+        </div>
+
+        <!-- Plano Growth -->
+        <div class="plan">
+            <h2>Silver</h2>
+            <p>Para vendedores que desejam expandir seu alcance e aumentar vendas e engajamento.</p>
+            <p class="price">R$37.17/mês</p>
+            <p>Faturado anualmente: R$445.99</p>
+            <button class="button">Iniciar teste gratuito de 7 dias</button>
+            <ul>
+                <li><i class="fas fa-lock locked"></i> Página Pro Customizada</li>
+                <li><i class="fas fa-lock locked"></i> Domínio Personalizado</li>
+                <li><i class="fas fa-lock locked"></i> Content ID e mais (em breve)*</li>
+                <li><i class="fas fa-lock locked"></i> Ofereça Assinaturas</li>
+                <li><i class="fas fa-lock locked"></i> Publicações em Blog</li>
+                <li><i class="fas fa-lock locked"></i> Integrações Avançadas de Marketing</li>
+                <li><i class="fas fa-check unlocked"></i> Venda Produtos Personalizados</li>
+                <li><i class="fas fa-check unlocked"></i> Agência de Direitos dos Criadores*</li>
+                <li><i class="fas fa-check unlocked"></i> Integração com TikTok Pixel</li>
+                <li><i class="fas fa-check unlocked"></i> Desconto de 5% no Promote*</li>
+                <li><i class="fas fa-check unlocked"></i> Créditos de Promote Anual</li>
+                <li><i class="fas fa-check unlocked"></i> Upload de Stem</li>
+                <li><i class="fas fa-check unlocked"></i> Uploads Ilimitados de Kits de Som</li>
+            </ul>
+        </div>
+
+        <!-- Plano Professional -->
+        <div class="plan">
+            <h2>Professional</h2>
+            <p>Para vendedores prontos para escalar seus negócios com uma loja web personalizada e oportunidades
+                exclusivas.</p>
+            <p class="price">R$74.99/mês</p>
+            <p>Faturado anualmente: R$899.90</p>
+            <button class="button">Iniciar teste gratuito de 7 dias</button>
+            <ul>
+                <li><i class="fas fa-check unlocked"></i> Página Pro Customizada</li>
+                <li><i class="fas fa-check unlocked"></i> Domínio Personalizado</li>
+                <li><i class="fas fa-check unlocked"></i> Content ID e mais (em breve)*</li>
+                <li><i class="fas fa-check unlocked"></i> Ofereça Assinaturas</li>
+                <li><i class="fas fa-check unlocked"></i> Publicações em Blog</li>
+                <li><i class="fas fa-check unlocked"></i> Integrações Avançadas de Marketing</li>
+                <li><i class="fas fa-check unlocked"></i> Venda Produtos Personalizados</li>
+                <li><i class="fas fa-check unlocked"></i> Agência de Direitos dos Criadores*</li>
+                <li><i class="fas fa-check unlocked"></i> Integração com TikTok Pixel</li>
+                <li><i class="fas fa-check unlocked"></i> Desconto de 5% no Promote*</li>
+                <li><i class="fas fa-check unlocked"></i> Créditos de Promote Anual</li>
+                <li><i class="fas fa-check unlocked"></i> Upload de Stem</li>
+                <li><i class="fas fa-check unlocked"></i> Uploads Ilimitados de Kits de Som</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

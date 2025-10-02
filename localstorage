@@ -1,0 +1,19 @@
+// Pegando os valores do formulário de cadastro
+const nome = document.getElementById('nome').value;
+const email = document.getElementById('email').value;
+const senha = document.getElementById('senha').value;
+const telefone = document.getElementById('telefone').value;
+
+// Criando o objeto do usuário
+const usuario = {
+    nome: nome,
+    email: email,
+    senha: senha,  // Agora estamos armazenando a senha corretamente
+    telefone: telefone
+};
+
+// Salvando no localStorage
+localStorage.setItem('usuario', JSON.stringify(usuario));
+
+// Exibindo um alerta de sucesso
+alert("Cadastro realizado com sucesso!");

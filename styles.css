@@ -1,0 +1,441 @@
+@import url("styles/header.css");
+@import url("styles.css/banner.css");
+@import url("styles.css/rodape.css");
+@import url("styles.css/header-studio.css");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+
+
+:root {
+    --cor-principal: #141414; 
+    --cor-studio: white; 
+    --fonte-principal: "Futura Cyrillic Bold";
+   
+}
+
+body {
+    background-color: var(--cor-principal);
+}
+
+
+/* slide-imagem */
+.slide-imagem {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden;
+    height: 75vh;
+    background-color: black;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+}
+
+.slide-imagem img {
+    width: 100%;
+    display: none;
+}
+
+.slide-imagem img:first-child {
+    display: block;
+}
+
+/* Adicione animação suave */
+.slide-imagem img {
+    -webkit-animation: fade 1.5s;
+    animation: fade 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from { opacity: .4 }
+    to { opacity: 1 }
+}
+
+@keyframes fade {
+    from { opacity: .4 }
+    to { opacity: 1 }
+}
+
+/* Outros estilos */
+
+.primeiro-hit {
+    display: flex;
+    justify-content: center;
+    background-color: #000;
+    box-sizing: border-box;
+    border-top: 1px solid #363636;
+    padding: 10px 0 10px 0 ;
+    text-align: center; /* Centraliza o texto */
+}
+
+.primeiro-hit-busca {
+    display: flex;
+    font-size: 40px;
+    align-items: center;
+    padding: 0 10px 0 0;
+    color: azure;
+    font-family: var(--fonte-principal);
+}
+
+
+
+
+.busca-hit {
+    display: flex;
+    padding: 0 0 0 120px;
+    width: 50%;
+    height: 40px;
+    color: black;
+    border-radius: 10px;
+}
+
+.pesquisa-hit {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 5px;
+
+}
+
+
+.texto-tracks {
+    font-size: 30px;
+    font-family: var(--fonte-principal);
+    padding: 20px 0 0 10px;
+    border-top:  1px solid #262626;
+    color: beige;
+   
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.swiper {
+  padding: 20px 0;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+
+.banner-anuncio {
+    background-color: rgb(10, 10, 9);
+    color: #fff;
+    overflow: hidden;
+}
+
+.banner-anuncio .informacoes li img.diminuir-imagem {
+    width: 30% !important; /* Ajuste conforme necessário */
+    height: auto !important; /* Mantém a proporção da imagem */
+    max-width: 100% !important; /* Garante que a imagem não exceda o contêiner pai */
+}
+
+
+
+
+
+.banner-preto {
+    padding: 40px 20px;
+    background-color: #262626;
+    color: #fff;
+    text-align: center;
+}
+
+.banner-preto h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.banner-preto p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.banner-preto button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #262626;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.banner-preto button:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Estilos para a seção do campo de e-mail */
+.campo-email {
+    padding: 40px 20px;
+    background-color: #f2f2f2;
+    text-align: center;
+    font-family: var(--fonte-principal);
+}
+
+.campo-email h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.campo-email form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.campo-email input[type="email"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.campo-email button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #262626;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.campo-email button:hover {
+    background-color: #555;
+}
+
+.container-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Define duas colunas de tamanho flexível */
+    gap: 20px; /* Espaço entre as colunas */
+}
+
+
+.section-title {
+    grid-column: 1 / -1; /* O título ocupará toda a largura da grid */
+    font-size: 40px; /* Tamanho da fonte do título */
+    text-align: center; /* Centraliza o texto */
+    margin-bottom: 20px; /* Espaço entre o título e as colunas */
+    color: white;
+}
+
+
+
+.column {
+    background-color: #f0f0f0; /* Cor de fundo das colunas */
+    padding: 20px; /* Espaçamento interno das colunas */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para as colunas */
+}
+
+
+
+
+
+.imagem-com-legenda {
+    padding: 40px 20px;
+    background-image: linear-gradient(#FFAA00, #092749);
+}
+
+.imagem-legenda-container {
+    display: flex;
+    align-items: center;
+}
+
+.imagem-legenda-imagem {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.imagem-legenda-texto {
+    flex: 2;
+    color: white;
+    font-family: var(--fonte-principal);
+}
+
+.imagem-legenda-texto h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.imagem-legenda-texto p {
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-family: var(--fonte-principal);
+    padding: 5px;
+    color: rgb(240, 226, 226);
+}
+
+
+/* Estilos para a seção de gêneros musicais */
+.generos-musicais {
+    padding: 40px 20px 20px;
+    background-color: #262626;
+    text-align: center;
+}
+
+.generos-musicais img {
+    height: 100px;
+}
+
+.generos-container {
+    margin-top: 20px;
+}
+/* Estilos para a seção de gêneros musicais */
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #000;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    color: #555;
+}
+
+
+.teste-de-imagem-logo {
+    background-color: black;
+    border-radius: 50px;
+
+}
+
+.card {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+.like-btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.like-btn.liked {
+    color: #dc3545;
+}
+
+.card:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+
+
+
+.informacoes {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap; /* Impede que as informações quebrem em várias linhas */
+    animation: scroll-left 20s linear infinite; /* Configura a animação para rolar para a esquerda */
+}
+
+.informacoes li {
+    display: inline-block;
+    margin-right: 30px; /* Espaçamento entre as informações */
+}
+
+.informacoes li img {
+    display: flex;
+    height: 5%;
+}
+
+/* Define a animação para rolar para a esquerda */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(100%); /* Começa fora da tela à direita */
+    }
+    100% {
+        transform: translateX(-100%); /* Termina fora da tela à esquerda */
+    }
+}
+
+.informacoes li img {
+    width: auto; /* Defina a largura desejada */
+    height: 100px; /* Mantenha a proporção original da imagem */
+    padding: 2px;
+}
+
+
+
+.banner-promocional {
+    padding: 40px 20px;
+    background-image: linear-gradient(#141414, #01061f);
+}
+
+.banner-promocional-imagem {
+    display: flex;
+    align-items: center;
+}
+
+.banner-promocional-imagem img {
+    color: white;
+}
+
+.banner-promocional-imagem p {
+    color: white;
+}
+
+
+
+.banner-promocional p {
+    flex: 2;
+}
+
+
+
+
+
+
+.video-maker {
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+    margin-left: 10px; /* Adiciona um espaçamento à direita do vídeo para evitar que outros elementos encostem nele */
+}

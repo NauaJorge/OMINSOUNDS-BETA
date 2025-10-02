@@ -1,0 +1,246 @@
+.container-principal {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    height: 50px;
+    background-color: 141414;
+    box-sizing: border-box;
+    border-bottom: 1px solid #363636;
+    font-family: var(--fonte-principal);
+}
+
+.menu-principal {
+    display: flex;
+    align-items: center;
+    
+    
+}
+
+
+.botoes-usuario {
+    display: flex;
+    gap: 10px;
+       
+
+   
+}
+
+
+.menu-principal li {
+    display: inline-block;
+    margin: 30px;
+
+
+}
+
+.menu-principal li:hover {
+    transform: scale(1.1);
+}
+
+.menu-principal li a:hover {
+    color: gray;
+}
+
+
+
+#textobusca {
+    color: white;
+}
+
+.lupa {
+    height: 25px;
+    border-radius: 5px;
+    border: none;
+    
+
+}
+
+
+
+#menu {
+    display: none;
+    
+
+}
+
+.nav-botao {
+    display: flex;
+   
+
+}
+
+.pesquisa-texto {
+    width: 300px;
+    height: 25px;
+    background-color: white;
+    color: gray;
+    padding: 8px 12px 8px 0;
+    border-radius: 5px;
+    border: none; /* Remove a borda padrão */
+    outline: none; /* Remove o contorno de foco padrão */  
+    
+
+}
+
+#textobusca {
+    color: black;
+}
+
+
+
+.container-secundario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 50px;
+    padding-top: 10px;
+    background-color: #161616;
+    box-sizing: border-box;
+    border-bottom: 1px solid #363636;
+    font-family: var(--fonte-principal);
+    
+
+}
+
+
+
+.menu-secundario  img {
+ 
+    padding: 0 5px 0 0 ;    
+}
+
+.menu-secundario li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+
+}
+
+.menu-secundario li a:hover {
+    color: gray;
+    
+}
+
+
+
+.menu-secundario li {
+    display: inline-block;
+    justify-content: center;
+    margin: 30px;
+
+
+}
+
+
+
+.menu-secundario li:hover {
+    transform: scale(1.1);
+
+
+}
+
+
+
+
+.tracks-menu {
+    position: absolute;
+    left: 23%;
+    background-color:  rgb(49, 49, 49);
+}
+
+
+.search-category {
+    border: none;
+    appearance: none;
+    background-color: transparent;
+    color: white;
+
+}
+
+
+
+
+.search-category option {
+    background-color: #131111;
+    color: white;
+
+}
+
+.search-category[value="all"]~#textobusca,
+
+.search-category[value="tracks"]~#textobusca[placeholder="O que você está procurando?"]:not([data-category="Tracks"]),
+
+.search-category[value="albums"]~#textobusca[placeholder="O que você está procurando?"]:not([data-category="Albums"]) {
+
+    display: grid;
+
+
+}
+
+
+
+.lista-menu-tracks {
+    color: rgb(17, 16, 16);
+    text-decoration: none;
+    border-color: rgb(250, 245, 241);
+    font-family: "Oswald", sans-serif;
+
+
+}
+
+.tracks-menu .submenu {
+    display: none;
+    position: absolute;
+    background-color: #131111;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    /* Garante que o submenu esteja sobre outros elementos */
+}
+
+.tracks-menu:hover .submenu {
+    display: block;
+}
+
+.submenu li {
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.submenu li a {
+    color: white;
+    text-decoration: none;
+}
+
+.submenu li:hover {
+    background-color: #555;
+}
+
+
+
+.lista-menu-link {
+    color: white;
+    text-decoration: none;
+}
+.lista-menu-link-s {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.movable-image {
+    transition: transform 0.5s ease;
+}
+
+.movable-image.move {
+    transform: translateX(10px); /* Ajuste o valor conforme necessário */
+}
+
+

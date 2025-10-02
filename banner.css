@@ -1,0 +1,26 @@
+.banner {
+    position: relative;
+    color: white;
+    left: 200px; /* Adjust the positioning as needed */
+    margin-top: 70px;
+}
+
+.banner__titulo {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+.pesquisa_beat {
+    border-radius: 15px;
+    border: 20px solid var(--branco);
+    color: var(--);
+    padding: 1.5em; /* Increase padding */
+    width: 550px; /* Set a specific width */
+    font-size: 16px; /* Increase font size */
+    text-align: center; /* Center the text horizontally */
+    cursor: pointer; /* Add a cursor pointer for better user interaction */
+
+
+}
+

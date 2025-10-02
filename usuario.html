@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMINISOUND</title>
+    <link rel="stylesheet" href="reset.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="banner.css">
+    <link rel="stylesheet" href="rodape.css">
+    <link rel="stylesheet" href="carrossel.css">
+    <link rel="stylesheet" href="swiper-bundle.css" <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://db.onlinewebfonts.com/c/50c1fe474aab5cecc00a2ae63d14a8cf?family=Futura+Cyrillic+Bold"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+    <style>
+        body {
+            background: linear-gradient(45deg, #1c1c1c, #4b3621);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+        }
+
+        .profile-card {
+            background-color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-card h3 {
+            color: #f1c40f;
+        }
+
+        .profile-card p {
+            margin: 10px 0;
+            color: #ccc;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .edit-btn {
+            background-color: #f1c40f;
+            border: none;
+            color: #000;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn:hover {
+            background-color: #d4ac0d;
+        }
+
+        header {
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            background-color: #1c1c1c;
+        }
+
+        .navbar-brand,
+        .nav-link,
+        .btn {
+            color: #f1c40f !important;
+        }
+
+        .btn-outline-success {
+            border-color: #f1c40f !important;
+            color: #f1c40f !important;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #f1c40f !important;
+            color: #000 !important;
+        }
+
+
+        .chatbot-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f1c40f;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: #000;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .chatbot-btn:hover {
+            background-color: #d4ac0d;
+        }
+
+        .modal-content {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .modal-header,
+        .modal-footer {
+            border-color: #444;
+        }
+
+        .modal-header h5 {
+            color: #f1c40f;
+        }
+
+        .faq-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .faq-list li {
+            margin-bottom: 15px;
+        }
+
+        .faq-list li p {
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <title>User Profile</title>
+
+
+<body>
+    <header class="container-principal">
+
+        <nav class="nav-imagem">
+
+            <input type="checkbox" id="menu" class="menu-botao">
+            <a href="index.html"><img src="assents/img/logo-botao.png" class="menu-imagem-botao" for="menu"></a>
+
+        </nav>
+
+        <div class="menu-principal">
+            <ul>
+                <li><a href="#" class="lista-menu-link">Feed</a></li>
+                <li><a href="studio.html" class="lista-menu-link">Studio</a></li>
+                <input type="text" id="textobusca" placeholder="O que você está procurando?" class="pesquisa-texto" />
+                <button class="lupa"><img src="assents/img/search.svg" alt="pesquisa-usuario"></button>
+                <li><a href="cadastre.html" class="lista-menu-link">Cadastre-se</a></li>
+                <li><a href="Login.html" class="lista-menu-link">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="botoes-usuario">
+            <a href="#"><img src="assents/img/heart-golden.svg" alt="Meus Favoritos" class="botao-user"></a>
+            <a href="carrinho.html"><img src="assents/img/shopping-car-golden.svg" alt="Carrinho de compras"
+                    class="botao-user"></a>
+            <a href="usuario.html"><img src="assents/img/user-circle-gold.svg" alt="Meu Perfil" class="botao-user"></a>
+        </div>
+
+    </header>
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <img src="https://via.placeholder.com/100" alt="Profile Image" class="profile-image">
+        <h3>Nauã Jorge</h3>
+        <p><i class="bi bi-people-fill"></i> 1.2k Seguidores</p>
+        <p><i class="bi bi-headphones"></i> 34.5k Plays</p>
+        <p><i class="bi bi-music-note-beamed"></i> 145 Beats</p>
+        <button class="edit-btn"><i class="bi bi-pencil"></i> Editar Perfil</button>
+    </div>
+
+   <!-- Floating Button -->
+   <button class="chatbot-btn" data-bs-toggle="modal" data-bs-target="#chatbotModal">
+    <i class="bi bi-chat-dots"></i>
+</button>
+
+<!-- Chatbot Modal -->
+<div class="modal fade" id="chatbotModal" tabindex="-1" a   ria-labelledby="chatbotModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chatbotModalLabel">Agente Virtual</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="faq-list">
+                    <li>
+                        <p><strong>Q1:</strong> Como posso alterar meu perfil?</p>
+                        <p><strong>R:</strong> Vá para a seção "Editar Perfil" e faça as modificações necessárias.</p>
+                    </li>
+                    <li>
+                        <p><strong>Q2:</strong> Como faço upload de uma música?</p>
+                        <p><strong>R:</strong> Clique no botão "Adicionar Música" no seu perfil.</p>
+                    </li>
+                    <li>
+                        <p><strong>Q3:</strong> Como posso aumentar o número de plays nas minhas músicas?</p>
+                        <p><strong>R:</strong> Compartilhe suas músicas em redes sociais e interaja com seus seguidores.</p>
+                    </li>
+                </ul>
+                <input type="text" id="userQuestion" class="form-control mt-3" placeholder="Digite sua pergunta aqui...">
+                <button id="askQuestion" class="btn btn-primary mt-2">Perguntar</button>
+                <div id="botResponse" class="mt-3"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+
+<script>
+  async function sendToBackend(question) {
+    try {
+        const response = await fetch('/ask-question', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question })
+        });
+
+        const data = await response.json();
+        return data.answer;
+    } catch (error) {
+        console.error('Erro ao se comunicar com o servidor:', error);
+        return 'Desculpe, houve um problema ao processar sua pergunta.';
+    }
+}
+
+document.getElementById('askQuestion').addEventListener('click', async () => {
+    const question = document.getElementById('userQuestion').value;
+    if (question.trim() === "") {
+        document.getElementById('botResponse').innerText = "Por favor, digite uma pergunta.";
+        return;
+    }
+
+    document.getElementById('botResponse').innerText = "Processando sua pergunta...";
+    const answer = await sendToBackend(question);
+    document.getElementById('botResponse').innerText = answer;
+});
+
+</script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
+
+</body>
+
+</html>

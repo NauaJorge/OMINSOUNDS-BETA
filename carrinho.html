@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <title>Document</title>
+
+    <style>
+        body {
+            background: linear-gradient(45deg, #1c1c1c, #4b3621);
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .card h3,
+        .card h6 {
+            color: #f1c40f;
+        }
+
+        .form-control {
+            background-color: #555;
+            color: #fff;
+            border: 1px solid #f1c40f;
+        }
+
+        .form-control::placeholder {
+            color: #ddd;
+        }
+
+        .btn-success {
+            background-color: #f1c40f;
+            border: none;
+            color: #000;
+        }
+
+        .btn-success:hover {
+            background-color: #d4ac0d;
+        }
+
+        .text-center a {
+            color: #f1c40f;
+        }
+
+        .text-center a:hover {
+            color: #d4ac0d;
+        }
+
+        /* Adicionando espaçamento de 20px entre os elementos */
+        .mb-4,
+        .mt-4 {
+            margin-bottom: 20px !important;
+            margin-top: 20px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="p-4 p-md-5"
+        style="background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-5">
+                <div class="card rounded-3">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h3>Upgrade Plano Premium</h3>
+                            <h6>Upgrade de plano</h6>
+                        </div>
+                        <form action="">
+                            <p class="fw-bold mb-4 pb-2">Escolha o método de pagamento:</p>
+
+                            <!-- Botões de rádio para seleção do método de pagamento -->
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment"
+                                    checked>
+                                <label class="form-check-label" for="cardPayment">
+                                    Pagar com Cartão
+                                </label>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="pixPayment">
+                                <label class="form-check-label" for="pixPayment">
+                                    Pagar com Pix
+                                </label>
+                            </div>
+
+ <!-- Adicione o CDN do Font Awesome no cabeçalho -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMm2n3x0MdHf4n2HJc1G3D1H9Y9pGPrZ3dU72E" crossorigin="anonymous">
+
+<!-- Formulário para pagamento com Cartão -->
+<div id="cardForm">
+    <p class="fw-bold mb-4">Adicionar novo cartão:</p>
+
+    <div class="form-outline mb-4">
+        <input type="text" id="formControlLgXsd" class="form-control form-control-lg" value="Matheus Ferreira" />
+        <label class="form-label" for="formControlLgXsd">Nome do titular do cartão</label>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-7">
+            <div class="form-outline">
+                <input type="text" id="formControlLgXM" class="form-control form-control-lg" value="1234 5678 1234 5678" />
+                <label class="form-label" for="formControlLgXM">Número do Cartão</label>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-outline">
+                <input type="text" id="formControlLgExpk" class="form-control form-control-lg" placeholder="MM/YYYY" />
+                <label class="form-label" for="formControlLgExpk">Validade</label>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-outline">
+                <input type="password" id="formControlLgcvv" class="form-control form-control-lg" placeholder="Cvv" />
+                <label class="form-label" for="formControlLgcvv">Cvv</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opção de escolher o tipo de cartão -->
+    <div class="mb-4">
+        <label class="form-label" for="cardType">Tipo de Cartão</label>
+        <select id="cardType" class="form-control form-control-lg">
+            <option value="visa">Visa</option>
+            <option value="mastercard">MasterCard</option>
+        </select>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <i class="fab fa-cc-visa" style="font-size: 40px; margin-right: 10px;"></i>
+        <i class="fab fa-cc-mastercard" style="font-size: 40px;"></i>
+    </div>
+
+    <button class="btn btn-success btn-lg btn-block">Adicionar Cartão</button>
+</div>
+
+<!-- Opção de pagamento Pix com QR Code -->
+<div id="pixForm" style="display: block;" class="mt-4">
+    <h6 class="mb-3">Pagamento via Pix</h6>
+    <div class="d-flex justify-content-center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Teste%20de%20Pix%20realizado%20por%20OminiSounds%20-%20R$%20100,00"
+            alt="QR Code" class="img-fluid">
+    </div>
+</div>
+
+<!-- Botão de prosseguir com o pagamento -->
+<button class="btn btn-success btn-lg btn-block mt-4"
+    onclick="window.open('https://www.mercadolivre.com/jms/mlb/lgz/msl/login/H4sIAAAAAAAEAzWNQQ7DIAwE_-JzlNw59iPICYagmoDAKa2q_L2mao87nl2_gXOIh5VXITDgyOPJAhMURvG5Jhud8lQUtSj0i7wOBSsmEqoNzHvsBHI30tJY8siNVMJTdus5d2XfV8pis_TU3oFsO62PSOP6b4SsYRcpzSxL731OVDd0uWDI85bTvFa4JtWbWKm43cFIPen6AN5uNinLAAAA/user/', '_blank')">
+    Prosseguir com o Pagamento
+</button>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        // Alternar entre formulários de pagamento por Cartão e Pix
+        document.getElementById('cardPayment').addEventListener('click', function () {
+            document.getElementById('cardForm').style.display = 'block';
+            document.getElementById('pixForm').style.display = 'none';
+        });
+
+        document.getElementById('pixPayment').addEventListener('click', function () {
+            document.getElementById('cardForm').style.display = 'none';
+            document.getElementById('pixForm').style.display = 'block';
+        });
+    </script>
+
+
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    <script>
+        const mp = new MercadoPago("YOUR_PUBLIC_KEY");
+    </script>
+
+</body>
+
+</html>

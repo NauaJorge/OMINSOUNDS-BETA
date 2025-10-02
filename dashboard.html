@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - OMINISOUND</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/rodape.css">
+    <link rel="stylesheet" href="styles/header-studio.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            color: beige;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(270deg, #ff5c5c, #333, #444, #111);
+            background-size: 800% 800%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .dashboard-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dashboard-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-container p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-container .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(168, 43, 43);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .dashboard-container .btn:hover {
+            background-color: #ff5c5c;
+        }
+
+        .dashboard-container .back-btn {
+            background-color: #f1c40f;
+            color: black;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <header class="menu-principal">
+        <!-- Cabeçalho -->
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <h2>Painel de Controle</h2>
+
+            <!-- Exibindo os dados do usuário -->
+            <p><strong>Nome:</strong> <span id="userName"></span></p>
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <p><strong>Telefone:</strong> <span id="userPhone"></span></p>
+
+            <button class="btn back-btn" onclick="window.location.href='login.html'">Sair</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <!-- Rodapé -->
+    </footer>
+
+    <script>
+        // Recuperando os dados do usuário do localStorage
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+        if (usuario) {
+            // Exibindo os dados no painel (sem a senha)
+            document.getElementById('userName').textContent = usuario.nome;
+            document.getElementById('userEmail').textContent = usuario.email;
+            document.getElementById('userPhone').textContent = usuario.telefone;
+        } else {
+            // Se o usuário não estiver logado, redireciona para o login
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

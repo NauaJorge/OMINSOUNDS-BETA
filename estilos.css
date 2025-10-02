@@ -1,0 +1,19 @@
+/* Estilo para imagem de perfil com borda redonda */
+.profile-img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.button-space {
+    margin-right: 10px;
+}
+
+.profile-card {
+    border: 1px solid #f1c40f;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
