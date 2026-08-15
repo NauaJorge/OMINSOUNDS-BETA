@@ -1,6 +1,6 @@
 # OMINSOUNDS
 
-Marketplace de beats. Produto da **Smooth Produções**, parte técnica e arquitetural pela **SoftWave Soluções**.
+Marketplace de beats. Desenvolvido pela **SoftWave Soluções**.
 
 Ambiente de **teste**: contas, catálogo e valores são demonstração.
 

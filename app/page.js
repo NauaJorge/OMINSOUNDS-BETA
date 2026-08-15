@@ -44,7 +44,7 @@ export default async function Home() {
         <div className="palco-veu" aria-hidden="true" />
 
         <div className="container palco-conteudo">
-          <span className="olho">Smooth Produções × SoftWave</span>
+          <span className="olho">Marketplace de beats</span>
           <h1 style={{ maxWidth: '15ch' }}>
             Tecnologia a serviço do ouvido de quem produz.
           </h1>

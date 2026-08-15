@@ -231,6 +231,16 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
 .rodape-linha { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .rodape a { color: var(--texto-2); }
 
+/* Sem regra propria o link nasce no azul do navegador e some no fundo escuro. */
+.credito a {
+  color: var(--texto-2);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.credito a:hover,
+.credito a:focus-visible { color: var(--ouro); }
+
 .vazio { padding: 34px; text-align: center; color: var(--texto-3); border: 1px dashed var(--linha-forte); border-radius: var(--raio); }
 
 /* ---------- palco: video de fundo no topo ---------- */

@@ -8,7 +8,7 @@ import Player from './player/Player';
 export const metadata = {
   title: 'OMINSOUNDS — beats, produtores e serviços musicais',
   description:
-    'Marketplace de beats da Smooth Produções. Catálogo de produtores, Studio próprio e mensagens que só chegam depois do aceite.',
+    'Marketplace de beats. Catálogo de produtores, Studio próprio e mensagens que só chegam depois do aceite.',
 };
 
 export const dynamic = 'force-dynamic';
@@ -68,7 +68,12 @@ export default async function RootLayout({ children }) {
             <div className="container rodape-linha">
               <div>
                 <strong>OMINSOUNDS</strong>
-                <div className="mini">Produto da Smooth Produções. Parte técnica pela SoftWave Soluções.</div>
+                <div className="mini credito">
+                  Desenvolvido pela{' '}
+                  <a href="https://www.softwavesolucoes.com.br/" target="_blank" rel="noopener">
+                    SoftWave Soluções<span className="sr">, abre em outra aba</span>
+                  </a>
+                </div>
               </div>
               <div className="mini">
                 Ambiente de teste. Catálogo e contas são demonstração.
