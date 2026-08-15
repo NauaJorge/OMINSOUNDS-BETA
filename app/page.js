@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { sql } from '../lib/db';
+import BotaoTocar from './player/BotaoTocar';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,7 +10,7 @@ function real(centavos) {
 
 export default async function Home() {
   const destaques = await sql`
-    SELECT b.id, b.titulo, b.capa_url, b.bpm, b.genero, b.mood, b.preco_centavos,
+    SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.bpm, b.genero, b.mood, b.preco_centavos,
            u.handle, u.nome AS produtor
     FROM beats b JOIN usuarios u ON u.id = b.produtor_id
     WHERE b.publicado
@@ -24,18 +25,37 @@ export default async function Home() {
 
   return (
     <>
-      <section className="container secao">
-        <span className="olho">Smooth Produções × SoftWave</span>
-        <h1 style={{ maxWidth: '15ch' }}>
-          Tecnologia a serviço do ouvido de quem produz.
-        </h1>
-        <p className="leve" style={{ maxWidth: '58ch', fontSize: 19 }}>
-          Um marketplace onde o beat chega antes do discurso, o produtor controla
-          a própria vitrine e ninguém consegue falar com você sem a sua permissão.
-        </p>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 26 }}>
-          <Link className="btn btn-ouro" href="/beats">Ouvir o catálogo</Link>
-          <Link className="btn btn-linha" href="/entrar">Entrar no Studio</Link>
+      <section className="palco">
+        {/* Video de fundo: mudo, em laco, sem controles e marcado como
+            decorativo. preload="none" e o poster seguram a banda ate o
+            navegador decidir tocar; quem pediu menos animacao nao recebe. */}
+        <video
+          className="palco-video"
+          src="/assents/video/estudio-loop.mp4"
+          poster="/assents/img/studio1.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          aria-hidden="true"
+          tabIndex={-1}
+        />
+        <div className="palco-veu" aria-hidden="true" />
+
+        <div className="container palco-conteudo">
+          <span className="olho">Smooth Produções × SoftWave</span>
+          <h1 style={{ maxWidth: '15ch' }}>
+            Tecnologia a serviço do ouvido de quem produz.
+          </h1>
+          <p className="leve" style={{ maxWidth: '58ch', fontSize: 19 }}>
+            Um marketplace onde o beat chega antes do discurso, o produtor controla
+            a própria vitrine e ninguém consegue falar com você sem a sua permissão.
+          </p>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 26 }}>
+            <Link className="btn btn-ouro" href="/beats">Ouvir o catálogo</Link>
+            <Link className="btn btn-linha" href="/entrar">Entrar no Studio</Link>
+          </div>
         </div>
       </section>
 
@@ -76,7 +96,15 @@ export default async function Home() {
         <div className="grade grade-4">
           {destaques.map((b) => (
             <article className="cartao" key={b.id}>
-              <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+              <div className="capa-com-play">
+                <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+                <BotaoTocar
+                  faixa={{
+                    id: b.id, titulo: b.titulo, produtor: b.produtor,
+                    handle: b.handle, capa: b.capa_url, audio: b.audio_url,
+                  }}
+                />
+              </div>
               <div className="cartao-corpo">
                 <h3 style={{ marginBottom: 2 }}>{b.titulo}</h3>
                 <Link className="mini" href={`/produtor/${b.handle}`}>{b.produtor}</Link>

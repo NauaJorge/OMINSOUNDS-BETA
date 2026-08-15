@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usuarioAtual } from '../lib/sessao';
 import { contarPendentes } from '../lib/mensagens';
 import { sair } from './acoes';
+import Player from './player/Player';
 
 export const metadata = {
   title: 'OMINSOUNDS — beats, produtores e serviços musicais',
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }) {
             <nav className="menu" aria-label="Navegação principal">
               <Link href="/beats">Beats</Link>
               <Link href="/produtores">Produtores</Link>
+              <Link href="/planos">Planos</Link>
               {usuario && <Link href="/studio">Studio</Link>}
               {usuario && (
                 <Link href="/mensagens">
@@ -59,19 +61,21 @@ export default async function RootLayout({ children }) {
           </div>
         </header>
 
-        <main id="conteudo">{children}</main>
+        <Player>
+          <main id="conteudo">{children}</main>
 
-        <footer className="rodape">
-          <div className="container rodape-linha">
-            <div>
-              <strong>OMINSOUNDS</strong>
-              <div className="mini">Produto da Smooth Produções. Parte técnica pela SoftWave Soluções.</div>
+          <footer className="rodape">
+            <div className="container rodape-linha">
+              <div>
+                <strong>OMINSOUNDS</strong>
+                <div className="mini">Produto da Smooth Produções. Parte técnica pela SoftWave Soluções.</div>
+              </div>
+              <div className="mini">
+                Ambiente de teste. Catálogo e contas são demonstração.
+              </div>
             </div>
-            <div className="mini">
-              Ambiente de teste. Catálogo e contas são demonstração.
-            </div>
-          </div>
-        </footer>
+          </footer>
+        </Player>
       </body>
     </html>
   );

@@ -233,6 +233,100 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
 
 .vazio { padding: 34px; text-align: center; color: var(--texto-3); border: 1px dashed var(--linha-forte); border-radius: var(--raio); }
 
+/* ---------- palco: video de fundo no topo ---------- */
+
+.palco { position: relative; overflow: hidden; padding: 92px 0 78px; isolation: isolate; }
+.palco-video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2; filter: saturate(.75) contrast(1.05);
+}
+/* Sem o veu o texto branco cai em cima de parede clara de estudio e some.
+   O degrade para o fundo emenda o palco com o resto da pagina. */
+.palco-veu {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(8,9,12,.94) 0%, rgba(8,9,12,.80) 46%, rgba(8,9,12,.42) 100%),
+    linear-gradient(to bottom, rgba(8,9,12,.55) 0%, transparent 30%, var(--fundo) 100%);
+}
+.palco-conteudo { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .palco-video { display: none; }
+}
+
+/* ---------- capa com play por cima ---------- */
+
+.capa-com-play { position: relative; }
+.tocar {
+  position: absolute; left: 12px; bottom: 12px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 46px; height: 46px; padding: 0; border-radius: 50%;
+  background: rgba(8,9,12,.72); color: var(--ouro);
+  border: 1px solid rgba(232,185,49,.55); cursor: pointer;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: transform .14s ease, background .14s ease;
+}
+.tocar svg { width: 20px; height: 20px; fill: currentColor; }
+.tocar:hover { background: var(--ouro); color: var(--sobre-ouro); transform: scale(1.06); }
+.tocar-ativo { background: var(--ouro); color: var(--sobre-ouro); }
+.tocar-largo { width: auto; height: 44px; padding: 0 18px; border-radius: 999px; }
+
+/* ---------- player fixo ---------- */
+
+.player {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 70;
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 18px;
+  background: rgba(13, 15, 20, .93);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border-top: 1px solid var(--linha-forte);
+}
+@supports not (backdrop-filter: blur(16px)) { .player { background: #0d0f14; } }
+
+.player-capa { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; flex: 0 0 auto; }
+.player-info { min-width: 0; max-width: 230px; }
+.player-info strong { display: block; font-size: 14.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.player-info a { text-decoration: none; }
+
+.player-botao {
+  flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--ouro); color: var(--sobre-ouro); border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.player-botao svg { width: 20px; height: 20px; fill: currentColor; }
+
+.player-barra { flex: 1 1 auto; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.player-barra input[type='range'] {
+  flex: 1 1 auto; min-width: 0; height: 4px; -webkit-appearance: none; appearance: none;
+  background: var(--linha-forte); border-radius: 999px; cursor: pointer;
+}
+.player-barra input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 13px; height: 13px;
+  border-radius: 50%; background: var(--ouro); border: 0;
+}
+.player-barra input[type='range']::-moz-range-thumb {
+  width: 13px; height: 13px; border-radius: 50%; background: var(--ouro); border: 0;
+}
+
+/* O player cobre o rodape se a pagina terminar rente ao fim. */
+body:has(.player) { padding-bottom: 84px; }
+
+/* ---------- planos ---------- */
+
+.plano { display: flex; }
+.plano .cartao-corpo { display: flex; flex-direction: column; width: 100%; }
+.plano-destaque { border-color: rgba(232,185,49,.5); box-shadow: 0 0 0 1px rgba(232,185,49,.16); }
+.plano-valor { font-size: 34px; font-weight: 800; margin: 6px 0 16px; letter-spacing: -.02em; }
+.plano-valor .mini { font-size: 14px; font-weight: 500; margin-left: 4px; }
+.plano-itens { list-style: none; padding: 0; margin: 0 0 22px; flex: 1 1 auto; }
+.plano-itens li { position: relative; padding-left: 22px; margin-bottom: 9px; font-size: 14.5px; color: var(--texto-2); }
+.plano-itens li::before {
+  content: ''; position: absolute; left: 2px; top: .62em;
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.6px solid var(--ouro);
+}
+
 @media (max-width: 900px) {
   .grade-3, .grade-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .topo-linha { flex-wrap: wrap; gap: 10px 16px; }

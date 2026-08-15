@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { sql } from '../../../lib/db';
 import { usuarioAtual } from '../../../lib/sessao';
 import FormularioPedido from './FormularioPedido';
+import BotaoTocar from '../../player/BotaoTocar';
 
 export const dynamic = 'force-dynamic';
 
@@ -107,7 +108,15 @@ export default async function Produtor({ params }) {
           <div className="grade grade-3">
             {beats.map((b) => (
               <article className="cartao" key={b.id}>
-                <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+                <div className="capa-com-play">
+                  <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+                  <BotaoTocar
+                    faixa={{
+                      id: b.id, titulo: b.titulo, produtor: produtor.nome,
+                      handle: produtor.handle, capa: b.capa_url, audio: b.audio_url,
+                    }}
+                  />
+                </div>
                 <div className="cartao-corpo">
                   <h3 style={{ marginBottom: 2 }}>{b.titulo}</h3>
                   <p className="mini" style={{ margin: 0 }}>{b.bpm} BPM · {b.tom}</p>
@@ -115,9 +124,6 @@ export default async function Produtor({ params }) {
                     <span className="etiqueta">{b.genero}</span>
                     <span className="etiqueta">{b.mood}</span>
                   </div>
-                  <audio controls preload="none" src={b.audio_url} style={{ width: '100%', marginTop: 12 }}>
-                    Seu navegador não conseguiu tocar este áudio.
-                  </audio>
                   <p className="preco" style={{ marginBottom: 0, marginTop: 12 }}>{real(b.preco_centavos)}</p>
                 </div>
               </article>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { sql } from '../../lib/db';
+import BotaoTocar from '../player/BotaoTocar';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Beats | OMINSOUNDS' };
@@ -50,7 +51,15 @@ export default async function Beats({ searchParams }) {
         <div className="grade grade-4">
           {beats.map((b) => (
             <article className="cartao" key={b.id}>
-              <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+              <div className="capa-com-play">
+                <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+                <BotaoTocar
+                  faixa={{
+                    id: b.id, titulo: b.titulo, produtor: b.produtor,
+                    handle: b.handle, capa: b.capa_url, audio: b.audio_url,
+                  }}
+                />
+              </div>
               <div className="cartao-corpo">
                 <h3 style={{ marginBottom: 2 }}>{b.titulo}</h3>
                 <Link className="mini" href={`/produtor/${b.handle}`}>{b.produtor}</Link>
@@ -59,9 +68,6 @@ export default async function Beats({ searchParams }) {
                   <span className="etiqueta">{b.tom}</span>
                   <span className="etiqueta">{b.mood}</span>
                 </div>
-                <audio controls preload="none" src={b.audio_url} style={{ width: '100%', marginTop: 12 }}>
-                  Seu navegador não conseguiu tocar este áudio.
-                </audio>
                 <p className="preco" style={{ marginBottom: 0, marginTop: 12 }}>{real(b.preco_centavos)}</p>
               </div>
             </article>
