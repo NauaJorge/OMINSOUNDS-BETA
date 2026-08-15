@@ -20,7 +20,7 @@ export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false
   const faixa = {
     id: beat.id, titulo: beat.titulo, produtor: beat.produtor,
     handle: beat.handle, capa: beat.capa_url, audio: beat.audio_url,
-    picos: beat.picos,
+    picos: beat.picos, bpm: beat.bpm, tom: beat.tom,
   };
 
   return (
@@ -53,7 +53,10 @@ export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false
         <Onda picos={beat.picos} progresso={eAtual ? progresso : 0} altura={30} />
       </div>
 
-      <span className="linha-tec mini">{beat.bpm} BPM · {beat.tom}</span>
+      <span className="linha-tec mini">
+        {beat.bpm} BPM · {beat.tom}
+        {beat.camelot && <span className="camelot" title={`Camelot ${beat.camelot}`}>{beat.camelot}</span>}
+      </span>
       <span className="preco linha-preco">{real(beat.preco_centavos)}</span>
     </li>
   );

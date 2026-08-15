@@ -365,6 +365,41 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
 .player-onda .onda { flex: 1 1 auto; min-width: 0; }
 .player-fila { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
 
+/* Ajuste de andamento: o artista ouve o beat no tempo da musica dele antes
+   de comprar. */
+.player-tempo { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.player-tempo label { min-width: 62px; text-align: right; }
+.player-tempo label strong { color: var(--texto); font-size: 14px; }
+.player-tempo input[type='range'] {
+  width: 92px; height: 4px; -webkit-appearance: none; appearance: none;
+  background: var(--linha-forte); border-radius: 999px; cursor: pointer;
+}
+.player-tempo input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 13px; height: 13px;
+  border-radius: 50%; background: var(--ouro); border: 0;
+}
+.player-tempo input[type='range']::-moz-range-thumb {
+  width: 13px; height: 13px; border-radius: 50%; background: var(--ouro); border: 0;
+}
+
+.chip-tom {
+  border: 1px solid var(--linha-forte); background: transparent; color: var(--texto-3);
+  border-radius: 999px; padding: 4px 10px; font-size: 12px; cursor: pointer;
+  white-space: nowrap;
+}
+.chip-tom:hover { color: var(--texto-2); border-color: var(--texto-3); }
+.chip-tom-ativo { color: var(--ouro); border-color: rgba(232,185,49,.55); }
+
+/* Codigo de Camelot ao lado do tom. Quem usa, reconhece na hora; quem nao
+   usa, ignora sem atrapalhar a leitura. */
+.camelot {
+  margin-left: 7px; padding: 2px 6px; border-radius: 4px;
+  background: var(--superficie-2); border: 1px solid var(--linha);
+  font-size: 11px; color: var(--texto-3); font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1180px) { .player-tempo { display: none; } }
+
 @media (max-width: 700px) {
   .player-onda .onda { display: none; }
   .player-info { max-width: 40vw; }

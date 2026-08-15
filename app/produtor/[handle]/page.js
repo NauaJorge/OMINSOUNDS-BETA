@@ -49,6 +49,7 @@ export default async function Produtor({ params }) {
   const lista = comPicos.map((b) => ({
     id: b.id, titulo: b.titulo, produtor: produtor.nome, handle: produtor.handle,
     capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+    bpm: b.bpm, tom: b.tom,
   }));
 
   const totalPlays = beats.reduce((s, b) => s + b.plays, 0);

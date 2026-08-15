@@ -33,6 +33,7 @@ export default async function Studio() {
   const lista = comPicos.map((b) => ({
     id: b.id, titulo: b.titulo, produtor: usuario.nome, handle: usuario.handle,
     capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+    bpm: b.bpm, tom: b.tom,
   }));
 
   const totalPlays = beats.reduce((s, b) => s + b.plays, 0);

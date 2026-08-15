@@ -35,6 +35,8 @@ export default function Player({ children }) {
   const [tocando, setTocando] = useState(false);
   const [posicao, setPosicao] = useState(0);
   const [duracao, setDuracao] = useState(0);
+  const [ritmo, setRitmo] = useState(1);
+  const [mudarTom, setMudarTom] = useState(false);
 
   const atual = indice >= 0 ? fila[indice] : null;
 
@@ -82,6 +84,24 @@ export default function Player({ children }) {
     if (!audio || !Number.isFinite(audio.duration)) return;
     audio.currentTime = audio.duration * fracao;
   }
+
+  /*
+    Ajuste de andamento. Serve para o artista descobrir, antes de comprar, se
+    o beat cabe no tempo da musica dele.
+
+    preservesPitch ligado: muda so a velocidade, o tom fica onde estava. E o
+    que um DAW moderno faz.
+    preservesPitch desligado: sobe e desce o tom junto, que e o que acontece
+    ao acelerar um disco. Produtor usa os dois, entao os dois estao aqui.
+  */
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.playbackRate = ritmo;
+    audio.preservesPitch = !mudarTom;
+    audio.mozPreservesPitch = !mudarTom;
+    audio.webkitPreservesPitch = !mudarTom;
+  }, [ritmo, mudarTom, atual]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -174,6 +194,36 @@ export default function Player({ children }) {
             <span className="mini">{tempo(posicao)}</span>
             <Onda picos={atual.picos} progresso={progresso} aoBuscar={buscarFracao} altura={34} />
             <span className="mini">{tempo(duracao)}</span>
+          </div>
+
+          <div className="player-tempo">
+            <label className="mini" htmlFor="ritmo">
+              {atual.bpm
+                ? <><strong>{Math.round(atual.bpm * ritmo)}</strong> BPM</>
+                : <>{ritmo.toFixed(2)}×</>}
+            </label>
+            <input
+              id="ritmo" type="range" min="0.75" max="1.25" step="0.01"
+              value={ritmo} onChange={(e) => setRitmo(Number(e.target.value))}
+              aria-label="Andamento da faixa"
+              title="Ouça o beat no tempo da sua música"
+            />
+            <button
+              type="button"
+              className={`chip-tom ${mudarTom ? 'chip-tom-ativo' : ''}`}
+              onClick={() => setMudarTom((v) => !v)}
+              aria-pressed={mudarTom}
+              title={mudarTom
+                ? 'O tom sobe e desce junto, como acelerar um disco'
+                : 'O tom fica onde está, só a velocidade muda'}
+            >
+              {mudarTom ? 'tom junto' : 'tom fixo'}
+            </button>
+            {ritmo !== 1 && (
+              <button type="button" className="chip-tom" onClick={() => setRitmo(1)}>
+                voltar
+              </button>
+            )}
           </div>
 
           {fila.length > 1 && (

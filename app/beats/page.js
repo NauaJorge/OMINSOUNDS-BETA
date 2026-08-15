@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { sql } from '../../lib/db';
 import LinhaBeat from '../player/LinhaBeat';
 import Filtros from './Filtros';
+import { codigoCamelot, tonsCompativeis } from '../../lib/harmonia';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Beats | OMINSOUNDS' };
@@ -19,6 +20,11 @@ export default async function Beats({ searchParams }) {
   const genero = p.genero ?? '';
   const mood = p.mood ?? '';
   const tom = p.tom ?? '';
+  const combinaCom = p.combina ?? '';
+
+  // Filtro harmonico: em vez de um tom exato, todos os que convivem com ele.
+  // Vem como lista e entra no SQL com = ANY, continuando parametrizado.
+  const tonsOk = combinaCom ? tonsCompativeis(combinaCom) : [];
   const bpmMin = Number(p.bpmMin) || 0;
   const bpmMax = Number(p.bpmMax) || 999;
   const ordem = ORDENS[p.ordem] ? p.ordem : 'tocados';
@@ -37,6 +43,7 @@ export default async function Beats({ searchParams }) {
       AND (${genero} = '' OR b.genero = ${genero})
       AND (${mood} = '' OR b.mood = ${mood})
       AND (${tom} = '' OR b.tom = ${tom})
+      AND (${combinaCom} = '' OR b.tom = ANY(${tonsOk}))
       AND b.bpm BETWEEN ${bpmMin} AND ${bpmMax}
     ORDER BY
       CASE WHEN ${ordem} = 'tocados' THEN b.plays END DESC,
@@ -46,7 +53,11 @@ export default async function Beats({ searchParams }) {
       b.id
   `;
 
-  const beats = linhas.map((b) => ({ ...b, picos: JSON.parse(b.picos || '[]') }));
+  const beats = linhas.map((b) => ({
+    ...b,
+    picos: JSON.parse(b.picos || '[]'),
+    camelot: codigoCamelot(b.tom),
+  }));
 
   const opcoes = await sql`
     SELECT
@@ -60,9 +71,10 @@ export default async function Beats({ searchParams }) {
   const lista = beats.map((b) => ({
     id: b.id, titulo: b.titulo, produtor: b.produtor, handle: b.handle,
     capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+    bpm: b.bpm, tom: b.tom,
   }));
 
-  const filtrando = busca || genero || mood || tom || p.bpmMin || p.bpmMax;
+  const filtrando = busca || genero || mood || tom || combinaCom || p.bpmMin || p.bpmMax;
 
   return (
     <div className="container secao">
@@ -70,7 +82,7 @@ export default async function Beats({ searchParams }) {
       <h1>Beats</h1>
 
       <Filtros
-        valores={{ q: busca, genero, mood, tom, bpmMin: p.bpmMin ?? '', bpmMax: p.bpmMax ?? '', ordem }}
+        valores={{ q: busca, genero, mood, tom, combina: combinaCom, bpmMin: p.bpmMin ?? '', bpmMax: p.bpmMax ?? '', ordem }}
         opcoes={{
           generos: opcoes[0]?.generos ?? [],
           moods: opcoes[0]?.moods ?? [],
@@ -80,6 +92,13 @@ export default async function Beats({ searchParams }) {
         }}
         ordens={ORDENS}
       />
+
+      {combinaCom && (
+        <p className="aviso aviso-ok" style={{ marginTop: 18 }}>
+          Mostrando o que combina com <strong>{combinaCom}</strong>: mesmo tom, o
+          relativo e os vizinhos na roda de Camelot — {tonsOk.join(', ')}.
+        </p>
+      )}
 
       <p className="mini" style={{ margin: '18px 0 10px' }}>
         {beats.length} {beats.length === 1 ? 'beat' : 'beats'}

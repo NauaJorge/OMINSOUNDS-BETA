@@ -69,6 +69,17 @@ export default function Filtros({ valores, opcoes, ordens }) {
           </select>
         </label>
 
+        {/* Nao e o mesmo que o filtro de tom acima: aqui a busca abre para os
+            tons que convivem com o escolhido, que e como se procura beat para
+            cantar por cima ou para juntar com outro. */}
+        <label className="filtro-item">
+          <span className="mini">Combina com o tom</span>
+          <select className="campo" value={valores.combina} onChange={(e) => aplicar('combina', e.target.value)}>
+            <option value="">Qualquer</option>
+            {opcoes.tons.map((t) => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </label>
+
         <div className="filtro-item filtro-bpm">
           <span className="mini">BPM</span>
           <div>

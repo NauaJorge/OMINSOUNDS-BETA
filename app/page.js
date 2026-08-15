@@ -10,7 +10,7 @@ function real(centavos) {
 
 export default async function Home() {
   const destaques = await sql`
-    SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.genero, b.mood, b.preco_centavos,
+    SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom, b.genero, b.mood, b.preco_centavos,
            u.handle, u.nome AS produtor
     FROM beats b JOIN usuarios u ON u.id = b.produtor_id
     WHERE b.publicado
@@ -21,6 +21,7 @@ export default async function Home() {
   const filaHome = destaquesComPicos.map((b) => ({
     id: b.id, titulo: b.titulo, produtor: b.produtor, handle: b.handle,
     capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+    bpm: b.bpm, tom: b.tom,
   }));
 
   const produtores = await sql`
@@ -108,7 +109,7 @@ export default async function Home() {
                   faixa={{
                     id: b.id, titulo: b.titulo, produtor: b.produtor,
                     handle: b.handle, capa: b.capa_url, audio: b.audio_url,
-                    picos: b.picos,
+                    picos: b.picos, bpm: b.bpm, tom: b.tom,
                   }}
                   lista={filaHome}
                 />
