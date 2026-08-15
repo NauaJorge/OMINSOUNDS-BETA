@@ -1,1 +1,25 @@
 .qa/
+
+# dependencias e build
+node_modules/
+.next/
+out/
+dist/
+
+# credenciais — nunca versionar
+.env
+.env.*
+!.env.example
+
+# vercel
+.vercel/
+
+# sistema
+.DS_Store
+Thumbs.db
+
+# credenciais das contas de teste, geradas localmente
+contas-de-teste.txt
+
+.vercel
+.env*
