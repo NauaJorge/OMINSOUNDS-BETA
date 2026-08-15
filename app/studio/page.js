@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { sql } from '../../lib/db';
 import { usuarioAtual } from '../../lib/sessao';
 import { contarPendentes } from '../../lib/mensagens';
-import BotaoTocar from '../player/BotaoTocar';
+import LinhaBeat from '../player/LinhaBeat';
 
 export const metadata = { title: 'Studio | OMINSOUNDS' };
 
@@ -18,11 +18,22 @@ export default async function Studio() {
   // Cada consulta e presa ao id da sessao. Um produtor nunca alcanca o
   // catalogo de outro trocando parametro nenhum, porque nao ha parametro.
   const beats = await sql`
-    SELECT id, titulo, capa_url, audio_url, bpm, tom, genero, mood, preco_centavos, plays, favoritos, publicado
+    SELECT id, titulo, capa_url, audio_url, picos, bpm, tom, genero, mood, preco_centavos, plays, favoritos, publicado
     FROM beats WHERE produtor_id = ${usuario.id}
     ORDER BY criado_em DESC
   `;
   const pendentes = await contarPendentes(usuario.id);
+
+  const comPicos = beats.map((b) => ({
+    ...b,
+    picos: JSON.parse(b.picos || '[]'),
+    produtor: usuario.nome,
+    handle: usuario.handle,
+  }));
+  const lista = comPicos.map((b) => ({
+    id: b.id, titulo: b.titulo, produtor: usuario.nome, handle: usuario.handle,
+    capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+  }));
 
   const totalPlays = beats.reduce((s, b) => s + b.plays, 0);
   const totalFavoritos = beats.reduce((s, b) => s + b.favoritos, 0);
@@ -76,34 +87,8 @@ export default async function Studio() {
           <p className="vazio">Você ainda não publicou nenhum beat.</p>
         ) : (
           <ol className="lista-beats">
-            {beats.map((b, i) => (
-              <li className="linha-beat" key={b.id}>
-                <span className="linha-num mini">{String(i + 1).padStart(2, '0')}</span>
-
-                <div className="linha-capa">
-                  <img src={b.capa_url} alt="" width="56" height="56" loading="lazy" />
-                  <BotaoTocar
-                    faixa={{
-                      id: b.id, titulo: b.titulo, produtor: usuario.nome,
-                      handle: usuario.handle, capa: b.capa_url, audio: b.audio_url,
-                    }}
-                  />
-                </div>
-
-                <div className="linha-titulo">
-                  <strong>{b.titulo}</strong>
-                  <span className="mini">
-                    {b.genero} · {b.mood}
-                    {!b.publicado && ' · rascunho'}
-                  </span>
-                </div>
-
-                <span className="linha-tec mini">{b.bpm} BPM · {b.tom}</span>
-                <span className="linha-plays mini">
-                  {b.plays.toLocaleString('pt-BR')} plays · {b.favoritos} favoritos
-                </span>
-                <span className="preco linha-preco">{real(b.preco_centavos)}</span>
-              </li>
+            {comPicos.map((b, i) => (
+              <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} />
             ))}
           </ol>
         )}

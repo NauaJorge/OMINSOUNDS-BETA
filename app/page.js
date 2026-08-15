@@ -10,13 +10,19 @@ function real(centavos) {
 
 export default async function Home() {
   const destaques = await sql`
-    SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.bpm, b.genero, b.mood, b.preco_centavos,
+    SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.genero, b.mood, b.preco_centavos,
            u.handle, u.nome AS produtor
     FROM beats b JOIN usuarios u ON u.id = b.produtor_id
     WHERE b.publicado
     ORDER BY b.plays DESC
     LIMIT 4
   `;
+  const destaquesComPicos = destaques.map((b) => ({ ...b, picos: JSON.parse(b.picos || '[]') }));
+  const filaHome = destaquesComPicos.map((b) => ({
+    id: b.id, titulo: b.titulo, produtor: b.produtor, handle: b.handle,
+    capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+  }));
+
   const produtores = await sql`
     SELECT handle, nome, bio, cidade, avatar_url,
            (SELECT count(*)::int FROM beats WHERE produtor_id = usuarios.id) AS qtd
@@ -94,7 +100,7 @@ export default async function Home() {
           <Link className="btn btn-fantasma" href="/beats">Ver tudo</Link>
         </div>
         <div className="grade grade-4">
-          {destaques.map((b) => (
+          {destaquesComPicos.map((b) => (
             <article className="cartao" key={b.id}>
               <div className="capa-com-play">
                 <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
@@ -102,7 +108,9 @@ export default async function Home() {
                   faixa={{
                     id: b.id, titulo: b.titulo, produtor: b.produtor,
                     handle: b.handle, capa: b.capa_url, audio: b.audio_url,
+                    picos: b.picos,
                   }}
+                  lista={filaHome}
                 />
               </div>
               <div className="cartao-corpo">

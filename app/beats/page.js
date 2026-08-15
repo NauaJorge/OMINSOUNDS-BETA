@@ -1,78 +1,101 @@
 import Link from 'next/link';
 import { sql } from '../../lib/db';
-import BotaoTocar from '../player/BotaoTocar';
+import LinhaBeat from '../player/LinhaBeat';
+import Filtros from './Filtros';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Beats | OMINSOUNDS' };
 
-function real(centavos) {
-  return (centavos / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
+const ORDENS = {
+  tocados: 'mais tocados',
+  novos: 'mais novos',
+  barato: 'menor preço',
+  caro: 'maior preço',
+};
 
 export default async function Beats({ searchParams }) {
-  const { genero = '' } = await searchParams;
+  const p = await searchParams;
+  const busca = (p.q ?? '').trim();
+  const genero = p.genero ?? '';
+  const mood = p.mood ?? '';
+  const tom = p.tom ?? '';
+  const bpmMin = Number(p.bpmMin) || 0;
+  const bpmMax = Number(p.bpmMax) || 999;
+  const ordem = ORDENS[p.ordem] ? p.ordem : 'tocados';
 
-  const beats = genero
-    ? await sql`
-        SELECT b.*, u.handle, u.nome AS produtor FROM beats b
-        JOIN usuarios u ON u.id = b.produtor_id
-        WHERE b.publicado AND b.genero = ${genero}
-        ORDER BY b.plays DESC`
-    : await sql`
-        SELECT b.*, u.handle, u.nome AS produtor FROM beats b
-        JOIN usuarios u ON u.id = b.produtor_id
-        WHERE b.publicado ORDER BY b.plays DESC`;
-
-  const generos = await sql`
-    SELECT DISTINCT genero FROM beats WHERE publicado AND genero <> '' ORDER BY genero
+  // Um SELECT so, com cada filtro neutralizado quando vem vazio. Montar SQL
+  // concatenando pedaco de texto seria o caminho curto e o jeito de abrir
+  // injecao; aqui tudo continua parametrizado.
+  const linhas = await sql`
+    SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom,
+           b.genero, b.mood, b.preco_centavos, b.plays,
+           u.handle, u.nome AS produtor
+    FROM beats b
+    JOIN usuarios u ON u.id = b.produtor_id
+    WHERE b.publicado
+      AND (${busca} = '' OR b.titulo ILIKE ${'%' + busca + '%'} OR u.nome ILIKE ${'%' + busca + '%'})
+      AND (${genero} = '' OR b.genero = ${genero})
+      AND (${mood} = '' OR b.mood = ${mood})
+      AND (${tom} = '' OR b.tom = ${tom})
+      AND b.bpm BETWEEN ${bpmMin} AND ${bpmMax}
+    ORDER BY
+      CASE WHEN ${ordem} = 'tocados' THEN b.plays END DESC,
+      CASE WHEN ${ordem} = 'novos'   THEN b.criado_em END DESC,
+      CASE WHEN ${ordem} = 'barato'  THEN b.preco_centavos END ASC,
+      CASE WHEN ${ordem} = 'caro'    THEN b.preco_centavos END DESC,
+      b.id
   `;
+
+  const beats = linhas.map((b) => ({ ...b, picos: JSON.parse(b.picos || '[]') }));
+
+  const opcoes = await sql`
+    SELECT
+      array_agg(DISTINCT genero) FILTER (WHERE genero <> '') AS generos,
+      array_agg(DISTINCT mood)   FILTER (WHERE mood   <> '') AS moods,
+      array_agg(DISTINCT tom)    FILTER (WHERE tom    <> '') AS tons,
+      min(bpm) AS bpm_min, max(bpm) AS bpm_max
+    FROM beats WHERE publicado
+  `;
+
+  const lista = beats.map((b) => ({
+    id: b.id, titulo: b.titulo, produtor: b.produtor, handle: b.handle,
+    capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+  }));
+
+  const filtrando = busca || genero || mood || tom || p.bpmMin || p.bpmMax;
 
   return (
     <div className="container secao">
       <span className="olho">Catálogo</span>
       <h1>Beats</h1>
 
-      <div className="beat-meta" style={{ marginBottom: 26 }}>
-        <Link className="etiqueta" href="/beats"
-              style={!genero ? { borderColor: 'var(--ouro)', color: 'var(--ouro)' } : undefined}>
-          Todos
-        </Link>
-        {generos.map((g) => (
-          <Link className="etiqueta" key={g.genero} href={`/beats?genero=${encodeURIComponent(g.genero)}`}
-                style={genero === g.genero ? { borderColor: 'var(--ouro)', color: 'var(--ouro)' } : undefined}>
-            {g.genero}
-          </Link>
-        ))}
-      </div>
+      <Filtros
+        valores={{ q: busca, genero, mood, tom, bpmMin: p.bpmMin ?? '', bpmMax: p.bpmMax ?? '', ordem }}
+        opcoes={{
+          generos: opcoes[0]?.generos ?? [],
+          moods: opcoes[0]?.moods ?? [],
+          tons: opcoes[0]?.tons ?? [],
+          bpmMin: opcoes[0]?.bpm_min ?? 60,
+          bpmMax: opcoes[0]?.bpm_max ?? 200,
+        }}
+        ordens={ORDENS}
+      />
+
+      <p className="mini" style={{ margin: '18px 0 10px' }}>
+        {beats.length} {beats.length === 1 ? 'beat' : 'beats'}
+        {filtrando && <> · <Link className="text-link" href="/beats">limpar filtros</Link></>}
+      </p>
 
       {beats.length === 0 ? (
-        <p className="vazio">Nenhum beat neste filtro.</p>
+        <p className="vazio">
+          Nenhum beat com esses filtros. <Link className="text-link" href="/beats">Ver tudo</Link>
+        </p>
       ) : (
-        <div className="grade grade-4">
-          {beats.map((b) => (
-            <article className="cartao" key={b.id}>
-              <div className="capa-com-play">
-                <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
-                <BotaoTocar
-                  faixa={{
-                    id: b.id, titulo: b.titulo, produtor: b.produtor,
-                    handle: b.handle, capa: b.capa_url, audio: b.audio_url,
-                  }}
-                />
-              </div>
-              <div className="cartao-corpo">
-                <h3 style={{ marginBottom: 2 }}>{b.titulo}</h3>
-                <Link className="mini" href={`/produtor/${b.handle}`}>{b.produtor}</Link>
-                <div className="beat-meta">
-                  <span className="etiqueta">{b.bpm} BPM</span>
-                  <span className="etiqueta">{b.tom}</span>
-                  <span className="etiqueta">{b.mood}</span>
-                </div>
-                <p className="preco" style={{ marginBottom: 0, marginTop: 12 }}>{real(b.preco_centavos)}</p>
-              </div>
-            </article>
+        <ol className="lista-beats">
+          {beats.map((b, i) => (
+            <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} mostrarProdutor />
           ))}
-        </div>
+        </ol>
       )}
     </div>
   );

@@ -2,7 +2,11 @@
 
 import { usarPlayer } from './Player';
 
-export default function BotaoTocar({ faixa, largo = false }) {
+/**
+ * `lista` e opcional: quando vem, clicar no beat toca a lista inteira a partir
+ * dele, e nao so aquela faixa. E o que faz o catalogo continuar rolando.
+ */
+export default function BotaoTocar({ faixa, lista, largo = false }) {
   const { atual, tocando, tocar } = usarPlayer();
   const eAtual = atual?.id === faixa.id;
   const noAr = eAtual && tocando;
@@ -11,7 +15,7 @@ export default function BotaoTocar({ faixa, largo = false }) {
     <button
       type="button"
       className={`tocar ${largo ? 'tocar-largo' : ''} ${eAtual ? 'tocar-ativo' : ''}`}
-      onClick={() => tocar(faixa)}
+      onClick={() => tocar(faixa, lista)}
       aria-label={`${noAr ? 'Pausar' : 'Tocar'} ${faixa.titulo}`}
     >
       {noAr ? (

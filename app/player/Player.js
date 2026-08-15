@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Onda from './Onda';
 
 const ContextoPlayer = createContext(null);
 
@@ -20,34 +21,46 @@ function tempo(segundos) {
 
 /*
   O <audio> vive aqui, no layout raiz, e nunca desmonta. Trocar de pagina no
-  App Router troca so o {children}: o elemento de audio continua o mesmo nodo
-  do DOM, entao a musica nao para e o arquivo nao e baixado de novo.
+  App Router troca so o {children}: o elemento continua o mesmo nodo do DOM,
+  entao a musica nao para e o arquivo nao e baixado de novo.
 
-  Foi por isso que virou contexto em vez de um <audio controls> por cartao:
-  cada cartao com o proprio elemento fazia o beat parar na navegacao e um
-  arquivo de 6 MB ser baixado outra vez a cada clique.
+  O player guarda uma fila. Clicar num beat de uma lista nao toca so aquele:
+  toca a lista a partir dali, e ao terminar segue para o proximo. E o que se
+  espera de catalogo de beat — a pessoa deixa rolando enquanto navega.
 */
 export default function Player({ children }) {
   const audioRef = useRef(null);
-  const [atual, setAtual] = useState(null);
+  const [fila, setFila] = useState([]);
+  const [indice, setIndice] = useState(-1);
   const [tocando, setTocando] = useState(false);
   const [posicao, setPosicao] = useState(0);
   const [duracao, setDuracao] = useState(0);
 
-  function tocar(faixa) {
+  const atual = indice >= 0 ? fila[indice] : null;
+
+  function carregar(faixa) {
+    const audio = audioRef.current;
+    if (!audio || !faixa) return;
+    audio.src = faixa.audio;
+    audio.play().catch(() => {});
+  }
+
+  /** Toca a faixa. Se vier lista junto, ela vira a fila corrente. */
+  function tocar(faixa, lista) {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Mesmo beat: alterna em vez de recomecar.
     if (atual?.id === faixa.id) {
       if (audio.paused) audio.play().catch(() => {});
       else audio.pause();
       return;
     }
 
-    setAtual(faixa);
-    audio.src = faixa.audio;
-    audio.play().catch(() => {});
+    const nova = Array.isArray(lista) && lista.length ? lista : [faixa];
+    const pos = Math.max(nova.findIndex((f) => f.id === faixa.id), 0);
+    setFila(nova);
+    setIndice(pos);
+    carregar(nova[pos]);
   }
 
   function alternar() {
@@ -57,10 +70,17 @@ export default function Player({ children }) {
     else audio.pause();
   }
 
-  function buscar(evento) {
+  function irPara(passo) {
+    if (fila.length < 2) return;
+    const novo = (indice + passo + fila.length) % fila.length;
+    setIndice(novo);
+    carregar(fila[novo]);
+  }
+
+  function buscarFracao(fracao) {
     const audio = audioRef.current;
-    if (!audio || !Number.isFinite(duracao)) return;
-    audio.currentTime = Number(evento.target.value);
+    if (!audio || !Number.isFinite(audio.duration)) return;
+    audio.currentTime = audio.duration * fracao;
   }
 
   useEffect(() => {
@@ -71,37 +91,47 @@ export default function Player({ children }) {
     const aoPausar = () => setTocando(false);
     const aoAndar = () => setPosicao(audio.currentTime);
     const aoCarregar = () => setDuracao(audio.duration);
-    const aoTerminar = () => { setTocando(false); setPosicao(0); };
-
     audio.addEventListener('play', aoTocar);
     audio.addEventListener('pause', aoPausar);
     audio.addEventListener('timeupdate', aoAndar);
     audio.addEventListener('loadedmetadata', aoCarregar);
-    audio.addEventListener('ended', aoTerminar);
     return () => {
       audio.removeEventListener('play', aoTocar);
       audio.removeEventListener('pause', aoPausar);
       audio.removeEventListener('timeupdate', aoAndar);
       audio.removeEventListener('loadedmetadata', aoCarregar);
-      audio.removeEventListener('ended', aoTerminar);
     };
   }, []);
 
-  // Barra de espaco toca e pausa, desde que o foco nao esteja num campo.
+  // O fim da faixa depende da fila, entao este ouvinte e trocado quando ela
+  // muda. Deixar junto do de cima faria ele fechar sobre uma fila velha.
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const aoTerminar = () => {
+      if (indice >= 0 && indice < fila.length - 1) irPara(1);
+      else { setTocando(false); setPosicao(0); }
+    };
+    audio.addEventListener('ended', aoTerminar);
+    return () => audio.removeEventListener('ended', aoTerminar);
+  }, [fila, indice]);
+
   useEffect(() => {
     function aoTeclar(e) {
-      if (e.code !== 'Space' || !atual) return;
-      const alvo = e.target;
-      if (alvo.closest('input, textarea, button, a, [contenteditable]')) return;
-      e.preventDefault();
-      alternar();
+      if (!atual) return;
+      if (e.target.closest('input, textarea, button, a, [contenteditable]')) return;
+      if (e.code === 'Space') { e.preventDefault(); alternar(); }
+      if (e.code === 'ArrowRight' && e.shiftKey) { e.preventDefault(); irPara(1); }
+      if (e.code === 'ArrowLeft' && e.shiftKey) { e.preventDefault(); irPara(-1); }
     }
     window.addEventListener('keydown', aoTeclar);
     return () => window.removeEventListener('keydown', aoTeclar);
-  }, [atual]);
+  }, [atual, fila, indice]);
+
+  const progresso = duracao > 0 ? posicao / duracao : 0;
 
   return (
-    <ContextoPlayer.Provider value={{ atual, tocando, tocar, alternar }}>
+    <ContextoPlayer.Provider value={{ atual, tocando, tocar, alternar, progresso }}>
       {children}
 
       <audio ref={audioRef} preload="none" />
@@ -115,31 +145,40 @@ export default function Player({ children }) {
             <Link className="mini" href={`/produtor/${atual.handle}`}>{atual.produtor}</Link>
           </div>
 
-          <button
-            className="player-botao"
-            type="button"
-            onClick={alternar}
-            aria-label={tocando ? 'Pausar' : 'Tocar'}
-          >
-            {tocando ? (
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-            ) : (
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            )}
-          </button>
+          <div className="player-controles">
+            <button
+              className="player-passo" type="button" onClick={() => irPara(-1)}
+              disabled={fila.length < 2} aria-label="Faixa anterior"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h2v14H7zm3 7 9-7v14z"/></svg>
+            </button>
 
-          <div className="player-barra">
+            <button className="player-botao" type="button" onClick={alternar}
+                    aria-label={tocando ? 'Pausar' : 'Tocar'}>
+              {tocando ? (
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+              ) : (
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              )}
+            </button>
+
+            <button
+              className="player-passo" type="button" onClick={() => irPara(1)}
+              disabled={fila.length < 2} aria-label="Próxima faixa"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5h2v14h-2zM5 5l9 7-9 7z"/></svg>
+            </button>
+          </div>
+
+          <div className="player-onda">
             <span className="mini">{tempo(posicao)}</span>
-            <input
-              type="range"
-              min="0"
-              max={Number.isFinite(duracao) && duracao > 0 ? duracao : 0}
-              value={posicao}
-              onChange={buscar}
-              aria-label="Posição da faixa"
-            />
+            <Onda picos={atual.picos} progresso={progresso} aoBuscar={buscarFracao} altura={34} />
             <span className="mini">{tempo(duracao)}</span>
           </div>
+
+          {fila.length > 1 && (
+            <span className="mini player-fila">{indice + 1}/{fila.length}</span>
+          )}
         </div>
       )}
     </ContextoPlayer.Provider>

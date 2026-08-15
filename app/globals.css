@@ -351,17 +351,23 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
 }
 .player-botao svg { width: 20px; height: 20px; fill: currentColor; }
 
-.player-barra { flex: 1 1 auto; display: flex; align-items: center; gap: 10px; min-width: 0; }
-.player-barra input[type='range'] {
-  flex: 1 1 auto; min-width: 0; height: 4px; -webkit-appearance: none; appearance: none;
-  background: var(--linha-forte); border-radius: 999px; cursor: pointer;
+.player-controles { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+.player-passo {
+  width: 34px; height: 34px; border: 0; background: transparent; cursor: pointer;
+  color: var(--texto-2); display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
 }
-.player-barra input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none; appearance: none; width: 13px; height: 13px;
-  border-radius: 50%; background: var(--ouro); border: 0;
-}
-.player-barra input[type='range']::-moz-range-thumb {
-  width: 13px; height: 13px; border-radius: 50%; background: var(--ouro); border: 0;
+.player-passo svg { width: 17px; height: 17px; fill: currentColor; }
+.player-passo:hover:not([disabled]) { color: var(--texto); background: var(--superficie-2); }
+.player-passo[disabled] { opacity: .3; cursor: not-allowed; }
+
+.player-onda { flex: 1 1 auto; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.player-onda .onda { flex: 1 1 auto; min-width: 0; }
+.player-fila { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 700px) {
+  .player-onda .onda { display: none; }
+  .player-info { max-width: 40vw; }
 }
 
 /* O player cobre o rodape se a pagina terminar rente ao fim. */
@@ -409,12 +415,14 @@ body:has(.player) { padding-bottom: 84px; }
 .lista-beats { list-style: none; padding: 0; margin: 0; }
 .linha-beat {
   display: grid;
-  grid-template-columns: 28px 56px minmax(0, 1fr) auto auto auto;
+  grid-template-columns: 30px 56px minmax(140px, 1.1fr) minmax(0, 1.4fr) auto auto;
   align-items: center; gap: 14px;
   padding: 10px 12px; border-radius: var(--raio-sm);
   border: 1px solid transparent;
 }
 .linha-beat:hover { background: var(--superficie); border-color: var(--linha); }
+.linha-ativa { background: var(--superficie); border-color: rgba(232,185,49,.34); }
+.linha-onda { min-width: 0; opacity: .9; }
 .linha-num { text-align: right; font-variant-numeric: tabular-nums; }
 .linha-capa { position: relative; width: 56px; height: 56px; }
 .linha-capa img { width: 56px; height: 56px; border-radius: 7px; object-fit: cover; }
@@ -439,10 +447,49 @@ body:has(.player) { padding-bottom: 84px; }
   .perfil-capa { height: 180px; }
   .perfil-topo { margin-top: -48px; }
   .perfil-avatar { width: 92px; height: 92px; }
-  /* No celular so o essencial fica na linha: numero, tecnico e plays saem. */
+  /* No celular so o essencial fica na linha: numero, onda e dado tecnico saem. */
   .linha-beat { grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; }
-  .linha-num, .linha-tec, .linha-plays { display: none; }
+  .linha-num, .linha-tec, .linha-plays, .linha-onda { display: none; }
   .linha-capa .tocar { opacity: 1; }
+}
+
+/* ---------- forma de onda ---------- */
+
+.onda { display: block; width: 100%; }
+.onda-clicavel { cursor: pointer; }
+.onda-tocada { fill: var(--ouro); }
+.onda-resto { fill: var(--linha-forte); }
+.onda-clicavel:hover .onda-resto { fill: #4d5666; }
+
+/* Tres barrinhas subindo e descendo: diz "esta tocando" sem escrever nada. */
+.equalizador { display: inline-flex; align-items: flex-end; gap: 2px; height: 13px; }
+.equalizador i { width: 3px; background: var(--ouro); border-radius: 1px; animation: pulo .9s ease-in-out infinite; }
+.equalizador i:nth-child(2) { animation-delay: .18s; }
+.equalizador i:nth-child(3) { animation-delay: .36s; }
+@keyframes pulo { 0%, 100% { height: 4px; } 50% { height: 13px; } }
+@media (prefers-reduced-motion: reduce) { .equalizador i { height: 9px; } }
+
+/* ---------- filtros do catalogo ---------- */
+
+.filtros { margin-top: 22px; }
+.filtro-busca { position: relative; max-width: 460px; }
+.filtro-busca svg {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; fill: none; stroke: var(--texto-3); stroke-width: 1.9;
+  stroke-linecap: round; pointer-events: none;
+}
+.filtro-busca .campo { padding-left: 38px; }
+
+.filtro-linha { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+.filtro-item { display: flex; flex-direction: column; gap: 5px; min-width: 130px; }
+.filtro-item .campo { margin-top: 0; min-height: 42px; padding: 8px 12px; }
+.filtro-bpm > div { display: flex; align-items: center; gap: 8px; }
+.filtro-bpm input { width: 74px; }
+.filtro-ordem { margin-left: auto; }
+
+@media (max-width: 640px) {
+  .filtro-item { flex: 1 1 140px; min-width: 0; }
+  .filtro-ordem { margin-left: 0; flex-basis: 100%; }
 }
 
 /* ---------- planos ---------- */

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { sql } from '../../../lib/db';
 import { usuarioAtual } from '../../../lib/sessao';
 import FormularioPedido from './FormularioPedido';
-import BotaoTocar from '../../player/BotaoTocar';
+import LinhaBeat from '../../player/LinhaBeat';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,10 +35,21 @@ export default async function Produtor({ params }) {
   if (!produtor) notFound();
 
   const beats = await sql`
-    SELECT id, titulo, capa_url, audio_url, bpm, tom, genero, mood, preco_centavos, plays, favoritos
+    SELECT id, titulo, capa_url, audio_url, picos, bpm, tom, genero, mood, preco_centavos, plays, favoritos
     FROM beats WHERE produtor_id = ${produtor.id} AND publicado
     ORDER BY plays DESC
   `;
+
+  const comPicos = beats.map((b) => ({
+    ...b,
+    picos: JSON.parse(b.picos || '[]'),
+    produtor: produtor.nome,
+    handle: produtor.handle,
+  }));
+  const lista = comPicos.map((b) => ({
+    id: b.id, titulo: b.titulo, produtor: produtor.nome, handle: produtor.handle,
+    capa: b.capa_url, audio: b.audio_url, picos: b.picos,
+  }));
 
   const totalPlays = beats.reduce((s, b) => s + b.plays, 0);
   const totalFavoritos = beats.reduce((s, b) => s + b.favoritos, 0);
@@ -57,10 +68,6 @@ export default async function Produtor({ params }) {
     jaTemPedido = p[0]?.situacao ?? false;
   }
 
-  const faixaDe = (b) => ({
-    id: b.id, titulo: b.titulo, produtor: produtor.nome,
-    handle: produtor.handle, capa: b.capa_url, audio: b.audio_url,
-  });
 
   return (
     <>
@@ -119,24 +126,8 @@ export default async function Produtor({ params }) {
                 <p className="vazio">Nenhum beat publicado ainda.</p>
               ) : (
                 <ol className="lista-beats">
-                  {beats.map((b, i) => (
-                    <li className="linha-beat" key={b.id}>
-                      <span className="linha-num mini">{String(i + 1).padStart(2, '0')}</span>
-
-                      <div className="linha-capa">
-                        <img src={b.capa_url} alt="" width="56" height="56" loading="lazy" />
-                        <BotaoTocar faixa={faixaDe(b)} />
-                      </div>
-
-                      <div className="linha-titulo">
-                        <strong>{b.titulo}</strong>
-                        <span className="mini">{b.genero} · {b.mood}</span>
-                      </div>
-
-                      <span className="linha-tec mini">{b.bpm} BPM · {b.tom}</span>
-                      <span className="linha-plays mini">{b.plays.toLocaleString('pt-BR')} plays</span>
-                      <span className="preco linha-preco">{real(b.preco_centavos)}</span>
-                    </li>
+                  {comPicos.map((b, i) => (
+                    <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} />
                   ))}
                 </ol>
               )}
