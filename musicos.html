@@ -1,296 +1,79 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OMINISOUND</title>
-
-    <!-- External Stylesheets -->
-    <link rel="stylesheet" href="reset.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="banner.css">
-    <link rel="stylesheet" href="rodape.css">
-    <link rel="stylesheet" href="carrossel.css">
-    <link rel="stylesheet" href="swiper-bundle.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://db.onlinewebfonts.com/c/50c1fe474aab5cecc00a2ae63d14a8cf?family=Futura+Cyrillic+Bold" rel="stylesheet">
-
-    <style>
-        /* Código CSS conforme o estilo anterior */
-        body {
-            background-color: #141414;
-            color: rgb(235, 217, 217);
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* Sidebar e cabeçalho */
-        header {
-            background-color: #1c1c1c;
-            color: #2e2c25;
-            margin-bottom: 20px;
-        }
-
-        .navbar {
-            background-color: #1c1c1c;
-        }
-
-        .navbar-brand,
-        .nav-link,
-        .btn {
-            color: #fcf8e8 !important;
-        }
-
-        .menu-principal ul li a {
-            color: #f1c40f;
-        }
-
-        .menu-principal ul li a:hover {
-            text-decoration: underline;
-        }
-
-        .botoes-usuario a {
-            color: #f1c40f;
-            margin-right: 20px;
-        }
-
-        /* Sidebar de Filtro */
-        .sidebar {
-            background-color: #1c1c1c;
-            border-right: 2px solid #f1c40f;
-            padding: 20px;
-            height: 100vh;
-        }
-
-        .sidebar h5 {
-            color: #f1c40f;
-        }
-
-        .sidebar .form-control,
-        .sidebar .form-select {
-            background-color: #333;
-            border: 1px solid #f1c40f;
-            color: white;
-        }
-
-        .sidebar .form-control:focus,
-        .sidebar .form-select:focus {
-            border-color: #f1c40f;
-            background-color: #333;
-        }
-
-        .sidebar .btn {
-            background-color: #f1c40f;
-            color: black;
-            margin-top: 10px;
-        }
-
-        .sidebar .btn:hover {
-            background-color: #d4ac0d;
-        }
-
-        /* Perfis */
-        .profile-card {
-            background-color: #333;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: rgb(27, 21, 21);
-        }
-
-        .profile-card h5 {
-            color: #f1c40f;
-            font-size: 18px;
-        }
-
-        .profile-card p {
-            color: #ddd;
-        }
-
-        .profile-card button {
-            margin-top: 10px;
-            background-color: #f1c40f;
-            border: none;
-            color: black;
-            font-size: 14px;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .profile-card button:hover {
-            background-color: #d4ac0d;
-        }
-
-        /* Formulário de filtro */
-        #filterForm button {
-            background-color: #f1c40f;
-            color: black;
-            padding: 8px 20px;
-            border-radius: 5px;
-            margin-top: 10px;
-            border: none;
-            cursor: pointer;
-        }
-
-        #filterForm button:hover {
-            background-color: #d4ac0d;
-        }
-
-        /* Imagens de perfil */
-        .profile-img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            margin-bottom: 10px;
-            border: 4px solid #f1c40f;
-        }
-
-        /* Título da página de perfis */
-        h5 {
-            color: #f1c40f;
-        }
-
-        /* Título "Trending tracks" */
-        .texto-tracks {
-            font-size: 30px;
-            font-family: 'Futura Cyrillic Bold', sans-serif;
-            padding: 20px 0 0 10px;
-            border-top: 1px solid #f1c40f;
-            color: #f1c40f;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artistas e produtores | OMINSOUNDS</title>
+  <meta name="description" content="Encontre artistas, produtores e beatmakers para colaboracoes na OMINSOUNDS.">
+  <link rel="stylesheet" href="omin-app.css">
 </head>
-
 <body>
-    <header class="container-principal">
-        <nav class="nav-imagem">
-            <input type="checkbox" id="menu" class="menu-botao">
-            <a href="index.html"><img src="assents/img/logo-botao.png" class="menu-imagem-botao" alt="OMINISOUND Logo"></a>
-        </nav>
-        <div class="menu-principal">
-            <ul>
-                <li><a href="#" class="lista-menu-link">Feed</a></li>
-                <li><a href="studio.html" class="lista-menu-link">Studio</a></li>
-                <input type="text" id="textobusca" placeholder="O que você está procurando?" class="pesquisa-texto">
-                <button class="lupa"><img src="assents/img/search.svg" alt="Pesquisa Usuário"></button>
-                <li><a href="cadastre.html" class="lista-menu-link">Cadastre-se</a></li>
-                <li><a href="Login.html" class="lista-menu-link">Login</a></li>
-            </ul>
+  <header class="app-header">
+    <a class="brand" href="index.html" aria-label="OMINSOUNDS"><img src="assents/img/logo-botao.png" alt=""><span>OMINSOUNDS</span></a>
+    <nav class="app-nav" aria-label="Navegacao principal"><a href="beats.html">Beats</a><a href="musicos.html">Artistas</a><a href="studio.html">Studio</a><a href="planos.html">Planos</a></nav>
+    <div class="header-actions"><a class="ghost-link" href="Login.html">Login</a><a class="primary-link" href="cadastre.html">Criar conta</a></div>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <div>
+        <span class="eyebrow">Rede criativa</span>
+        <h1>Encontre quem completa sua faixa.</h1>
+        <p>Perfis de artistas, produtores e studios com estilos claros, numeros de prova e caminhos rapidos para contato.</p>
+      </div>
+      <aside class="hero-panel">
+        <div class="metric-row">
+          <div class="metric"><strong>850+</strong><span>criadores</span></div>
+          <div class="metric"><strong>34k</strong><span>plays</span></div>
+          <div class="metric"><strong>24h</strong><span>resposta media</span></div>
         </div>
-        <div class="botoes-usuario">
-            <a href="#"><img src="assents/img/heart-golden.svg" alt="Meus Favoritos" class="botao-user"></a>
-            <a href="carrinho.html"><img src="assents/img/shopping-car-golden.svg" alt="Carrinho de compras" class="botao-user"></a>
-            <a href="usuario.html"><img src="assents/img/user-circle-gold.svg" alt="Meu Perfil" class="botao-user"></a>
+      </aside>
+    </section>
+
+    <form class="filter-bar" role="search">
+      <input class="field" type="search" placeholder="Buscar artista, produtor ou estilo">
+      <select class="select"><option>Cidade</option><option>Sao Paulo</option><option>Rio de Janeiro</option><option>Salvador</option></select>
+      <select class="select"><option>Especialidade</option><option>Voz</option><option>Beatmaker</option><option>Mixagem</option></select>
+      <select class="select"><option>Status</option><option>Disponivel</option><option>Em alta</option></select>
+      <button class="button button-primary" type="submit">Buscar</button>
+    </form>
+
+    <section class="grid-3" aria-label="Artistas em destaque">
+      <article class="card artist-card">
+        <img class="card-media" src="assents/img/4batz-portrait.jpg" alt="Retrato de 4Batz Lab">
+        <div class="card-body">
+          <h2>4Batz Lab</h2>
+          <p class="muted">R&B, trap soul e melodias para refrao.</p>
+          <div class="artist-stats"><span>1.2k seguidores</span><span>34.5k plays</span><span>145 beats</span></div>
+          <div class="pill-row"><span class="pill gold">Disponivel</span><span class="pill">Voz guia</span><span class="pill">Topline</span></div>
         </div>
-    </header>
+      </article>
 
-    <div class="container">
-        <div class="row">
-            <!-- Sidebar de Filtros -->
-            <div class="col-md-3 sidebar">
-                <h5>Filtro de Localização</h5>
-                <form id="filterForm">
-                    <!-- Filtro de Localização -->
-                    <div class="mb-3">
-                        <label for="locationSelect" class="form-label">Escolha sua localização</label>
-                        <select class="form-select" id="locationSelect">
-                            <option value="all">Todos</option>
-                            <option value="São Paulo">São Paulo</option>
-                            <option value="Rio de Janeiro">Rio de Janeiro</option>
-                            <option value="Belo Horizonte">Belo Horizonte</option>
-                            <option value="Curitiba">Curitiba</option>
-                            <option value="Porto Alegre">Porto Alegre</option>
-                            <option value="Salvador">Salvador</option>
-                        </select>
-                    </div>
-
-                    <!-- Filtro de Nome -->
-                    <div class="mb-3">
-                        <label for="nameSearch" class="form-label">Nome do Artista</label>
-                        <input type="text" id="nameSearch" class="form-control" placeholder="Digite o nome">
-                    </div>
-
-                    <!-- Filtro de Email -->
-                    <div class="mb-3">
-                        <label for="emailSearch" class="form-label">Email</label>
-                        <input type="email" id="emailSearch" class="form-control" placeholder="Digite o email">
-                    </div>
-
-                    <button type="button" class="btn btn-success" onclick="filterProfiles()">Aplicar Filtro</button>
-                </form>
-            </div>
-
-            <!-- Exibição dos Perfis -->
-            <div class="col-md-9">
-                <h5>Perfis de Usuários</h5>
-
-                <div class="row" id="profilesContainer">
-                    <!-- Perfis (6 perfis exibidos como exemplo) -->
-                    <div class="col-md-4 profile-card" data-location="São Paulo">
-                        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img img-fluid">
-                        <h5>Matheus Ferreira</h5>
-                        <p>Localização: São Paulo</p>
-                        <p>Email: matheus@example.com</p>
-                        <button class="btn btn-primary button-space">Mostrar Perfil</button>
-                        <button class="btn btn-secondary">Enviar Mensagem</button>
-                    </div>
-
-                    <div class="col-md-4 profile-card" data-location="Rio de Janeiro">
-                        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img img-fluid">
-                        <h5>Ana Souza</h5>
-                        <p>Localização: Rio de Janeiro</p>
-                        <p>Email: ana@example.com</p>
-                        <button class="btn btn-primary button-space">Mostrar Perfil</button>
-                        <button class="btn btn-secondary">Enviar Mensagem</button>
-                    </div>
-
-                    <div class="col-md-4 profile-card" data-location="Belo Horizonte">
-                        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img img-fluid">
-                        <h5>João Silva</h5>
-                        <p>Localização: Belo Horizonte</p>
-                        <p>Email: joao@example.com</p>
-                        <button class="btn btn-primary button-space">Mostrar Perfil</button>
-                        <button class="btn btn-secondary">Enviar Mensagem</button>
-                    </div>
-
-                    <div class="col-md-4 profile-card" data-location="Curitiba">
-                        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img img-fluid">
-                        <h5>Lucas Almeida</h5>
-                        <p>Localização: Curitiba</p>
-                        <p>Email: lucas@example.com</p>
-                        <button class="btn btn-primary button-space">Mostrar Perfil</button>
-                        <button class="btn btn-secondary">Enviar Mensagem</button>
-                    </div>
-
-                    <div class="col-md-4 profile-card" data-location="Porto Alegre">
-                        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img img-fluid">
-                        <h5>Carla Dias</h5>
-                        <p>Localização: Porto Alegre</p>
-                        <p>Email: carla@example.com</p>
-                        <button class="btn btn-primary button-space">Mostrar Perfil</button>
-                        <button class="btn btn-secondary">Enviar Mensagem</button>
-                    </div>
-
-                    <div class="col-md-4 profile-card" data-location="Salvador">
-                        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-img img-fluid">
-                        <h5>Fernando Oliveira</h5>
-                        <p>Localização: Salvador</p>
-                        <p>Email: fernando@example.com</p>
-                        <button class="btn btn-primary button-space">Mostrar Perfil</button>
-                        <button class="btn btn-secondary">Enviar Mensagem</button>
-                    </div>
-                </div>
-            </div>
+      <article class="card artist-card">
+        <img class="card-media" src="assents/img/sidoka-img.png" alt="Retrato de Sidoka Type">
+        <div class="card-body">
+          <h2>Sidoka Type</h2>
+          <p class="muted">Trap nacional, timbres escuros e bounce agressivo.</p>
+          <div class="artist-stats"><span>980 seguidores</span><span>21k plays</span><span>88 beats</span></div>
+          <div class="pill-row"><span class="pill gold">Em alta</span><span class="pill">Trap</span><span class="pill">Mix</span></div>
         </div>
-    </div>
+      </article>
 
-    <script src="filtroLocalizacao.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xeY1B6nG9/xpY2n2uo2ht2X7pK2F2sVxWJt7ntVmOTLhHxgUkc1UtxD3twlsnlXp" crossorigin="anonymous"></script>
+      <article class="card artist-card">
+        <img class="card-media" src="assents/img/teto-img.png" alt="Retrato de Teto Type">
+        <div class="card-body">
+          <h2>Teto Type</h2>
+          <p class="muted">Beats leves, comerciais e prontos para hook.</p>
+          <div class="artist-stats"><span>1.8k seguidores</span><span>41k plays</span><span>122 beats</span></div>
+          <div class="pill-row"><span class="pill gold">Premium</span><span class="pill">Pop trap</span><span class="pill">Hook</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div><strong>OMINSOUNDS</strong><span>Beats, produtores e servicos musicais.</span></div>
+    <nav aria-label="Rodape"><a href="beats.html">Beats</a><a href="studio.html">Studio</a><a href="planos.html">Planos</a><a href="Login.html">Login</a></nav>
+  </footer>
 </body>
-
 </html>

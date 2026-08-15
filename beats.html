@@ -1,106 +1,114 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OMINISOUND</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="banner.css">
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="rodape.css" <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="cadastre.html"
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beats | OMINSOUNDS</title>
+  <meta name="description" content="Explore beats, compare estilos e compre licencas musicais na OMINSOUNDS.">
+  <link rel="stylesheet" href="omin-app.css">
 </head>
-
 <body>
+  <header class="app-header">
+    <a class="brand" href="index.html" aria-label="OMINSOUNDS"><img src="assents/img/logo-botao.png" alt=""><span>OMINSOUNDS</span></a>
+    <nav class="app-nav" aria-label="Navegacao principal">
+      <a href="beats.html">Beats</a>
+      <a href="musicos.html">Artistas</a>
+      <a href="studio.html">Studio</a>
+      <a href="planos.html">Planos</a>
+    </nav>
+    <div class="header-actions"><a class="ghost-link" href="Login.html">Login</a><a class="primary-link" href="cadastre.html">Criar conta</a></div>
+  </header>
 
-
-    <header class="menu-principal">
-        <nav>
-            <input type="checkbox" id="menu" class="menu-botao">
-            <a href="index.html"><img src="img/logo-botao.png" class="menu-imagem-botao" for="menu"></a>
-        </nav>
-
-        <input type="text" id="textobusca" placeholder="O que você está procurando?" class="pesquisa-texto" />
-
-        <div class="itens-principal">
-
-            <ul>
-                <li><a href="#" class="lista-menu-link">Explore</a></li>
-                <li><a href="#" class="lista-menu-link">Creator Tools</a></li>
-                <li><a href="#" class="lista-menu-link">Beats</a></li>
-                <li><a href="#" class="lista-menu-link">Sign Up</a></li>
-                <li><a href="#" class="lista-menu-link">Sign In</a></li>
-            </ul>
+  <main class="page-shell">
+    <section class="page-hero">
+      <div>
+        <span class="eyebrow">Catalogo</span>
+        <h1>Beats prontos para gravar.</h1>
+        <p>Filtre por genero, mood e BPM. Escute antes de comprar e leve a licenca certa para o seu lancamento.</p>
+      </div>
+      <aside class="hero-panel">
+        <div class="metric-row">
+          <div class="metric"><strong>320</strong><span>Trap</span></div>
+          <div class="metric"><strong>180</strong><span>Funk</span></div>
+          <div class="metric"><strong>95</strong><span>Afrobeat</span></div>
         </div>
+      </aside>
+    </section>
 
-        <div class="tracks-menu">
-            <select id="search-category" class="search-category">
-                <option value="all">All</option>
-                <option value="tracks">Tracks</option>
-                <option value="albums">Albums</option>
-            </select>
+    <form class="filter-bar" role="search">
+      <input class="field" type="search" placeholder="Buscar beat, mood ou produtor">
+      <select class="select" aria-label="Genero"><option>Genero</option><option>Trap</option><option>Funk</option><option>Drill</option><option>Afrobeat</option></select>
+      <select class="select" aria-label="BPM"><option>BPM</option><option>120-135</option><option>136-150</option><option>151+</option></select>
+      <select class="select" aria-label="Licenca"><option>Licenca</option><option>Basica</option><option>Premium</option><option>Exclusiva</option></select>
+      <button class="button button-primary" type="submit">Filtrar</button>
+    </form>
+
+    <section class="grid-3" aria-label="Lista de beats">
+      <article class="card">
+        <img class="card-media" src="assents/img/beat1.jpg" alt="Capa do beat Noite Alta">
+        <div class="card-body">
+          <div class="card-top"><div><h2>Noite Alta</h2><p class="muted">Trap melodico · 142 BPM</p></div><strong class="price">R$120</strong></div>
+          <div class="pill-row"><span class="pill gold">Destaque</span><span class="pill">Hook pronto</span><span class="pill">Lease</span></div>
+          <audio controls><source src="assents/music/filipe-ret-quero-paz.mp3" type="audio/mpeg"></audio>
+          <a class="button button-primary button-block" href="carrinho.html">Comprar licenca</a>
         </div>
+      </article>
 
-        <div class="botao-usuario">
-            <a href="#"><img src="img/Favoritos.svg" alt="Meus Favoritos" class="botao-user"></a>
-            <a href="#"><img src="img/Sacola.svg" alt="Carrinho de compras" class="botao-user"></a>
-            <a href="#"><img src="img/Usuario.svg" alt="Meu Perfil" class="botao-user"></a>
-
+      <article class="card">
+        <img class="card-media" src="assents/img/beat2.jpg" alt="Capa do beat Rota 21">
+        <div class="card-body">
+          <div class="card-top"><div><h2>Rota 21</h2><p class="muted">Drill · 148 BPM</p></div><strong class="price">R$95</strong></div>
+          <div class="pill-row"><span class="pill">808 pesado</span><span class="pill">Street</span><span class="pill">Lease</span></div>
+          <audio controls><source src="assents/music/rona-music.mp3" type="audio/mpeg"></audio>
+          <a class="button button-primary button-block" href="carrinho.html">Comprar licenca</a>
         </div>
+      </article>
 
-    </header>
-
-    <header class="menu-secundario">
-
-        <div class="itens-secundarios">
-            <ul>
-                <li><a href="#" class="lista-menu-link-s">Feed</a></li>
-                <li><a href="#" class="lista-menu-link-s">Tracks</a></li>
-                <li><a href="#" class="lista-menu-link-s">Beats</a></li>
-                <li><a href="#" class="lista-menu-link-s">Sound kits</a></li>
-            </ul>
+      <article class="card">
+        <img class="card-media" src="assents/img/beat3.jpg" alt="Capa do beat Vitrine">
+        <div class="card-body">
+          <div class="card-top"><div><h2>Vitrine</h2><p class="muted">Funk · 130 BPM</p></div><strong class="price">R$110</strong></div>
+          <div class="pill-row"><span class="pill">Clube</span><span class="pill">Radio</span><span class="pill">Premium</span></div>
+          <audio controls><source src="assents/music/filipe-ret-quero-paz.mp3" type="audio/mpeg"></audio>
+          <a class="button button-primary button-block" href="carrinho.html">Comprar licenca</a>
         </div>
+      </article>
 
-    </header>
-
-    <body>
-
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Sobre Nós</h3>
-                <p>Somos uma plataforma dedicada à você encontrar seu próximo HIT! </p>
-            </div>
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <p>Telefone: (123) 456-7890</p>
-                <p>Email: info.omnisounds@gmail.com</p>
-            </div>
-            <div class="footer-section">
-                <h3>Links Úteis</h3>
-                <ul>
-                    <li><a href="#">Termos de Uso</a></li>
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
+      <article class="card">
+        <img class="card-media" src="assents/img/afro-img.png" alt="Capa do beat Sol de Verao">
+        <div class="card-body">
+          <div class="card-top"><div><h2>Sol de Verao</h2><p class="muted">Afrobeat · 104 BPM</p></div><strong class="price">R$140</strong></div>
+          <div class="pill-row"><span class="pill">Afro</span><span class="pill">Dance</span><span class="pill">Premium</span></div>
+          <audio controls><source src="assents/music/rona-music.mp3" type="audio/mpeg"></audio>
+          <a class="button button-primary button-block" href="carrinho.html">Comprar licenca</a>
         </div>
-        <div class="copyright">
-            <p>&copy; OMINISOUNDS. Todos os direitos reservados.</p>
+      </article>
+
+      <article class="card">
+        <img class="card-media" src="assents/img/ts-mamacita.jpg" alt="Capa do beat Mamacita">
+        <div class="card-body">
+          <div class="card-top"><div><h2>Mamacita</h2><p class="muted">Reggaeton · 96 BPM</p></div><strong class="price">R$150</strong></div>
+          <div class="pill-row"><span class="pill">Latino</span><span class="pill">Hit</span><span class="pill">Exclusiva</span></div>
+          <audio controls><source src="assents/music/filipe-ret-quero-paz.mp3" type="audio/mpeg"></audio>
+          <a class="button button-primary button-block" href="carrinho.html">Comprar licenca</a>
         </div>
-    </footer>
+      </article>
 
+      <article class="card">
+        <img class="card-media" src="assents/img/smooth.jpg" alt="Capa do beat Smooth Tape">
+        <div class="card-body">
+          <div class="card-top"><div><h2>Smooth Tape</h2><p class="muted">R&B · 88 BPM</p></div><strong class="price">R$130</strong></div>
+          <div class="pill-row"><span class="pill">Soul</span><span class="pill">Vocal</span><span class="pill">Lease</span></div>
+          <audio controls><source src="assents/music/rona-music.mp3" type="audio/mpeg"></audio>
+          <a class="button button-primary button-block" href="carrinho.html">Comprar licenca</a>
+        </div>
+      </article>
+    </section>
+  </main>
 
+  <footer class="app-footer">
+    <div><strong>OMINSOUNDS</strong><span>Beats, produtores e servicos musicais.</span></div>
+    <nav aria-label="Rodape"><a href="musicos.html">Artistas</a><a href="studio.html">Studio</a><a href="planos.html">Planos</a><a href="Login.html">Login</a></nav>
+  </footer>
 </body>
-
 </html>

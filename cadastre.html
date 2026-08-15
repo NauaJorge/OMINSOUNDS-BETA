@@ -1,170 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - OMINISOUND</title>
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/cadastre.css">
-    <link rel="stylesheet" href="styles/banner.css">
-    <link rel="stylesheet" href="styles/rodape.css">
-    <link rel="stylesheet" href="styles/header-studio.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Bebas Neue', sans-serif;
-            color: beige;
-            overflow: hidden;
-        }
-
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(270deg, #ff5c5c, #333, #444, #111);
-            background-size: 800% 800%;
-            animation: gradientAnimation 15s ease infinite;
-        }
-
-        .logo {
-            height: 40px;
-        }
-
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .form-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .form-container label {
-            display: block;
-            margin-bottom: 0px;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="email"],
-        .form-container input[type="password"],
-        .form-container input[type="tel"] {
-            width: 95%;
-            padding: 5px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: #fff;
-        }
-
-        .form-container input[type="checkbox"] {
-            margin-bottom: 10px;
-        }
-
-        .form-container button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: rgb(168, 43, 43);
-            color: #fff;
-            font-size: 18px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        .form-container button:hover {
-            background-color: #ff5c5c;
-        }
-
-        .form-container a {
-            color: #ff5c5c;
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta | OMINSOUNDS</title>
+  <meta name="description" content="Crie sua conta na OMINSOUNDS para comprar beats, vender catalogos e conectar artistas a produtores.">
+  <link rel="stylesheet" href="omin-app.css">
 </head>
-
 <body>
-    <div class="background"></div>
+  <header class="app-header">
+    <a class="brand" href="index.html" aria-label="OMINSOUNDS">
+      <img src="assents/img/logo-botao.png" alt="" aria-hidden="true">
+      <span>OMINSOUNDS</span>
+    </a>
+    <nav class="app-nav" aria-label="Navegacao principal">
+      <a href="beats.html">Beats</a>
+      <a href="musicos.html">Artistas</a>
+      <a href="studio.html">Studio</a>
+      <a href="planos.html">Planos</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost-link" href="Login.html">Login</a>
+      <a class="primary-link" href="beats.html">Explorar</a>
+    </div>
+  </header>
 
-    <header class="menu-principal">
-        <!-- Código do cabeçalho -->
-    </header>
+  <main class="page-shell split">
+    <section class="auth-copy">
+      <span class="eyebrow">Comece gratis</span>
+      <h1>Crie sua vitrine musical.</h1>
+      <p>Entre como artista, produtor ou studio para comprar licencas, publicar beats e receber pedidos de servico.</p>
 
-    <main>
-        <div class="form-container">
-            <center><img src="assents/img/logo-botao.png" alt="Logo OMINISOUND" class="logo"></center>
-            <h2>Cadastro</h2>
-            <form id="cadastroForm">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
-
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" required>
-
-                <label>
-                    <input type="checkbox" id="termos" name="termos" required>
-                    Aceito os <a href="#">termos e condições</a>
-                </label>
-
-                <button type="submit">Cadastrar</button>
-            </form>
-
-            <button class="back-btn" onclick="window.location.href='index.html'">Voltar para a Página Inicial</button>
+      <div class="hero-panel">
+        <div class="metric-row">
+          <div class="metric"><strong>2.4k+</strong><span>beats publicados</span></div>
+          <div class="metric"><strong>850+</strong><span>perfis criativos</span></div>
+          <div class="metric"><strong>PRO</strong><span>planos de destaque</span></div>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <footer class="footer">
-        <!-- Código do rodapé -->
-    </footer>
+    <section class="auth-panel" aria-label="Formulario de cadastro">
+      <h2>Criar conta</h2>
+      <p>Escolha seu perfil e complete os dados principais.</p>
 
-    <script>
-        // Função de envio do formulário
-        document.getElementById('cadastroForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Evita o envio do formulário
+      <form class="form-stack" action="Login.html">
+        <div class="choice-row" aria-label="Tipo de conta">
+          <label class="choice"><input type="radio" name="tipo" value="artista" checked><span>Artista</span></label>
+          <label class="choice"><input type="radio" name="tipo" value="produtor"><span>Produtor</span></label>
+          <label class="choice"><input type="radio" name="tipo" value="studio"><span>Studio</span></label>
+        </div>
 
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const telefone = document.getElementById('telefone').value;
+        <label class="form-label" for="nome">
+          Nome artistico ou marca
+          <input class="field" id="nome" name="nome" type="text" placeholder="Ex: OMIN Beats" autocomplete="name" required>
+        </label>
 
-            // Enviando os dados para o backend ou armazenando no localStorage
-            localStorage.setItem('usuario', JSON.stringify({ nome, email, telefone }));
+        <div class="form-row">
+          <label class="form-label" for="email">
+            E-mail
+            <input class="field" id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" required>
+          </label>
 
-            alert('Cadastro realizado com sucesso!');
-            window.location.href = 'login.html'; // Redireciona para a página de login
-        });
-    </script>
+          <label class="form-label" for="telefone">
+            WhatsApp
+            <input class="field" id="telefone" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
+          </label>
+        </div>
+
+        <label class="form-label" for="senha">
+          Senha
+          <input class="field" id="senha" name="senha" type="password" placeholder="Crie uma senha" autocomplete="new-password" required>
+        </label>
+
+        <label class="form-meta" style="justify-content:flex-start">
+          <input type="checkbox" required>
+          Aceito os termos e quero receber novidades da plataforma.
+        </label>
+
+        <button class="button button-primary button-block" type="submit">Criar conta</button>
+      </form>
+
+      <p class="muted" style="margin-top:18px">Ja tem cadastro? <a class="text-link" href="Login.html">Entrar</a></p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div>
+      <strong>OMINSOUNDS</strong>
+      <span>Beats, produtores e servicos musicais.</span>
+    </div>
+    <nav aria-label="Rodape">
+      <a href="beats.html">Beats</a>
+      <a href="studio.html">Studio</a>
+      <a href="planos.html">Planos</a>
+      <a href="Login.html">Login</a>
+    </nav>
+  </footer>
 </body>
-
 </html>

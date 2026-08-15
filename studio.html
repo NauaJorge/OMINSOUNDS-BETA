@@ -1,211 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Studio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio | OMINSOUNDS</title>
+  <meta name="description" content="Publique beats, venda licencas e organize seu catalogo no Studio da OMINSOUNDS.">
+  <link rel="stylesheet" href="omin-app.css">
 </head>
-
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">OminiSounds</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+  <header class="app-header">
+    <a class="brand" href="index.html" aria-label="OMINSOUNDS"><img src="assents/img/logo-botao.png" alt=""><span>OMINSOUNDS</span></a>
+    <nav class="app-nav" aria-label="Navegacao principal"><a href="beats.html">Beats</a><a href="musicos.html">Artistas</a><a href="studio.html">Studio</a><a href="planos.html">Planos</a></nav>
+    <div class="header-actions"><a class="ghost-link" href="Login.html">Login</a><a class="primary-link" href="cadastre.html">Criar conta</a></div>
+  </header>
 
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Menu
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"></a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Desativado</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Busca" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Pesquisa</button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <main>
+  <main class="page-shell">
+    <section class="page-hero">
+      <div>
+        <span class="eyebrow">Para produtores</span>
+        <h1>Controle sua vitrine de beats.</h1>
+        <p>Um painel simples para publicar catalogos, organizar licencas e transformar sua producao em uma loja musical.</p>
+      </div>
+      <aside class="hero-panel">
+        <img class="card-media wide-media" src="assents/img/studio1.jpg" alt="Studio musical com equipamentos">
+      </aside>
+    </section>
 
-        
-        <section>
+    <section class="grid-3" aria-label="Ferramentas do studio">
+      <article class="card">
+        <img class="card-media wide-media" src="assents/img/studio2.jpg" alt="Mesa de producao musical">
+        <div class="card-body">
+          <h2>Catalogo organizado</h2>
+          <p class="muted">Publique capa, audio, BPM, genero, mood e tipos de licenca em uma ficha limpa.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="card-media wide-media" src="assents/img/studio3.jpg" alt="Equipamentos de gravacao">
+        <div class="card-body">
+          <h2>Licencas claras</h2>
+          <p class="muted">Separe basica, premium e exclusiva para o artista entender o que esta comprando.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-body">
+          <span class="eyebrow">Dashboard</span>
+          <h2>Numeros que ajudam a vender</h2>
+          <p class="muted">Acompanhe plays, favoritos e conversoes para saber quais beats merecem destaque.</p>
+          <div class="metric-row">
+            <div class="metric"><strong>42k</strong><span>plays</span></div>
+            <div class="metric"><strong>318</strong><span>favoritos</span></div>
+            <div class="metric"><strong>76</strong><span>vendas</span></div>
+          </div>
+        </div>
+      </article>
+    </section>
 
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-                aria-controls="offcanvasExample">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256">
-                    <path
-                        d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H107.31l18.35,18.34a8,8,0,0,1-11.32,11.32l-32-32a8,8,0,0,1,0-11.32l32-32a8,8,0,0,1,11.32,11.32L107.31,120H168A8,8,0,0,1,176,128Z">
-                    </path>
-                </svg>
-            </button>
+    <section class="section grid-2">
+      <div>
+        <span class="eyebrow">Fluxo</span>
+        <h2>Do upload ao pedido.</h2>
+        <p class="section-lead">O Studio foi pensado para quem precisa publicar rapido e manter a vitrine profissional.</p>
+      </div>
+      <div class="timeline">
+        <article><strong>1</strong><div><strong>Suba o beat</strong><p class="muted">Adicione capa, preview em MP3 e tags comerciais.</p></div></article>
+        <article><strong>2</strong><div><strong>Defina a licenca</strong><p class="muted">Mostre preco, uso permitido e entrega do arquivo.</p></div></article>
+        <article><strong>3</strong><div><strong>Receba pedidos</strong><p class="muted">Direcione compradores para carrinho, contato ou plano PRO.</p></div></article>
+      </div>
+    </section>
 
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-                aria-labelledby="offcanvasExampleLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Studio OminiSounds</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <div>
-                        Adicionar um texto sobre o menu lateral e explicar, listas, músicas.
-                    </div>
-                    <div class="dropdown mt-3">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            menu
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Contratos</a></li>
-                            <li><a class="dropdown-item" href="#">Finanças</a></li>
-                            <li><a class="dropdown-item" href="#">Promova</a></li>
-                            <li><a class="dropdown-item" href="#">Opotunidades</a></li>
-                            <li><a class="dropdown-item" href="#">integração</a></li>
-                            <li><a class="dropdown-item" href="#">Vendas</a></li>
-                            <li><a class="dropdown-item" href="#">Beats</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="section hero-panel">
+      <div class="section-heading">
+        <div><span class="eyebrow">Proximo passo</span><h2>Quer vender mais dentro da plataforma?</h2></div>
+        <a class="button button-primary" href="planos.html">Ver planos</a>
+      </div>
+      <p class="muted">Use destaque, vitrine completa e recursos de promocao para fazer seus beats aparecerem para mais artistas.</p>
+    </section>
+  </main>
 
-        <section class="container text-center">
-            <h3>Bom dia, Usuários (a)</h3>
-            <p>Aqui temos as notícias da semana, link.</p>
-
-            <div class="container text-center">
-                <div class="row row-cols-2 p-5">
-                    <div class="col">item1</div>
-                    <div class="col">item2</div>
-                    <div class="col">item3</div>
-                    <div class="col">item4</div>
-                    <div class="col">item5</div>
-                    <div class="col">item6</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="container text-center mb-3">
-            <h3>Dashboard</h3>
-        </section>
-
-        <!-- Tabelas com imagens, links e parágrafos -->
-        <section class="container text-center">
-            <div class="row g-3">
-                <!-- Primeira Tabela -->
-                <div class="col-6">
-                    <table class="table table-borderless">
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <a href="https://example.com/link1">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 1" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 1</p>
-                                </td>
-                                <td class="text-center">
-                                    <a href="https://example.com/link2">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 2" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 2</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <a href="https://example.com/link3">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 3" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 3</p>
-                                </td>
-                                <td class="text-center">
-                                    <a href="https://example.com/link4">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 4" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 4</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Segunda Tabela -->
-                <div class="col-6">
-                    <table class="table table-borderless">
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <a href="https://example.com/link5">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 5" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 5</p>
-                                </td>
-                                <td class="text-center">
-                                    <a href="https://example.com/link6">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 6" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 6</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <a href="https://example.com/link7">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 7" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 7</p>
-                                </td>
-                                <td class="text-center">
-                                    <a href="https://example.com/link8">
-                                        <img src="https://via.placeholder.com/150" alt="Imagem 8" class="img-fluid">
-                                    </a>
-                                    <p>Descrição da Imagem 8</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-
-
-
-    </main>
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
+  <footer class="app-footer">
+    <div><strong>OMINSOUNDS</strong><span>Beats, produtores e servicos musicais.</span></div>
+    <nav aria-label="Rodape"><a href="beats.html">Beats</a><a href="musicos.html">Artistas</a><a href="planos.html">Planos</a><a href="Login.html">Login</a></nav>
+  </footer>
 </body>
-
 </html>
