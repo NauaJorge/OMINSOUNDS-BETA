@@ -40,7 +40,9 @@ export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false
       </div>
 
       <div className="linha-titulo">
-        <strong>{beat.titulo}</strong>
+        {/* O titulo leva para a pagina do beat. Antes nao levava a lugar
+            nenhum, e nao existia link para mandar um beat especifico. */}
+        <Link className="linha-link" href={`/beat/${beat.id}`}>{beat.titulo}</Link>
         <span className="mini">
           {mostrarProdutor ? (
             <Link href={`/produtor/${beat.handle}`}>{beat.produtor}</Link>

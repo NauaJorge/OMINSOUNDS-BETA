@@ -471,7 +471,43 @@ body:has(.player) { padding-bottom: 84px; }
 .linha-capa .tocar-ativo { opacity: 1; }
 .linha-capa .tocar:hover { transform: translate(-50%, -50%) scale(1.08); }
 .linha-titulo { min-width: 0; display: flex; flex-direction: column; }
-.linha-titulo strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.linha-titulo strong,
+.linha-link { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.linha-link { color: var(--texto); font-weight: 700; text-decoration: none; }
+.linha-link:hover { color: var(--ouro); }
+
+.estilo { text-decoration: none; }
+.estilo .cartao-corpo { display: flex; flex-direction: column; gap: 3px; padding: 20px; }
+.estilo strong { font-size: 18px; }
+.estilo:hover strong { color: var(--ouro); }
+
+/* ---------- pagina do beat ---------- */
+
+.beat-cabecalho { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.beat-cabecalho-capa {
+  width: 260px; height: 260px; object-fit: cover; border-radius: var(--raio);
+  border: 1px solid var(--linha); flex: 0 0 auto;
+}
+.beat-cabecalho-corpo { flex: 1 1 340px; min-width: 0; }
+.beat-cabecalho-corpo h1 { font-size: clamp(30px, 4.5vw, 46px); margin: 0 0 6px; }
+.beat-cabecalho-onda { margin: 20px 0 18px; }
+.beat-cabecalho-acoes { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.licencas { display: grid; gap: 12px; margin-top: 18px; }
+.licenca {
+  border: 1px solid var(--linha); border-radius: var(--raio);
+  background: var(--superficie); padding: 16px 18px;
+}
+.licenca-exclusiva { border-color: rgba(232,185,49,.45); }
+.licenca-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.licenca-topo h3 { margin: 0; font-size: 17px; }
+.licenca-topo .preco { font-size: 19px; }
+.licenca-formatos { margin: 6px 0 8px; font-size: 14px; color: var(--texto-2); }
+
+.ficha { margin: 10px 0 0; display: grid; gap: 8px; }
+.ficha > div { display: flex; justify-content: space-between; gap: 14px; font-size: 14.5px; }
+.ficha dt { color: var(--texto-3); margin: 0; }
+.ficha dd { margin: 0; color: var(--texto); }
 .linha-preco { white-space: nowrap; }
 
 @media (max-width: 900px) {

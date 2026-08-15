@@ -25,6 +25,12 @@ export default async function Home() {
     bpm: b.bpm, tom: b.tom,
   }));
 
+  const estilos = await sql`
+    SELECT genero, count(*)::int AS qtd
+    FROM beats WHERE publicado AND genero <> ''
+    GROUP BY genero ORDER BY qtd DESC, genero
+  `;
+
   const produtores = await sql`
     SELECT handle, nome, bio, cidade, avatar_url,
            (SELECT count(*)::int FROM beats WHERE produtor_id = usuarios.id) AS qtd
@@ -96,6 +102,20 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="container secao" style={{ paddingTop: 0 }}>
+        <div className="secao-titulo"><h2>Explore por estilo</h2></div>
+        <div className="grade grade-4">
+          {estilos.map((e) => (
+            <Link className="cartao estilo" href={`/beats?genero=${encodeURIComponent(e.genero)}`} key={e.genero}>
+              <div className="cartao-corpo">
+                <strong>{e.genero}</strong>
+                <span className="mini">{e.qtd} {e.qtd === 1 ? 'beat' : 'beats'}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section className="container secao">
         <Carrossel
           titulo="Mais tocados"
@@ -116,7 +136,7 @@ export default async function Home() {
                 />
               </div>
               <div className="cartao-corpo">
-                <h3 style={{ marginBottom: 2 }}>{b.titulo}</h3>
+                <h3 style={{ marginBottom: 2 }}><Link className="linha-link" href={`/beat/${b.id}`}>{b.titulo}</Link></h3>
                 <Link className="mini" href={`/produtor/${b.handle}`}>{b.produtor}</Link>
                 <div className="beat-meta">
                   <span className="etiqueta">{b.bpm} BPM</span>
