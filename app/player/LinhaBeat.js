@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usarPlayer } from './Player';
 import BotaoTocar from './BotaoTocar';
+import BotaoFavorito from './BotaoFavorito';
 import Onda from './Onda';
 
 function real(centavos) {
@@ -13,7 +14,7 @@ function real(centavos) {
  * Linha de catalogo. A onda fica na propria linha, como no BeatPlace: o
  * formato da faixa vira informacao de escolha, junto com BPM e tom.
  */
-export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false }) {
+export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false, logado = false }) {
   const { atual, tocando, progresso } = usarPlayer();
   const eAtual = atual?.id === beat.id;
 
@@ -57,6 +58,13 @@ export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false
         {beat.bpm} BPM · {beat.tom}
         {beat.camelot && <span className="camelot" title={`Camelot ${beat.camelot}`}>{beat.camelot}</span>}
       </span>
+      <BotaoFavorito
+        beatId={beat.id}
+        favoritado={beat.favoritado}
+        total={beat.favoritos}
+        logado={logado}
+      />
+
       <span className="preco linha-preco">{real(beat.preco_centavos)}</span>
     </li>
   );

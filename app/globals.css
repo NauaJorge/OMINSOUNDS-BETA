@@ -450,7 +450,7 @@ body:has(.player) { padding-bottom: 84px; }
 .lista-beats { list-style: none; padding: 0; margin: 0; }
 .linha-beat {
   display: grid;
-  grid-template-columns: 30px 56px minmax(140px, 1.1fr) minmax(0, 1.4fr) auto auto;
+  grid-template-columns: 30px 56px minmax(140px, 1.1fr) minmax(0, 1.4fr) auto auto auto;
   align-items: center; gap: 14px;
   padding: 10px 12px; border-radius: var(--raio-sm);
   border: 1px solid transparent;
@@ -483,10 +483,60 @@ body:has(.player) { padding-bottom: 84px; }
   .perfil-topo { margin-top: -48px; }
   .perfil-avatar { width: 92px; height: 92px; }
   /* No celular so o essencial fica na linha: numero, onda e dado tecnico saem. */
-  .linha-beat { grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; }
+  .linha-beat { grid-template-columns: 56px minmax(0, 1fr) auto auto; gap: 10px; }
   .linha-num, .linha-tec, .linha-plays, .linha-onda { display: none; }
   .linha-capa .tocar { opacity: 1; }
 }
+
+/* ---------- carrossel ---------- */
+
+.carrossel-topo { margin-bottom: 18px; }
+.carrossel-acoes { display: flex; align-items: center; gap: 10px; }
+.carrossel-setas { display: flex; gap: 6px; }
+.seta {
+  width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--linha-forte); background: transparent; color: var(--texto-2);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.seta svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.seta:hover:not([disabled]) { color: var(--ouro); border-color: var(--ouro); }
+.seta[disabled] { opacity: .3; cursor: not-allowed; }
+
+/* scroll-snap faz o trabalho: no celular o arrasto e o do proprio sistema,
+   com a inercia certa, e continua sendo regiao rolavel para o teclado. */
+.carrossel-trilho {
+  display: flex; gap: 16px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+  scrollbar-width: thin; scrollbar-color: var(--linha-forte) transparent;
+}
+.carrossel-trilho::-webkit-scrollbar { height: 6px; }
+.carrossel-trilho::-webkit-scrollbar-thumb { background: var(--linha-forte); border-radius: 999px; }
+.carrossel-trilho::-webkit-scrollbar-track { background: transparent; }
+.carrossel-trilho:focus-visible { outline: 2px solid var(--ouro); outline-offset: 4px; border-radius: var(--raio); }
+
+.carrossel-item { flex: 0 0 236px; scroll-snap-align: start; }
+.carrossel-item-largo { flex-basis: 320px; }
+
+@media (prefers-reduced-motion: reduce) { .carrossel-trilho { scroll-behavior: auto; } }
+@media (max-width: 560px) {
+  .carrossel-item { flex-basis: 74vw; }
+  .carrossel-item-largo { flex-basis: 82vw; }
+  .carrossel-setas { display: none; }
+}
+
+/* ---------- favorito ---------- */
+
+.favorito {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: transparent; border: 0; cursor: pointer; padding: 6px;
+  color: var(--texto-3); border-radius: 8px;
+}
+.favorito svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.favorito:hover { color: var(--texto-2); }
+.favorito-ativo { color: var(--ouro); }
+.favorito-ativo svg { fill: currentColor; stroke: currentColor; }
+.favorito[disabled] { opacity: .6; cursor: wait; }
 
 /* ---------- forma de onda ---------- */
 

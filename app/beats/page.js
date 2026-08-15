@@ -3,6 +3,7 @@ import { sql } from '../../lib/db';
 import LinhaBeat from '../player/LinhaBeat';
 import Filtros from './Filtros';
 import { codigoCamelot, tonsCompativeis } from '../../lib/harmonia';
+import { usuarioAtual } from '../../lib/sessao';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Beats | OMINSOUNDS' };
@@ -34,7 +35,7 @@ export default async function Beats({ searchParams }) {
   // injecao; aqui tudo continua parametrizado.
   const linhas = await sql`
     SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom,
-           b.genero, b.mood, b.preco_centavos, b.plays,
+           b.genero, b.mood, b.preco_centavos, b.plays, b.favoritos,
            u.handle, u.nome AS produtor
     FROM beats b
     JOIN usuarios u ON u.id = b.produtor_id
@@ -53,10 +54,16 @@ export default async function Beats({ searchParams }) {
       b.id
   `;
 
+  const visitante = await usuarioAtual();
+  const meus = visitante
+    ? new Set((await sql`SELECT beat_id FROM favoritos WHERE usuario_id = ${visitante.id}`).map((f) => f.beat_id))
+    : new Set();
+
   const beats = linhas.map((b) => ({
     ...b,
     picos: JSON.parse(b.picos || '[]'),
     camelot: codigoCamelot(b.tom),
+    favoritado: meus.has(b.id),
   }));
 
   const opcoes = await sql`
@@ -112,7 +119,7 @@ export default async function Beats({ searchParams }) {
       ) : (
         <ol className="lista-beats">
           {beats.map((b, i) => (
-            <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} mostrarProdutor />
+            <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} mostrarProdutor logado={!!visitante} />
           ))}
         </ol>
       )}

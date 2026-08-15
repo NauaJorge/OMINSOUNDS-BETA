@@ -125,6 +125,52 @@ export async function recusar(dadosForm) {
   revalidatePath('/mensagens');
 }
 
+/**
+ * Conta um play. Chamado quando a faixa realmente comeca a tocar, nao no
+ * clique: clicar e mudar de ideia nao e escuta.
+ */
+export async function contarPlay(beatId) {
+  const id = Number(beatId);
+  if (!Number.isInteger(id)) return;
+  await sql`UPDATE beats SET plays = plays + 1 WHERE id = ${id}`;
+}
+
+/**
+ * Favoritar e desfavoritar. O contador em beats.favoritos anda junto, na
+ * mesma ida ao banco, para a tela nunca mostrar um numero que nao bate com a
+ * lista de quem favoritou.
+ */
+export async function alternarFavorito(beatId) {
+  const usuario = await usuarioAtual();
+  if (!usuario) return { erro: 'entre' };
+
+  const id = Number(beatId);
+  if (!Number.isInteger(id)) return { erro: 'invalido' };
+
+  const removeu = await sql`
+    DELETE FROM favoritos WHERE usuario_id = ${usuario.id} AND beat_id = ${id}
+    RETURNING beat_id
+  `;
+
+  if (removeu[0]) {
+    // GREATEST evita contador negativo se algo ficar fora de sincronia.
+    const r = await sql`
+      UPDATE beats SET favoritos = GREATEST(favoritos - 1, 0)
+      WHERE id = ${id} RETURNING favoritos
+    `;
+    return { favoritado: false, total: r[0]?.favoritos ?? 0 };
+  }
+
+  await sql`
+    INSERT INTO favoritos (usuario_id, beat_id) VALUES (${usuario.id}, ${id})
+    ON CONFLICT DO NOTHING
+  `;
+  const r = await sql`
+    UPDATE beats SET favoritos = favoritos + 1 WHERE id = ${id} RETURNING favoritos
+  `;
+  return { favoritado: true, total: r[0]?.favoritos ?? 0 };
+}
+
 export async function responder(_estadoAnterior, dadosForm) {
   const usuario = await usuarioAtual();
   if (!usuario) return { erro: 'Sessão expirada.' };

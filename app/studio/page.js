@@ -4,6 +4,7 @@ import { sql } from '../../lib/db';
 import { usuarioAtual } from '../../lib/sessao';
 import { contarPendentes } from '../../lib/mensagens';
 import LinhaBeat from '../player/LinhaBeat';
+import { codigoCamelot } from '../../lib/harmonia';
 
 export const metadata = { title: 'Studio | OMINSOUNDS' };
 
@@ -24,9 +25,15 @@ export default async function Studio() {
   `;
   const pendentes = await contarPendentes(usuario.id);
 
+  const meus = new Set(
+    (await sql`SELECT beat_id FROM favoritos WHERE usuario_id = ${usuario.id}`).map((f) => f.beat_id)
+  );
+
   const comPicos = beats.map((b) => ({
     ...b,
     picos: JSON.parse(b.picos || '[]'),
+    camelot: codigoCamelot(b.tom),
+    favoritado: meus.has(b.id),
     produtor: usuario.nome,
     handle: usuario.handle,
   }));
@@ -89,7 +96,7 @@ export default async function Studio() {
         ) : (
           <ol className="lista-beats">
             {comPicos.map((b, i) => (
-              <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} />
+              <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} logado />
             ))}
           </ol>
         )}

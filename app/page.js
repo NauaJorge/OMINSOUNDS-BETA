@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { sql } from '../lib/db';
 import BotaoTocar from './player/BotaoTocar';
+import Carrossel from './componentes/Carrossel';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,7 +16,7 @@ export default async function Home() {
     FROM beats b JOIN usuarios u ON u.id = b.produtor_id
     WHERE b.publicado
     ORDER BY b.plays DESC
-    LIMIT 4
+    LIMIT 10
   `;
   const destaquesComPicos = destaques.map((b) => ({ ...b, picos: JSON.parse(b.picos || '[]') }));
   const filaHome = destaquesComPicos.map((b) => ({
@@ -96,13 +97,13 @@ export default async function Home() {
       </section>
 
       <section className="container secao">
-        <div className="secao-titulo">
-          <h2>Mais tocados</h2>
-          <Link className="btn btn-fantasma" href="/beats">Ver tudo</Link>
-        </div>
-        <div className="grade grade-4">
+        <Carrossel
+          titulo="Mais tocados"
+          rotulo="Beats mais tocados"
+          acao={<Link className="btn btn-fantasma" href="/beats">Ver tudo</Link>}
+        >
           {destaquesComPicos.map((b) => (
-            <article className="cartao" key={b.id}>
+            <article className="cartao carrossel-item" key={b.id}>
               <div className="capa-com-play">
                 <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
                 <BotaoTocar
@@ -125,14 +126,17 @@ export default async function Home() {
               </div>
             </article>
           ))}
-        </div>
+        </Carrossel>
       </section>
 
       <section className="container secao" style={{ paddingTop: 0 }}>
-        <div className="secao-titulo"><h2>Produtores</h2></div>
-        <div className="grade grade-3">
+        <Carrossel
+          titulo="Produtores"
+          rotulo="Produtores da plataforma"
+          acao={<Link className="btn btn-fantasma" href="/produtores">Ver todos</Link>}
+        >
           {produtores.map((p) => (
-            <Link className="cartao" href={`/produtor/${p.handle}`} key={p.handle} style={{ textDecoration: 'none' }}>
+            <Link className="cartao carrossel-item carrossel-item-largo" href={`/produtor/${p.handle}`} key={p.handle} style={{ textDecoration: 'none' }}>
               <div className="cartao-corpo">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 13 }}>
                   <img className="avatar" src={p.avatar_url || '/assents/img/user-circle.svg'} alt="" width="46" height="46" />
@@ -145,7 +149,7 @@ export default async function Home() {
               </div>
             </Link>
           ))}
-        </div>
+        </Carrossel>
       </section>
     </>
   );

@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Onda from './Onda';
+import { contarPlay } from '../acoes';
 
 const ContextoPlayer = createContext(null);
 
@@ -39,6 +40,11 @@ export default function Player({ children }) {
   const [mudarTom, setMudarTom] = useState(false);
 
   const atual = indice >= 0 ? fila[indice] : null;
+  const jaContados = useRef(new Set());
+  // O ouvinte de "playing" e registrado uma vez so; sem esta referencia ele
+  // fecharia sobre a faixa que estava no ar quando foi criado.
+  const atualRef = useRef(null);
+  atualRef.current = atual;
 
   function carregar(faixa) {
     const audio = audioRef.current;
@@ -108,15 +114,25 @@ export default function Player({ children }) {
     if (!audio) return;
 
     const aoTocar = () => setTocando(true);
+    // Conta o play uma vez por faixa por visita. Sem isso, pausar e voltar
+    // inflaria o numero, e ai a metrica nao vale nada para o produtor.
+    const aoComecar = () => {
+      const id = atualRef.current?.id;
+      if (!id || jaContados.current.has(id)) return;
+      jaContados.current.add(id);
+      contarPlay(id).catch(() => {});
+    };
     const aoPausar = () => setTocando(false);
     const aoAndar = () => setPosicao(audio.currentTime);
     const aoCarregar = () => setDuracao(audio.duration);
     audio.addEventListener('play', aoTocar);
+    audio.addEventListener('playing', aoComecar);
     audio.addEventListener('pause', aoPausar);
     audio.addEventListener('timeupdate', aoAndar);
     audio.addEventListener('loadedmetadata', aoCarregar);
     return () => {
       audio.removeEventListener('play', aoTocar);
+      audio.removeEventListener('playing', aoComecar);
       audio.removeEventListener('pause', aoPausar);
       audio.removeEventListener('timeupdate', aoAndar);
       audio.removeEventListener('loadedmetadata', aoCarregar);

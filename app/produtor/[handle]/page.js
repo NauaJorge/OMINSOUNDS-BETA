@@ -4,6 +4,7 @@ import { sql } from '../../../lib/db';
 import { usuarioAtual } from '../../../lib/sessao';
 import FormularioPedido from './FormularioPedido';
 import LinhaBeat from '../../player/LinhaBeat';
+import { codigoCamelot } from '../../../lib/harmonia';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,9 +41,16 @@ export default async function Produtor({ params }) {
     ORDER BY plays DESC
   `;
 
+  const visitanteFav = await usuarioAtual();
+  const meus = visitanteFav
+    ? new Set((await sql`SELECT beat_id FROM favoritos WHERE usuario_id = ${visitanteFav.id}`).map((f) => f.beat_id))
+    : new Set();
+
   const comPicos = beats.map((b) => ({
     ...b,
     picos: JSON.parse(b.picos || '[]'),
+    camelot: codigoCamelot(b.tom),
+    favoritado: meus.has(b.id),
     produtor: produtor.nome,
     handle: produtor.handle,
   }));
@@ -128,7 +136,7 @@ export default async function Produtor({ params }) {
               ) : (
                 <ol className="lista-beats">
                   {comPicos.map((b, i) => (
-                    <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} />
+                    <LinhaBeat key={b.id} beat={b} indice={i} lista={lista} logado={!!visitanteFav} />
                   ))}
                 </ol>
               )}
