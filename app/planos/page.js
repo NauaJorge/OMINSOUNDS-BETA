@@ -49,7 +49,7 @@ export default function Planos() {
     <div className="container secao">
       <span className="olho">Planos</span>
       <h1>Escolha como sua música aparece.</h1>
-      <p className="leve" style={{ maxWidth: '60ch' }}>
+      <p className="leve" style={{ maxWidth: '68ch', fontSize: 18 }}>
         Comece com uma vitrine simples ou use recursos de destaque para vender
         beats, serviços e licenças com mais presença.
       </p>

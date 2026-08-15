@@ -47,17 +47,19 @@ const contas = [
   },
 ];
 
+// Genero e BPM saem da arte de cada capa, que tem os dois impressos nela.
+// Divergir aqui coloca contradicao na tela.
 const catalogo = {
   naua: [
-    { titulo: 'Rota 21', bpm: 140, tom: 'F# menor', genero: 'Trap', mood: 'Noturno', preco: 24900, capa: '/assents/img/capa-rota-21.jpg', audio: '/assents/music/rona-music.mp3', plays: 1840, favoritos: 96 },
-    { titulo: 'Vitrine', bpm: 128, tom: 'C menor', genero: 'Drill', mood: 'Tenso', preco: 19900, capa: '/assents/img/capa-vitrine.jpg', audio: '/assents/music/rona-music.mp3', plays: 920, favoritos: 41 },
+    { titulo: 'Rota 21', bpm: 148, tom: 'F# menor', genero: 'Drill', mood: 'Noturno', preco: 24900, capa: '/assents/img/capa-rota-21.jpg', audio: '/assents/music/rona-music.mp3', plays: 1840, favoritos: 96 },
+    { titulo: 'Vitrine', bpm: 130, tom: 'C menor', genero: 'Funk', mood: 'Tenso', preco: 19900, capa: '/assents/img/capa-vitrine.jpg', audio: '/assents/music/rona-music.mp3', plays: 920, favoritos: 41 },
   ],
   bruma: [
-    { titulo: 'Noite Alta', bpm: 146, tom: 'G menor', genero: 'Trap', mood: 'Sombrio', preco: 29900, capa: '/assents/img/capa-noite-alta.jpg', audio: '/assents/music/filipe-ret-quero-paz.mp3', plays: 4210, favoritos: 233 },
-    { titulo: 'Calor', bpm: 132, tom: 'A menor', genero: 'Afrobeat', mood: 'Solar', preco: 21900, capa: '/assents/img/capa-calor.jpg', audio: '/assents/music/rona-music.mp3', plays: 2670, favoritos: 148 },
+    { titulo: 'Noite Alta', bpm: 142, tom: 'G menor', genero: 'Trap', mood: 'Sombrio', preco: 29900, capa: '/assents/img/capa-noite-alta.jpg', audio: '/assents/music/filipe-ret-quero-paz.mp3', plays: 4210, favoritos: 233 },
+    { titulo: 'Calor', bpm: 96, tom: 'A menor', genero: 'Reggaeton', mood: 'Solar', preco: 21900, capa: '/assents/img/capa-calor.jpg', audio: '/assents/music/rona-music.mp3', plays: 2670, favoritos: 148 },
   ],
   vellox: [
-    { titulo: 'Sol de Verao', bpm: 92, tom: 'D maior', genero: 'Boom bap', mood: 'Leve', preco: 17900, capa: '/assents/img/capa-sol-de-verao.jpg', audio: '/assents/music/filipe-ret-quero-paz.mp3', plays: 3105, favoritos: 187 },
+    { titulo: 'Sol de Verão', bpm: 108, tom: 'D maior', genero: 'Afrobeat', mood: 'Leve', preco: 17900, capa: '/assents/img/capa-sol-de-verao.jpg', audio: '/assents/music/filipe-ret-quero-paz.mp3', plays: 3105, favoritos: 187 },
   ],
 };
 

@@ -110,10 +110,10 @@ export default async function Produtor({ params }) {
             )}
 
             <section style={{ marginTop: 34 }}>
-              <div className="secao-titulo" style={{ marginBottom: 14 }}>
-                <h2 style={{ fontSize: 22 }}>Catálogo</h2>
-                <span className="mini">{beats.length} {beats.length === 1 ? 'beat' : 'beats'}</span>
-              </div>
+              {/* A contagem sai daqui: ja aparece no bloco de numeros la em
+                  cima e a lista e numerada. Solta na ponta direita ela so
+                  ficava boiando longe do titulo. */}
+              <h2 style={{ fontSize: 22, marginBottom: 14 }}>Catálogo</h2>
 
               {beats.length === 0 ? (
                 <p className="vazio">Nenhum beat publicado ainda.</p>

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { sql } from '../../lib/db';
 import { usuarioAtual } from '../../lib/sessao';
 import { contarPendentes } from '../../lib/mensagens';
+import BotaoTocar from '../player/BotaoTocar';
 
 export const metadata = { title: 'Studio | OMINSOUNDS' };
 
@@ -17,7 +18,7 @@ export default async function Studio() {
   // Cada consulta e presa ao id da sessao. Um produtor nunca alcanca o
   // catalogo de outro trocando parametro nenhum, porque nao ha parametro.
   const beats = await sql`
-    SELECT id, titulo, capa_url, bpm, tom, genero, mood, preco_centavos, plays, favoritos, publicado
+    SELECT id, titulo, capa_url, audio_url, bpm, tom, genero, mood, preco_centavos, plays, favoritos, publicado
     FROM beats WHERE produtor_id = ${usuario.id}
     ORDER BY criado_em DESC
   `;
@@ -28,7 +29,7 @@ export default async function Studio() {
 
   return (
     <div className="container secao">
-      <div className="secao-titulo">
+      <div className="secao-titulo" style={{ alignItems: 'center', marginBottom: 30 }}>
         <div>
           <span className="olho">Studio de {usuario.nome}</span>
           <h1 style={{ marginBottom: 6 }}>Seu painel.</h1>
@@ -66,37 +67,45 @@ export default async function Studio() {
       </div>
 
       <section className="secao" style={{ paddingBottom: 0 }}>
-        <div className="secao-titulo">
-          <h2>Meu catálogo</h2>
+        <div className="secao-titulo" style={{ alignItems: 'center', marginBottom: 16 }}>
+          <h2 style={{ margin: 0 }}>Meu catálogo</h2>
           <span className="mini">Só você vê esta lista</span>
         </div>
 
         {beats.length === 0 ? (
           <p className="vazio">Você ainda não publicou nenhum beat.</p>
         ) : (
-          <div className="grade grade-3">
-            {beats.map((b) => (
-              <article className="cartao" key={b.id}>
-                <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
-                <div className="cartao-corpo">
-                  <h3>{b.titulo}</h3>
-                  <p className="mini" style={{ margin: 0 }}>
-                    {b.bpm} BPM · {b.tom}
-                  </p>
-                  <div className="beat-meta">
-                    <span className="etiqueta">{b.genero}</span>
-                    <span className="etiqueta">{b.mood}</span>
-                    {!b.publicado && <span className="etiqueta">rascunho</span>}
-                  </div>
-                  <div className="numeros">
-                    <div><strong className="preco" style={{ fontSize: 18 }}>{real(b.preco_centavos)}</strong><span>licença</span></div>
-                    <div><strong style={{ fontSize: 18 }}>{b.plays.toLocaleString('pt-BR')}</strong><span>plays</span></div>
-                    <div><strong style={{ fontSize: 18 }}>{b.favoritos}</strong><span>favoritos</span></div>
-                  </div>
+          <ol className="lista-beats">
+            {beats.map((b, i) => (
+              <li className="linha-beat" key={b.id}>
+                <span className="linha-num mini">{String(i + 1).padStart(2, '0')}</span>
+
+                <div className="linha-capa">
+                  <img src={b.capa_url} alt="" width="56" height="56" loading="lazy" />
+                  <BotaoTocar
+                    faixa={{
+                      id: b.id, titulo: b.titulo, produtor: usuario.nome,
+                      handle: usuario.handle, capa: b.capa_url, audio: b.audio_url,
+                    }}
+                  />
                 </div>
-              </article>
+
+                <div className="linha-titulo">
+                  <strong>{b.titulo}</strong>
+                  <span className="mini">
+                    {b.genero} · {b.mood}
+                    {!b.publicado && ' · rascunho'}
+                  </span>
+                </div>
+
+                <span className="linha-tec mini">{b.bpm} BPM · {b.tom}</span>
+                <span className="linha-plays mini">
+                  {b.plays.toLocaleString('pt-BR')} plays · {b.favoritos} favoritos
+                </span>
+                <span className="preco linha-preco">{real(b.preco_centavos)}</span>
+              </li>
             ))}
-          </div>
+          </ol>
         )}
       </section>
 

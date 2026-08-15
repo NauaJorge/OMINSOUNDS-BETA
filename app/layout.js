@@ -25,7 +25,12 @@ export default async function RootLayout({ children }) {
         <header className="topo">
           <div className="topo-linha">
             <Link className="marca" href="/">
-              <img src="/assents/img/logo-botao.png" alt="" width="26" height="26" />
+              {/* Marca desenhada em SVG. A imagem que estava aqui era o selo
+                  "SMT" da Smooth, que saiu do site por decisao do Diretor, e
+                  ainda por cima era um PNG de 1 KB que aparecia serrilhado. */}
+              <svg className="marca-sinal" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 12h3l2-6 3 13 3-17 3 20 2.5-10H22" />
+              </svg>
               <span>OMINSOUNDS</span>
             </Link>
 
