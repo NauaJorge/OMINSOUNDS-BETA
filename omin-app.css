@@ -507,7 +507,7 @@ audio {
   padding: 15px;
 }
 
-.timeline strong:first-child {
+.timeline > article > strong:first-child {
   display: inline-flex;
   align-items: center;
   justify-content: center;
