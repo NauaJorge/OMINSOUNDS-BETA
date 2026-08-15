@@ -10,6 +10,13 @@ import {
   responderPedido,
   responderNaConversa,
 } from '../lib/mensagens';
+import {
+  normalizarHandle,
+  validarCadastro,
+  criarUsuario,
+  emailEmUso,
+  handleEmUso,
+} from '../lib/usuarios';
 
 export async function entrar(_estadoAnterior, dadosForm) {
   const email = String(dadosForm.get('email') ?? '').trim().toLowerCase();
@@ -42,6 +49,39 @@ export async function entrar(_estadoAnterior, dadosForm) {
 export async function sair() {
   await encerrarSessao();
   redirect('/');
+}
+
+export async function cadastrar(_estadoAnterior, dadosForm) {
+  const nome = String(dadosForm.get('nome') ?? '').trim();
+  const handle = normalizarHandle(dadosForm.get('handle'));
+  const email = String(dadosForm.get('email') ?? '').trim().toLowerCase();
+  const senha = String(dadosForm.get('senha') ?? '');
+
+  const erros = validarCadastro({ nome, handle, email, senha });
+  // Os valores voltam para o formulario para a pessoa nao redigitar tudo por
+  // causa de um campo. A senha nao volta, de proposito.
+  const eco = { nome, handle, email };
+
+  if (Object.keys(erros).length) return { erros, eco };
+
+  if (await emailEmUso(email)) {
+    return { erros: { email: 'Já existe conta com esse e-mail.' }, eco };
+  }
+  if (await handleEmUso(handle)) {
+    return { erros: { handle: 'Esse @ já está em uso.' }, eco };
+  }
+
+  let criado;
+  try {
+    criado = await criarUsuario({ nome, handle, email, senha });
+  } catch {
+    // Corrida entre duas pessoas pedindo o mesmo @ ou e-mail ao mesmo tempo:
+    // o indice unico do banco barra, e a mensagem sai limpa em vez de erro 500.
+    return { erros: { email: 'Não foi possível criar a conta. Tente outro @ ou e-mail.' }, eco };
+  }
+
+  await criarSessao(criado.id);
+  redirect('/studio');
 }
 
 export async function enviarPedido(_estadoAnterior, dadosForm) {

@@ -60,7 +60,10 @@ export default async function RootLayout({ children }) {
                   </form>
                 </>
               ) : (
-                <Link className="btn btn-ouro" href="/entrar">Entrar</Link>
+                <>
+                  <Link className="btn btn-fantasma" href="/entrar">Entrar</Link>
+                  <Link className="btn btn-ouro" href="/cadastrar">Criar conta</Link>
+                </>
               )}
             </div>
           </div>

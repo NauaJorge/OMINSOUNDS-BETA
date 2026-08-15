@@ -206,6 +206,41 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
   border-radius: var(--raio-sm); padding: 12px 14px; font-size: 14px; margin-bottom: 16px;
 }
 .aviso-erro { border-color: rgba(255,107,107,.5); color: #ffc9c9; }
+
+.campo-erro { border-color: rgba(255,107,107,.65); }
+.erro-campo { display: block; margin-top: 6px; font-size: 13px; color: #ff9b9b; }
+
+/* O @ fica dentro da moldura do campo, como prefixo, para ninguem digitar o
+   arroba de novo e ficar com "@@fulano". */
+.campo-com-prefixo { position: relative; display: block; }
+.campo-com-prefixo > span[aria-hidden] {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--texto-3); pointer-events: none;
+}
+.campo-com-prefixo .campo { padding-left: 30px; }
+
+.ou {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0; color: var(--texto-3); font-size: 13px;
+}
+.ou::before, .ou::after {
+  content: ''; flex: 1 1 auto; height: 1px; background: var(--linha-forte);
+}
+
+.btn-google { gap: 10px; }
+.btn-google svg { flex: 0 0 auto; }
+
+.text-link { color: var(--ouro); text-decoration: underline; text-underline-offset: 3px; }
+
+.lista-marcada { list-style: none; padding: 0; margin: 22px 0 0; }
+.lista-marcada li {
+  position: relative; padding-left: 24px; margin-bottom: 10px;
+  color: var(--texto-2); font-size: 15px;
+}
+.lista-marcada li::before {
+  content: ''; position: absolute; left: 3px; top: .55em;
+  width: 9px; height: 9px; border-radius: 50%; border: 1.7px solid var(--ouro);
+}
 .aviso-ok { border-color: rgba(79,209,197,.45); color: #b6f0e9; }
 
 /* ---------- caixa de mensagens ---------- */
