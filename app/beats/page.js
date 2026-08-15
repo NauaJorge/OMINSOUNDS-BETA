@@ -22,6 +22,8 @@ export default async function Beats({ searchParams }) {
   const mood = p.mood ?? '';
   const tom = p.tom ?? '';
   const combinaCom = p.combina ?? '';
+  const tag = p.tag ?? '';
+  const soGratis = p.gratis === '1';
 
   // Filtro harmonico: em vez de um tom exato, todos os que convivem com ele.
   // Vem como lista e entra no SQL com = ANY, continuando parametrizado.
@@ -35,16 +37,19 @@ export default async function Beats({ searchParams }) {
   // injecao; aqui tudo continua parametrizado.
   const linhas = await sql`
     SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom,
-           b.genero, b.mood, b.preco_centavos, b.plays, b.favoritos,
+           b.genero, b.mood, b.preco_centavos, b.plays, b.favoritos, b.tags, b.gratis,
            u.handle, u.nome AS produtor
     FROM beats b
     JOIN usuarios u ON u.id = b.produtor_id
     WHERE b.publicado
-      AND (${busca} = '' OR b.titulo ILIKE ${'%' + busca + '%'} OR u.nome ILIKE ${'%' + busca + '%'})
+      AND (${busca} = '' OR b.titulo ILIKE ${'%' + busca + '%'} OR u.nome ILIKE ${'%' + busca + '%'}
+           OR EXISTS (SELECT 1 FROM unnest(b.tags) t WHERE t ILIKE ${'%' + busca + '%'}))
       AND (${genero} = '' OR b.genero = ${genero})
       AND (${mood} = '' OR b.mood = ${mood})
       AND (${tom} = '' OR b.tom = ${tom})
       AND (${combinaCom} = '' OR b.tom = ANY(${tonsOk}))
+      AND (${tag} = '' OR ${tag} = ANY(b.tags))
+      AND (${soGratis} = false OR b.gratis)
       AND b.bpm BETWEEN ${bpmMin} AND ${bpmMax}
     ORDER BY
       CASE WHEN ${ordem} = 'tocados' THEN b.plays END DESC,
@@ -66,6 +71,13 @@ export default async function Beats({ searchParams }) {
     favoritado: meus.has(b.id),
   }));
 
+  // As tags mais usadas viram atalho, como no BeatStars: e por elas que o
+  // artista procura, nao por genero.
+  const etiquetas = await sql`
+    SELECT tag, count(*)::int AS qtd FROM beats, unnest(tags) AS tag
+    WHERE publicado GROUP BY tag ORDER BY qtd DESC, tag LIMIT 12
+  `;
+
   const opcoes = await sql`
     SELECT
       array_agg(DISTINCT genero) FILTER (WHERE genero <> '') AS generos,
@@ -81,7 +93,7 @@ export default async function Beats({ searchParams }) {
     bpm: b.bpm, tom: b.tom,
   }));
 
-  const filtrando = busca || genero || mood || tom || combinaCom || p.bpmMin || p.bpmMax;
+  const filtrando = busca || genero || mood || tom || combinaCom || tag || soGratis || p.bpmMin || p.bpmMax;
 
   return (
     <div className="container secao">
@@ -89,13 +101,14 @@ export default async function Beats({ searchParams }) {
       <h1>Beats</h1>
 
       <Filtros
-        valores={{ q: busca, genero, mood, tom, combina: combinaCom, bpmMin: p.bpmMin ?? '', bpmMax: p.bpmMax ?? '', ordem }}
+        valores={{ q: busca, genero, mood, tom, combina: combinaCom, tag, gratis: soGratis, bpmMin: p.bpmMin ?? '', bpmMax: p.bpmMax ?? '', ordem }}
         opcoes={{
           generos: opcoes[0]?.generos ?? [],
           moods: opcoes[0]?.moods ?? [],
           tons: opcoes[0]?.tons ?? [],
           bpmMin: opcoes[0]?.bpm_min ?? 60,
           bpmMax: opcoes[0]?.bpm_max ?? 200,
+          tags: etiquetas.map((e) => e.tag),
         }}
         ordens={ORDENS}
       />

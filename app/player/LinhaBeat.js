@@ -67,7 +67,9 @@ export default function LinhaBeat({ beat, indice, lista, mostrarProdutor = false
         logado={logado}
       />
 
-      <span className="preco linha-preco">{real(beat.preco_centavos)}</span>
+      <span className="preco linha-preco">
+        {beat.gratis ? <span className="selo-gratis">grátis</span> : real(beat.preco_centavos)}
+      </span>
     </li>
   );
 }

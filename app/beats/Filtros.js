@@ -30,6 +30,31 @@ export default function Filtros({ valores, opcoes, ordens }) {
 
   return (
     <div className="filtros">
+      {/* Atalhos por tag e o caminho curto: o artista clica em "drill uk" em
+          vez de montar a combinacao de genero, BPM e tom. */}
+      {(opcoes.tags?.length > 0) && (
+        <div className="atalhos">
+          <button
+            type="button"
+            className={`etiqueta atalho ${valores.gratis ? 'atalho-ativo' : ''}`}
+            onClick={() => aplicar('gratis', valores.gratis ? '' : '1')}
+            aria-pressed={!!valores.gratis}
+          >
+            Grátis
+          </button>
+          {opcoes.tags.map((t) => (
+            <button
+              type="button" key={t}
+              className={`etiqueta atalho ${valores.tag === t ? 'atalho-ativo' : ''}`}
+              onClick={() => aplicar('tag', valores.tag === t ? '' : t)}
+              aria-pressed={valores.tag === t}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="filtro-busca">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />

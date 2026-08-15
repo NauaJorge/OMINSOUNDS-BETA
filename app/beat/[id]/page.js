@@ -54,7 +54,7 @@ export default async function Beat({ params }) {
   const parecidos = compativeis.length
     ? await sql`
         SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom,
-               b.genero, b.mood, b.preco_centavos, b.favoritos,
+               b.genero, b.mood, b.preco_centavos, b.favoritos, b.tags, b.gratis,
                u.handle, u.nome AS produtor
         FROM beats b JOIN usuarios u ON u.id = b.produtor_id
         WHERE b.publicado AND b.id <> ${numero} AND b.tom = ANY(${compativeis})
@@ -90,10 +90,19 @@ export default async function Beat({ params }) {
 
       <div className="perfil-grade" style={{ marginTop: 34 }}>
         <div>
-          <h2 style={{ fontSize: 22 }}>Licenças</h2>
+          {beat.tags?.length > 0 && (
+            <div className="beat-meta" style={{ marginBottom: 22 }}>
+              {beat.tags.map((t) => (
+                <Link className="etiqueta" key={t} href={`/beats?tag=${encodeURIComponent(t)}`}>{t}</Link>
+              ))}
+            </div>
+          )}
+
+          <h2 style={{ fontSize: 22 }}>{beat.gratis ? 'Como usar este beat' : 'Licenças'}</h2>
           <p className="leve" style={{ fontSize: 15, maxWidth: '58ch' }}>
-            O que muda de uma para outra é o arquivo que você recebe e o quanto
-            pode usar. Escolha pela entrega, não só pelo preço.
+            {beat.gratis
+              ? 'Este beat foi liberado pelo produtor. Leia o que pode e o que não pode antes de lançar.'
+              : 'O que muda de uma para outra é o arquivo que você recebe e o quanto pode usar. Escolha pela entrega, não só pelo preço.'}
           </p>
 
           <div className="licencas">
@@ -101,7 +110,9 @@ export default async function Beat({ params }) {
               <article className={`licenca ${l.exclusiva ? 'licenca-exclusiva' : ''}`} key={l.nome}>
                 <div className="licenca-topo">
                   <h3>{l.nome}</h3>
-                  <strong className="preco">{real(l.preco_centavos)}</strong>
+                  <strong className="preco">
+                    {l.preco_centavos === 0 ? 'Grátis' : real(l.preco_centavos)}
+                  </strong>
                 </div>
                 <p className="licenca-formatos">{l.formatos}</p>
                 <p className="mini" style={{ margin: 0 }}>{l.uso}</p>
@@ -110,9 +121,9 @@ export default async function Beat({ params }) {
           </div>
 
           <p className="cofre" style={{ marginTop: 18 }}>
-            Ambiente de teste: a compra ainda não está ligada. O pagamento fica
-            para depois, por decisão do Diretor. Para fechar agora, fale com o
-            produtor pela caixa de mensagens.
+            {beat.gratis
+              ? 'Ambiente de teste: o download ainda não está ligado. Fale com o produtor pela caixa de mensagens para receber o arquivo.'
+              : 'Ambiente de teste: a compra ainda não está ligada. O pagamento fica para depois, por decisão do Diretor. Para fechar agora, fale com o produtor pela caixa de mensagens.'}
           </p>
 
           {listaParecidos.length > 0 && (
