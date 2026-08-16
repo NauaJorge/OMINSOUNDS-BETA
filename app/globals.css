@@ -748,6 +748,119 @@ body:has(.player) { padding-bottom: 84px; }
 }
 @media (max-width: 900px) { .vitrola { height: 420px; } }
 
+/* ---------- onboarding ---------- */
+
+/* Cabeçalho enxuto do onboarding: só marca e saída. */
+.topo-comecar { border-bottom: 1px solid var(--linha); }
+.topo-comecar-linha {
+  max-width: var(--max); margin: 0 auto; padding: 16px var(--gutter);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+
+.comecar {
+  max-width: 620px; margin: 0 auto;
+  padding: 54px var(--gutter) 80px;
+}
+.comecar-barra { display: flex; gap: 6px; margin-bottom: 12px; }
+.comecar-barra i { height: 4px; flex: 1; border-radius: 999px; background: var(--linha-forte); }
+.comecar-barra i.on { background: var(--ouro); }
+.comecar-contador { margin: 0 0 18px; }
+.comecar-apoio { margin-bottom: 26px; max-width: 52ch; }
+
+.comecar-acoes { display: flex; align-items: center; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+.comecar-pular { margin-top: 16px; }
+.link-pular {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--texto-3); font-size: 14px;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.link-pular:hover { color: var(--texto-2); }
+
+/* Passo 1: os dois caminhos. Botão inteiro é o alvo, não só o texto. */
+.escolha-papel { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
+.cartao-papel {
+  display: flex; flex-direction: column; gap: 5px; text-align: left;
+  padding: 26px 24px; cursor: pointer;
+  background: var(--superficie); border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  transition: border-color .16s ease, transform .16s ease;
+}
+.cartao-papel:hover { border-color: var(--ouro); transform: translateY(-2px); }
+.cartao-papel strong { font-size: 19px; }
+.cartao-papel-ico svg {
+  width: 26px; height: 26px; margin-bottom: 10px;
+  fill: none; stroke: var(--ouro); stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Chips de marcar: o input some, o rótulo inteiro vira o alvo — e continua
+   sendo checkbox de verdade para o teclado e para o leitor de tela. */
+.grupo-chips { border: 0; padding: 0; margin: 0 0 22px; }
+.grupo-chips legend { padding: 0; margin-bottom: 9px; }
+.chip-toque { cursor: pointer; }
+.chip-toque input { position: absolute; opacity: 0; width: 0; height: 0; }
+.chip-toque span {
+  display: inline-block; font-size: 14px; padding: 8px 15px; border-radius: 999px;
+  border: 1px solid var(--linha-forte); color: var(--texto-2);
+  transition: border-color .14s ease, color .14s ease, background .14s ease;
+}
+.chip-toque:hover span { border-color: var(--texto-3); color: var(--texto); }
+.chip-toque input:checked + span {
+  border-color: var(--ouro); color: var(--ouro); background: rgba(232,185,49,.10);
+}
+.chip-toque input:focus-visible + span { outline: 2px solid var(--ouro); outline-offset: 3px; }
+
+.lista-radio { display: grid; gap: 10px; }
+.radio-linha {
+  display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+  padding: 14px 16px; border: 1px solid var(--linha-forte); border-radius: 10px;
+  transition: border-color .14s ease, background .14s ease;
+}
+.radio-linha input { position: absolute; opacity: 0; width: 0; height: 0; }
+.radio-marca {
+  width: 17px; height: 17px; border-radius: 50%; flex: 0 0 auto; margin-top: 3px;
+  border: 1.6px solid var(--linha-forte); transition: box-shadow .14s ease, border-color .14s ease;
+}
+.radio-linha:hover { border-color: var(--texto-3); }
+.radio-linha:has(input:checked) { border-color: var(--ouro); background: rgba(232,185,49,.07); }
+.radio-linha:has(input:checked) .radio-marca { border-color: var(--ouro); box-shadow: inset 0 0 0 4px var(--ouro); }
+.radio-linha:has(input:focus-visible) { outline: 2px solid var(--ouro); outline-offset: 3px; }
+.radio-linha strong { display: block; }
+.radio-linha .mini { display: block; }
+
+.lista-numerada { list-style: none; padding: 0; margin: 0; }
+.lista-numerada li { display: flex; gap: 14px; margin-bottom: 22px; }
+.lista-numerada b {
+  flex: 0 0 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--ouro); color: var(--ouro); font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.lista-numerada p { margin: 0; font-size: 15px; }
+
+.lista-seguir { margin-top: 4px; }
+.linha-seguir {
+  display: flex; align-items: center; gap: 13px;
+  padding: 12px 14px; border: 1px solid var(--linha);
+  border-radius: 10px; margin-bottom: 9px;
+}
+.linha-seguir-corpo { min-width: 0; }
+.linha-seguir-corpo strong { display: block; }
+.linha-seguir form { margin-left: auto; }
+.btn-seguir {
+  font-size: 13.5px; font-weight: 700; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--linha-forte); background: transparent;
+  color: var(--texto-2); cursor: pointer; white-space: nowrap;
+}
+.btn-seguir:hover { border-color: var(--ouro); color: var(--ouro); }
+.btn-seguir.on { background: var(--ouro); border-color: var(--ouro); color: var(--sobre-ouro); }
+
+.btn-vender { min-height: 38px; padding: 8px 16px; font-size: 14px; }
+
+@media (max-width: 560px) {
+  .escolha-papel { grid-template-columns: 1fr; }
+  .btn-vender { display: none; }
+}
+
 /* ---------- carrossel ---------- */
 
 .carrossel-topo { margin-bottom: 18px; }

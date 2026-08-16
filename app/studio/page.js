@@ -15,6 +15,9 @@ function real(centavos) {
 export default async function Studio() {
   const usuario = await usuarioAtual();
   if (!usuario) redirect('/entrar');
+  // Studio e do produtor. Artista logado seria mandado para um painel que
+  // nao e dele, com catalogo sempre vazio.
+  if (usuario.papel === 'artista') redirect('/beats');
 
   // Cada consulta e presa ao id da sessao. Um produtor nunca alcanca o
   // catalogo de outro trocando parametro nenhum, porque nao ha parametro.

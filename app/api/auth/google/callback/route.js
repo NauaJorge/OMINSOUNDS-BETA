@@ -58,7 +58,8 @@ export async function GET(req) {
 
   await criarSessao(id);
 
-  const ida = NextResponse.redirect(new URL('/studio', req.url));
+  // Conta nova pelo Google tambem passa pelo onboarding; /comecar decide.
+  const ida = NextResponse.redirect(new URL('/comecar', req.url));
   ida.cookies.delete('omin_google_state');
   return ida;
 }

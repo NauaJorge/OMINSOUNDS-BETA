@@ -28,7 +28,7 @@ export async function entrar(_estadoAnterior, dadosForm) {
   }
 
   const linhas = await sql`
-    SELECT id, senha_hash FROM usuarios WHERE lower(email) = ${email}
+    SELECT id, senha_hash, papel, onboarding_em FROM usuarios WHERE lower(email) = ${email}
   `;
   const usuario = linhas[0];
 
@@ -44,7 +44,9 @@ export async function entrar(_estadoAnterior, dadosForm) {
   }
 
   await criarSessao(usuario.id);
-  redirect('/studio');
+  // Artista nao tem Studio, e quem nunca fez o onboarding vai para ele.
+  if (!usuario.onboarding_em) redirect('/comecar');
+  redirect(usuario.papel === 'artista' ? '/beats' : '/studio');
 }
 
 export async function sair() {
@@ -91,7 +93,9 @@ export async function cadastrar(_estadoAnterior, dadosForm) {
   }
 
   await criarSessao(criado.id);
-  redirect('/studio');
+  // Conta nova vai para o onboarding; quem ja passou por ele cai direto no
+  // seu lugar, porque /comecar redireciona sozinho.
+  redirect('/comecar');
 }
 
 export async function enviarPedido(_estadoAnterior, dadosForm) {

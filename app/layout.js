@@ -1,9 +1,11 @@
 import './globals.css';
 import Link from 'next/link';
+import { headers } from 'next/headers';
 import { usuarioAtual } from '../lib/sessao';
 import { contarPendentes } from '../lib/mensagens';
 import { sair } from './acoes';
 import Player from './player/Player';
+import { passarAVender } from './comecar/acoes';
 
 export const metadata = {
   title: 'OMINSOUNDS — beats, produtores e serviços musicais',
@@ -14,6 +16,11 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function RootLayout({ children }) {
+  // O onboarding tem cabecalho proprio, enxuto. Sem isto o menu do site
+  // inteiro competia com a pergunta que define o caminho.
+  const caminho = (await headers()).get('x-caminho') ?? '';
+  const noOnboarding = caminho.startsWith('/comecar');
+
   const usuario = await usuarioAtual();
   const pendentes = usuario ? await contarPendentes(usuario.id) : 0;
 
@@ -22,6 +29,7 @@ export default async function RootLayout({ children }) {
       <body>
         <a className="sr" href="#conteudo">Pular para o conteúdo</a>
 
+        {!noOnboarding && (
         <header className="topo">
           <div className="topo-linha">
             <Link className="marca" href="/">
@@ -38,7 +46,7 @@ export default async function RootLayout({ children }) {
               <Link href="/beats">Beats</Link>
               <Link href="/produtores">Produtores</Link>
               <Link href="/planos">Planos</Link>
-              {usuario && <Link href="/studio">Studio</Link>}
+              {usuario?.papel === 'produtor' && <Link href="/studio">Studio</Link>}
               {usuario && (
                 <Link href="/mensagens">
                   Mensagens
@@ -54,6 +62,15 @@ export default async function RootLayout({ children }) {
             <div className="topo-acoes">
               {usuario ? (
                 <>
+                  {/* O "Become a Seller" da BeatStars: artista vira produtor
+                      sem perder nada, e cai direto no onboarding da vitrine. */}
+                  {usuario.papel === 'artista' && (
+                    <form action={passarAVender}>
+                      <button className="btn btn-linha btn-vender" type="submit">
+                        Quero vender também
+                      </button>
+                    </form>
+                  )}
                   <span className="mini">@{usuario.handle}</span>
                   <form action={sair}>
                     <button className="btn btn-fantasma" type="submit">Sair</button>
@@ -68,10 +85,12 @@ export default async function RootLayout({ children }) {
             </div>
           </div>
         </header>
+        )}
 
         <Player>
           <main id="conteudo">{children}</main>
 
+          {!noOnboarding && (
           <footer className="rodape">
             <div className="container rodape-grade">
               <div className="rodape-marca">
@@ -115,6 +134,7 @@ export default async function RootLayout({ children }) {
               </div>
             </div>
           </footer>
+          )}
         </Player>
       </body>
     </html>
