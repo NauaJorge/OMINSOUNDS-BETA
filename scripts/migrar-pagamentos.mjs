@@ -1,5 +1,6 @@
-// Estrutura de pagamentos. Cartao e Pix ficam no checkout hospedado do Mercado
-// Pago; aqui guardamos apenas pedido, status e ids/resumos nao sensiveis.
+// Estrutura de pagamentos. Cartao e Pix ficam no checkout hospedado do provedor
+// configurado (PagBank ou Mercado Pago); aqui guardamos apenas pedido, status e
+// ids/resumos nao sensiveis.
 //   node --env-file=.env.local scripts/migrar-pagamentos.mjs
 import { neon } from '@neondatabase/serverless';
 

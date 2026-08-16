@@ -6,8 +6,8 @@ export const metadata = { title: 'Pagamento | OMINSOUNDS' };
 
 const TEXTOS = {
   success: {
-    titulo: 'Pagamento recebido pelo Mercado Pago.',
-    corpo: 'A confirmação final chega por webhook. Assim que o Mercado Pago aprovar, a licença fica registrada no sistema.',
+    titulo: 'Pagamento recebido pelo provedor.',
+    corpo: 'A confirmação final chega por webhook. Assim que o provedor aprovar, a licença fica registrada no sistema.',
   },
   pending: {
     titulo: 'Pagamento em processamento.',

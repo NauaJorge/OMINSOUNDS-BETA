@@ -6,6 +6,7 @@ import { codigoCamelot, tonsCompativeis } from '../../../lib/harmonia';
 import LinhaBeat from '../../player/LinhaBeat';
 import CabecalhoBeat from './CabecalhoBeat';
 import Licencas from './Licencas';
+import { provedorPagamentoAtivo } from '../../../lib/pagamentos';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,7 +90,8 @@ export default async function Beat({ params }) {
     capa: beat.capa_url, audio: beat.audio_url,
     picos: JSON.parse(beat.picos || '[]'), bpm: beat.bpm, tom: beat.tom,
   };
-  const mercadoPagoConfigurado = Boolean(process.env.MERCADO_PAGO_ACCESS_TOKEN);
+  const provedorPagamento = provedorPagamentoAtivo();
+  const pagamentoLigado = Boolean(provedorPagamento);
 
   return (
     <div className="container secao">
@@ -121,15 +123,15 @@ export default async function Beat({ params }) {
           <Licencas
             licencas={comLimites}
             gratis={beat.gratis}
-            pagamentoLigado={mercadoPagoConfigurado}
+            pagamentoLigado={pagamentoLigado}
           />
 
           <p className="cofre" style={{ marginTop: 18 }}>
             {beat.gratis
               ? 'Ambiente de teste: o download ainda não está ligado. Fale com o produtor pela caixa de mensagens para receber o arquivo.'
-              : mercadoPagoConfigurado
-                ? 'Pagamento seguro via Mercado Pago. O OMINSOUNDS nao recebe nem armazena numero de cartao ou CVV.'
-                : 'Pagamento seguro preparado para Mercado Pago. Falta configurar o access token para liberar Pix e cartao.'}
+              : pagamentoLigado
+                ? `Pagamento seguro via ${provedorPagamento === 'pagbank' ? 'PagBank' : 'Mercado Pago'}. O OMINSOUNDS nao recebe nem armazena numero de cartao ou CVV.`
+                : 'Pagamento seguro preparado. Falta configurar PagBank ou Mercado Pago para liberar Pix e cartao.'}
           </p>
 
           {listaParecidos.length > 0 && (
