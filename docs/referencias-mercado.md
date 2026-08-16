@@ -94,7 +94,47 @@ Detalhes:
 - Barra lateral fixa: Início, Feed, Novidades, Explorar, Beats Quentes, Todos
   Packs, e uma lista de **sugestões para seguir** com avatar dos produtores.
 
-### Onboarding do produtor — `/minha-conta/aplicar`
+### Onboarding do cadastro — roda uma vez e não volta
+
+O Diretor lembrou de 4 etapas, começando por escolher o tipo de conta. Como o
+fluxo já foi concluído na conta dele, `/onboarding` redireciona para o explore e
+não dá para revisitar pela tela.
+
+Recuperei a arquitetura pelos nomes dos componentes carregados no bundle da
+área logada. **Não é um fluxo de 4 etapas: é uma bifurcação.**
+
+```
+StepChoice  ← "o que você é", a etapa que o Diretor lembrou como primeira
+   │
+   ├── caminho ARTISTA (comprador)
+   │     StepBuyerStyles          estilos que curte  ← o "filtro reggae, trap"
+   │     StepBuyerPurpose         para que vai usar
+   │     StepBuyerSuggestions     beats sugeridos
+   │     StepBuyerFollowSuggestions  produtores para seguir  ← a 4ª esquecida
+   │
+   └── caminho PRODUTOR (beatmaker)
+         StepBmProfile      perfil
+         StepBmHowItWorks   como a plataforma funciona
+         StepBmFirstBeat    subir o primeiro beat
+         StepBmPlans        planos
+```
+
+Existe também `OnboardingProgress`, o indicador de andamento, e um segundo
+wizard só para a loja do produtor: `StepName → StepTheme → StepLogo →
+StepConfirm`.
+
+O que isso ensina:
+
+1. **A primeira pergunta separa os dois públicos**, e a partir dali cada um vê
+   um caminho diferente. Um marketplace tem dois lados, e tratar os dois igual
+   no primeiro minuto desperdiça a única chance de perguntar.
+2. **O caminho do artista termina em seguir produtores.** A pessoa não sai do
+   onboarding sozinha — sai com um feed que já tem conteúdo.
+3. **O caminho do produtor termina em planos**, depois de já ter subido um beat.
+   Pede dinheiro só depois de mostrar valor.
+4. Quatro etapas de cada lado, nem uma a mais.
+
+### Onboarding da loja do produtor — `/minha-conta/aplicar`
 
 Uma tela só, com título em pergunta e subtítulo curto:
 
@@ -133,13 +173,16 @@ O que vale copiar aqui:
 1. **Seletor de licença com total reagindo** — é onde a compra acontece, e a
    nossa está mais fraca
 2. **Termos de uso em números com ícone**, no lugar do texto corrido
-3. **Onboarding do produtor**, uma tela, dois campos obrigatórios, com
+3. **Onboarding com bifurcação no primeiro passo** — artista ou produtor, e a
+   partir dali cada um vê o seu caminho. O do artista termina em seguir
+   produtores; o do produtor, em planos, depois de já ter subido um beat
+4. **Onboarding da loja**, uma tela, dois campos obrigatórios, com
    "Fazer depois" e estilos em chips
-4. **Página "Minha conta" em cartões**, com a ação principal destacada
-5. **Favoritos e notificações em painel suspenso**, sem trocar de página
-6. **Negociação** como estado do pedido de conversa, com valor proposto
-7. **Carteira no menu**, mostrando o que o produtor tem a receber
-8. **Aviso de e-mail não verificado** que cobra sem bloquear
+5. **Página "Minha conta" em cartões**, com a ação principal destacada
+6. **Favoritos e notificações em painel suspenso**, sem trocar de página
+7. **Negociação** como estado do pedido de conversa, com valor proposto
+8. **Carteira no menu**, mostrando o que o produtor tem a receber
+9. **Aviso de e-mail não verificado** que cobra sem bloquear
 
 ### O que já temos e eles não
 
