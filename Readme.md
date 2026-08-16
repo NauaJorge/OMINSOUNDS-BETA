@@ -54,6 +54,6 @@ As senhas sorteadas ficam em `contas-de-teste.txt`, que está no `.gitignore`.
 ## O que ainda não entrou
 
 - Publicar e editar beat pelo painel: o catálogo vem do banco de teste.
-- Pagamento real em produção: a integração PagBank está ativa na Vercel com `PAGBANK_TOKEN`, `PAGBANK_WEBHOOK_TOKEN` e `PAGBANK_ENV=production`. O comprador vai para o checkout hospedado do PagBank.
+- Pagamento real em produção: o token de produção foi gerado e testado, mas a API retornou `allowlist_access_required`. Falta o PagBank homologar/liberar a conta para o endpoint `/checkouts`. Para não deixar checkout público quebrado, `PAGBANK_TOKEN` foi removido temporariamente da Vercel até essa liberação.
 - Player global que continua tocando entre páginas.
 - Upload de áudio e capa.
