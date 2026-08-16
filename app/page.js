@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { sql } from '../lib/db';
 import BotaoTocar from './player/BotaoTocar';
 import Carrossel from './componentes/Carrossel';
+import Vitrola from './componentes/Vitrola';
 
 export const dynamic = 'force-dynamic';
 
@@ -103,16 +104,32 @@ export default async function Home() {
       </section>
 
       <section className="container secao" style={{ paddingTop: 0 }}>
-        <div className="secao-titulo"><h2>Explore por estilo</h2></div>
-        <div className="grade grade-4">
-          {estilos.map((e) => (
-            <Link className="cartao estilo" href={`/beats?genero=${encodeURIComponent(e.genero)}`} key={e.genero}>
-              <div className="cartao-corpo">
-                <strong>{e.genero}</strong>
-                <span className="mini">{e.qtd} {e.qtd === 1 ? 'beat' : 'beats'}</span>
-              </div>
+        <div className="descubra">
+          <div>
+            <span className="olho">Descubra novos sons</span>
+            <h2 style={{ fontSize: 'clamp(26px, 3.6vw, 40px)' }}>
+              Type beats de todos os estilos.
+            </h2>
+            <p className="leve" style={{ maxWidth: '46ch' }}>
+              Do que toca em todo lugar ao que ainda está no subsolo. Cada
+              estilo abre o catálogo já filtrado, com o beat tocando enquanto
+              você navega.
+            </p>
+
+            <div className="beat-meta" style={{ marginTop: 20 }}>
+              {estilos.map((e) => (
+                <Link className="etiqueta" href={`/beats?genero=${encodeURIComponent(e.genero)}`} key={e.genero}>
+                  {e.genero} <span className="mini">{e.qtd}</span>
+                </Link>
+              ))}
+            </div>
+
+            <Link className="btn btn-linha" href="/beats" style={{ marginTop: 22 }}>
+              Ver o catálogo inteiro
             </Link>
-          ))}
+          </div>
+
+          <Vitrola />
         </div>
       </section>
 

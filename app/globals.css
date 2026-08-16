@@ -530,6 +530,88 @@ body:has(.player) { padding-bottom: 84px; }
   .linha-capa .tocar { opacity: 1; }
 }
 
+/* ---------- descubra: texto e capas lado a lado ---------- */
+
+.descubra {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 44px; align-items: center;
+}
+@media (max-width: 900px) {
+  .descubra { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+}
+
+/* ---------- vitrola: capas girando ---------- */
+
+.vitrola {
+  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  height: 520px; overflow: hidden;
+  border-radius: var(--raio);
+}
+.vitrola-coluna { overflow: hidden; }
+.vitrola-trilha { display: flex; flex-direction: column; gap: 16px; will-change: transform; }
+
+/* Anda exatamente metade: no instante do reinicio a segunda copia esta no
+   lugar da primeira, e a emenda nao aparece. O -50% precisa levar o gap
+   junto, por isso o translate usa calc com o proprio gap. */
+.vitrola-sobe .vitrola-trilha  { animation: vitrola-sobe 42s linear infinite; }
+.vitrola-desce .vitrola-trilha { animation: vitrola-desce 50s linear infinite; }
+
+@keyframes vitrola-sobe {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-50% - 8px)); }
+}
+@keyframes vitrola-desce {
+  from { transform: translateY(calc(-50% - 8px)); }
+  to   { transform: translateY(0); }
+}
+
+/* Parar a coluna inteira no hover: sem isso a capa foge do cursor bem na
+   hora do clique. */
+.vitrola:hover .vitrola-trilha { animation-play-state: paused; }
+
+.vitrola-capa {
+  position: relative; display: block; flex: 0 0 auto;
+  border-radius: var(--raio); overflow: hidden;
+  border: 1px solid var(--linha);
+  text-decoration: none;
+}
+.vitrola-capa img {
+  width: 100%; height: auto; display: block;
+  /* Cinza, mas ainda legivel: a 0.72 a arte sumia e virava mancha escura.
+     O salto para a cor no hover continua evidente. */
+  filter: grayscale(1) contrast(1.08) brightness(.92);
+  transition: filter .35s ease, transform .35s ease;
+}
+.vitrola-capa:hover img,
+.vitrola-capa:focus-visible img {
+  filter: grayscale(0) contrast(1) brightness(1);
+  transform: scale(1.04);
+}
+.vitrola-nome {
+  position: absolute; left: 14px; bottom: 12px;
+  font-size: 13px; font-weight: 800; letter-spacing: .06em;
+  text-transform: uppercase; color: #fff;
+  opacity: 0; transition: opacity .3s ease;
+  text-shadow: 0 2px 10px rgba(0,0,0,.9);
+}
+.vitrola-capa:hover .vitrola-nome,
+.vitrola-capa:focus-visible .vitrola-nome { opacity: 1; }
+
+/* Desmancha o topo e o pe, para as capas nascerem e sumirem em vez de
+   serem cortadas por uma linha reta. */
+.vitrola-borda {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom,
+    var(--fundo) 0%, transparent 16%, transparent 84%, var(--fundo) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vitrola-trilha { animation: none !important; }
+  .vitrola { height: auto; max-height: 520px; overflow-y: auto; }
+}
+@media (max-width: 900px) { .vitrola { height: 420px; } }
+
 /* ---------- carrossel ---------- */
 
 .carrossel-topo { margin-bottom: 18px; }
