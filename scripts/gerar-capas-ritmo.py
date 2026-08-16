@@ -1,10 +1,8 @@
 # Gera as capas dos ritmos, uma por estilo.
 #   python scripts/gerar-capas-ritmo.py
 #
-# Arte propria, desenhada aqui. Nao entra foto nem capa de artista real: e
-# material de terceiro com direito de imagem, e usar sugere um aval que
-# ninguem deu. O que se usa do mercado e a convencao de nome "type beat",
-# que e texto e referencia nominativa, nao a imagem da pessoa.
+# Arte propria, desenhada aqui. Estas capas ficam como fallback visual para os
+# ritmos quando a interface nao usa uma foto especifica de artista.
 import math
 import os
 import random
@@ -15,10 +13,8 @@ LADO = 640
 SAIDA = 'public/assents/img/ritmos'
 os.makedirs(SAIDA, exist_ok=True)
 
-# O nome do artista entra como referencia de estilo, na convencao "type
-# beat" que o mercado inteiro usa e que a propria BeatPlace tem na
-# marcacao ("Alee Type Beats"). E texto descrevendo a sonoridade, nao a
-# imagem da pessoa e nao um aval dela.
+# O nome do artista entra como referencia de estilo, na convencao "type beat"
+# que o mercado inteiro usa e que a propria BeatPlace tem na marcacao.
 RITMOS = [
     ('Trap',        'Matuê',      'trap',        (250, 196, 60),  (120, 30, 140),  'grade'),
     ('Drill',       'Teto',       'drill',       (90, 200, 255),  (10, 40, 110),   'lamina'),

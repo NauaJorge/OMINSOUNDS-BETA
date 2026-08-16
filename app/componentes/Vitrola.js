@@ -19,21 +19,21 @@ import Link from 'next/link';
 // sonoridade e e como o artista procura. O link leva para a busca por essa
 // referencia, entao o rotulo nao e enfeite: e o filtro.
 const RITMOS = [
-  { nome: 'Trap',        artista: 'Matuê',     arquivo: 'trap' },
-  { nome: 'Drill',       artista: 'Teto',      arquivo: 'drill' },
-  { nome: 'Funk RJ',     artista: 'Cabelinho', arquivo: 'funk-rj' },
-  { nome: 'Afrobeat',    artista: 'Burna Boy', arquivo: 'afrobeat' },
-  { nome: 'Boom Bap',    artista: 'Emicida',   arquivo: 'boom-bap' },
-  { nome: 'Reggaeton',   artista: 'Bad Bunny', arquivo: 'reggaeton' },
-  { nome: 'Melódico',    artista: 'Veigh',     arquivo: 'melodico' },
-  { nome: 'Drum & Bass', artista: 'Sub Focus', arquivo: 'drum-and-bass' },
+  { nome: 'Trap',        artista: 'Matuê',     arquivo: 'trap',          imagem: '/assents/img/artistas/matue.jpg' },
+  { nome: 'Drill',       artista: 'Teto',      arquivo: 'drill',         imagem: '/assents/img/artistas/teto.jpg' },
+  { nome: 'Funk RJ',     artista: 'Cabelinho', arquivo: 'funk-rj',       imagem: '/assents/img/artistas/cabelinho.jpg' },
+  { nome: 'Afrobeat',    artista: 'Burna Boy', arquivo: 'afrobeat',      imagem: '/assents/img/artistas/burna-boy.jpg' },
+  { nome: 'Boom Bap',    artista: 'Emicida',   arquivo: 'boom-bap',      imagem: '/assents/img/artistas/emicida.jpg' },
+  { nome: 'Reggaeton',   artista: 'Bad Bunny', arquivo: 'reggaeton',     imagem: '/assents/img/artistas/bad-bunny.jpg' },
+  { nome: 'Melódico',    artista: 'Veigh',     arquivo: 'melodico',      imagem: '/assents/img/artistas/veigh.jpg' },
+  { nome: 'Drum & Bass', artista: 'Sub Focus', arquivo: 'drum-and-bass', imagem: '/assents/img/artistas/sub-focus.jpg' },
 ];
 
 function Capa({ ritmo, clone }) {
   const conteudo = (
     <>
       <img
-        src={`/assents/img/ritmos/${ritmo.arquivo}.jpg`}
+        src={ritmo.imagem || `/assents/img/ritmos/${ritmo.arquivo}.jpg`}
         alt=""
         width="640"
         height="640"
