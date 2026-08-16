@@ -21,6 +21,3 @@ Thumbs.db
 # credenciais das contas de teste, geradas localmente
 contas-de-teste.txt
 *.log
-
-.vercel
-.env*

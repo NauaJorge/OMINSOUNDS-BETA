@@ -355,9 +355,38 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
 
 /* ---------- rodape ---------- */
 
-.rodape { border-top: 1px solid var(--linha); margin-top: 50px; padding: 30px 0 44px; color: var(--texto-2); font-size: 14px; }
-.rodape-linha { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-.rodape a { color: var(--texto-2); }
+.rodape {
+  border-top: 1px solid var(--linha);
+  margin-top: 50px;
+  padding: 42px 0 44px;
+  color: var(--texto-2);
+  font-size: 14px;
+  background: linear-gradient(180deg, rgba(13,15,20,.64), rgba(8,9,12,.96));
+}
+.rodape-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(160px, .6fr) minmax(160px, .6fr);
+  gap: 34px;
+}
+.rodape-marca p { max-width: 42ch; margin: 14px 0 0; }
+.rodape-coluna {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.rodape-coluna strong {
+  color: var(--texto);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 4px;
+}
+.rodape a { color: var(--texto-2); text-decoration: none; }
+.rodape a:hover { color: var(--ouro); }
+.rodape-base {
+  display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
 
 /* Sem regra propria o link nasce no azul do navegador e some no fundo escuro. */
 .credito a {
@@ -368,6 +397,11 @@ textarea.campo { min-height: 120px; resize: vertical; line-height: 1.55; }
 }
 .credito a:hover,
 .credito a:focus-visible { color: var(--ouro); }
+
+@media (max-width: 700px) {
+  .rodape-grade { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .rodape-base { flex-direction: column; }
+}
 
 .vazio { padding: 34px; text-align: center; color: var(--texto-3); border: 1px dashed var(--linha-forte); border-radius: var(--raio); }
 

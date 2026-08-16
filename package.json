@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "db:migrar": "node --env-file=.env.local scripts/migrar.mjs",
+    "db:migrar:pagamentos": "node --env-file=.env.local scripts/migrar-pagamentos.mjs",
     "db:semear": "node --env-file=.env.local scripts/semear.mjs"
   },
   "dependencies": {

@@ -5,6 +5,7 @@ import { usuarioAtual } from '../../../lib/sessao';
 import { codigoCamelot, tonsCompativeis } from '../../../lib/harmonia';
 import LinhaBeat from '../../player/LinhaBeat';
 import CabecalhoBeat from './CabecalhoBeat';
+import { iniciarPagamentoLicenca } from '../../acoes';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +40,7 @@ export default async function Beat({ params }) {
   if (!beat) notFound();
 
   const licencas = await sql`
-    SELECT nome, preco_centavos, formatos, uso, exclusiva
+    SELECT id, nome, preco_centavos, formatos, uso, exclusiva
     FROM licencas WHERE beat_id = ${numero} ORDER BY ordem
   `;
 
@@ -77,6 +78,7 @@ export default async function Beat({ params }) {
     capa: beat.capa_url, audio: beat.audio_url,
     picos: JSON.parse(beat.picos || '[]'), bpm: beat.bpm, tom: beat.tom,
   };
+  const mercadoPagoConfigurado = Boolean(process.env.MERCADO_PAGO_ACCESS_TOKEN);
 
   return (
     <div className="container secao">
@@ -116,6 +118,18 @@ export default async function Beat({ params }) {
                 </div>
                 <p className="licenca-formatos">{l.formatos}</p>
                 <p className="mini" style={{ margin: 0 }}>{l.uso}</p>
+                {!beat.gratis && (
+                  <form action={iniciarPagamentoLicenca} style={{ marginTop: 14 }}>
+                    <input type="hidden" name="licenca" value={l.id} />
+                    <button
+                      className={`btn btn-bloco ${l.exclusiva ? 'btn-ouro' : 'btn-linha'}`}
+                      type="submit"
+                      disabled={!mercadoPagoConfigurado}
+                    >
+                      {mercadoPagoConfigurado ? 'Pagar com Pix ou cartão' : 'Pagamento em configuração'}
+                    </button>
+                  </form>
+                )}
               </article>
             ))}
           </div>
@@ -123,7 +137,9 @@ export default async function Beat({ params }) {
           <p className="cofre" style={{ marginTop: 18 }}>
             {beat.gratis
               ? 'Ambiente de teste: o download ainda não está ligado. Fale com o produtor pela caixa de mensagens para receber o arquivo.'
-              : 'Ambiente de teste: a compra ainda não está ligada. O pagamento fica para depois, por decisão do Diretor. Para fechar agora, fale com o produtor pela caixa de mensagens.'}
+              : mercadoPagoConfigurado
+                ? 'Pagamento seguro via Mercado Pago. O OMINSOUNDS nao recebe nem armazena numero de cartao ou CVV.'
+                : 'Pagamento seguro preparado para Mercado Pago. Falta configurar o access token para liberar Pix e cartao.'}
           </p>
 
           {listaParecidos.length > 0 && (

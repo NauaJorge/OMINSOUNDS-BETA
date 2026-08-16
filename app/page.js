@@ -221,28 +221,6 @@ export default async function Home() {
       </section>
 
       <section className="container secao" style={{ paddingTop: 0 }}>
-        <div className="secao-titulo">
-          <div>
-            <span className="olho">FAQ</span>
-            <h2>Perguntas frequentes de compradores</h2>
-            <p className="leve" style={{ maxWidth: '60ch', margin: 0 }}>
-              Tudo que você precisa saber para ouvir, comparar e conversar com produtores na OMINSOUNDS.
-            </p>
-          </div>
-          <Link className="btn btn-fantasma" href="/beats">Explorar Beats</Link>
-        </div>
-
-        <div className="faq-lista">
-          {FAQ_COMPRADORES.map((item) => (
-            <details className="faq-item" key={item.pergunta}>
-              <summary>{item.pergunta}</summary>
-              <p>{item.resposta}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <section className="container secao" style={{ paddingTop: 0 }}>
         <div className="venda-banner">
           <img
             src="/assents/img/studio2.jpg"
@@ -263,6 +241,28 @@ export default async function Home() {
               <Link className="btn btn-linha" href="/planos">Ver planos</Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="container secao" style={{ paddingTop: 0 }}>
+        <div className="secao-titulo">
+          <div>
+            <span className="olho">FAQ</span>
+            <h2>Perguntas frequentes de compradores</h2>
+            <p className="leve" style={{ maxWidth: '60ch', margin: 0 }}>
+              Tudo que você precisa saber para ouvir, comparar e conversar com produtores na OMINSOUNDS.
+            </p>
+          </div>
+          <Link className="btn btn-fantasma" href="/beats">Explorar Beats</Link>
+        </div>
+
+        <div className="faq-lista">
+          {FAQ_COMPRADORES.map((item) => (
+            <details className="faq-item" key={item.pergunta}>
+              <summary>{item.pergunta}</summary>
+              <p>{item.resposta}</p>
+            </details>
+          ))}
         </div>
       </section>
     </>

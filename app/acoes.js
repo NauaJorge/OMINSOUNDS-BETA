@@ -17,6 +17,7 @@ import {
   emailEmUso,
   handleEmUso,
 } from '../lib/usuarios';
+import { criarPedidoLicenca } from '../lib/pagamentos';
 
 export async function entrar(_estadoAnterior, dadosForm) {
   const email = String(dadosForm.get('email') ?? '').trim().toLowerCase();
@@ -49,6 +50,15 @@ export async function entrar(_estadoAnterior, dadosForm) {
 export async function sair() {
   await encerrarSessao();
   redirect('/');
+}
+
+export async function iniciarPagamentoLicenca(dadosForm) {
+  const usuario = await usuarioAtual();
+  if (!usuario) redirect('/entrar');
+
+  const licencaId = Number(dadosForm.get('licenca'));
+  const checkoutUrl = await criarPedidoLicenca({ usuario, licencaId });
+  redirect(checkoutUrl);
 }
 
 export async function cadastrar(_estadoAnterior, dadosForm) {

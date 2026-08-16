@@ -73,7 +73,7 @@ export default function Planos() {
 
               <Link
                 className={`btn btn-bloco ${p.destaque ? 'btn-ouro' : 'btn-linha'}`}
-                href="/entrar"
+                href="/cadastrar"
               >
                 {p.valor === 'Grátis' ? 'Começar' : `Assinar ${p.nome}`}
               </Link>

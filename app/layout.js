@@ -73,18 +73,45 @@ export default async function RootLayout({ children }) {
           <main id="conteudo">{children}</main>
 
           <footer className="rodape">
-            <div className="container rodape-linha">
-              <div>
-                <strong>OMINSOUNDS</strong>
-                <div className="mini credito">
-                  Desenvolvido pela{' '}
-                  <a href="https://www.softwavesolucoes.com.br/" target="_blank" rel="noopener">
-                    SoftWave Soluções<span className="sr">, abre em outra aba</span>
-                  </a>
-                </div>
+            <div className="container rodape-grade">
+              <div className="rodape-marca">
+                <Link className="marca" href="/">
+                  <svg className="marca-sinal" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12h3l2-6 3 13 3-17 3 20 2.5-10H22" />
+                  </svg>
+                  <span>OMINSOUNDS</span>
+                </Link>
+                <p>
+                  Marketplace de beats para artistas encontrarem sons e produtores
+                  venderem com vitrine própria.
+                </p>
               </div>
+
+              <nav className="rodape-coluna" aria-label="Links da plataforma">
+                <strong>Plataforma</strong>
+                <Link href="/beats">Beats</Link>
+                <Link href="/produtores">Produtores</Link>
+                <Link href="/planos">Planos</Link>
+                <Link href="/entrar">Entrar</Link>
+              </nav>
+
+              <nav className="rodape-coluna" aria-label="Links para produtores">
+                <strong>Para produtores</strong>
+                <Link href="/cadastrar">Criar conta</Link>
+                <Link href="/studio">Studio</Link>
+                <Link href="/planos">Comparar planos</Link>
+              </nav>
+            </div>
+
+            <div className="container rodape-base">
               <div className="mini">
-                Ambiente de teste. Catálogo e contas são demonstração.
+                Ambiente de teste. Catálogo, contas e pagamentos podem estar em modo de configuração.
+              </div>
+              <div className="mini credito">
+                Desenvolvido pela{' '}
+                <a href="https://www.softwavesolucoes.com.br/" target="_blank" rel="noopener">
+                  SoftWave Soluções<span className="sr">, abre em outra aba</span>
+                </a>
               </div>
             </div>
           </footer>
