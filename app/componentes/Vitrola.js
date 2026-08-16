@@ -15,15 +15,18 @@ import Link from 'next/link';
   aria-hidden, senao o leitor de tela anuncia tudo duas vezes.
 */
 
+// A referencia de artista entra na convencao "type beat", que descreve a
+// sonoridade e e como o artista procura. O link leva para a busca por essa
+// referencia, entao o rotulo nao e enfeite: e o filtro.
 const RITMOS = [
-  { nome: 'Trap',        arquivo: 'trap' },
-  { nome: 'Drill',       arquivo: 'drill' },
-  { nome: 'Funk RJ',     arquivo: 'funk-rj' },
-  { nome: 'Afrobeat',    arquivo: 'afrobeat' },
-  { nome: 'Boom Bap',    arquivo: 'boom-bap' },
-  { nome: 'Reggaeton',   arquivo: 'reggaeton' },
-  { nome: 'Melódico',    arquivo: 'melodico' },
-  { nome: 'Drum & Bass', arquivo: 'drum-and-bass' },
+  { nome: 'Trap',        artista: 'Matuê',     arquivo: 'trap' },
+  { nome: 'Drill',       artista: 'Teto',      arquivo: 'drill' },
+  { nome: 'Funk RJ',     artista: 'Cabelinho', arquivo: 'funk-rj' },
+  { nome: 'Afrobeat',    artista: 'Burna Boy', arquivo: 'afrobeat' },
+  { nome: 'Boom Bap',    artista: 'Emicida',   arquivo: 'boom-bap' },
+  { nome: 'Reggaeton',   artista: 'Bad Bunny', arquivo: 'reggaeton' },
+  { nome: 'Melódico',    artista: 'Veigh',     arquivo: 'melodico' },
+  { nome: 'Drum & Bass', artista: 'Sub Focus', arquivo: 'drum-and-bass' },
 ];
 
 function Capa({ ritmo, clone }) {
@@ -37,7 +40,10 @@ function Capa({ ritmo, clone }) {
         loading="lazy"
         decoding="async"
       />
-      <span className="vitrola-nome">{ritmo.nome}</span>
+      <span className="vitrola-nome">
+        {ritmo.nome}
+        <small>{ritmo.artista} type beat</small>
+      </span>
     </>
   );
 
@@ -47,8 +53,8 @@ function Capa({ ritmo, clone }) {
   return (
     <Link
       className="vitrola-capa"
-      href={`/beats?genero=${encodeURIComponent(ritmo.nome)}`}
-      aria-label={`Ver beats de ${ritmo.nome}`}
+      href={`/beats?q=${encodeURIComponent(`${ritmo.artista} type beat`)}`}
+      aria-label={`Ver beats no estilo ${ritmo.artista} type beat`}
     >
       {conteudo}
     </Link>

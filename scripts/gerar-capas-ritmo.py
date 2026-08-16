@@ -15,15 +15,19 @@ LADO = 640
 SAIDA = 'public/assents/img/ritmos'
 os.makedirs(SAIDA, exist_ok=True)
 
+# O nome do artista entra como referencia de estilo, na convencao "type
+# beat" que o mercado inteiro usa e que a propria BeatPlace tem na
+# marcacao ("Alee Type Beats"). E texto descrevendo a sonoridade, nao a
+# imagem da pessoa e nao um aval dela.
 RITMOS = [
-    ('Trap',        'trap',        (250, 196, 60),  (120, 30, 140),  'grade'),
-    ('Drill',       'drill',       (90, 200, 255),  (10, 40, 110),   'lamina'),
-    ('Funk RJ',     'funk-rj',     (255, 90, 160),  (70, 10, 90),    'pulso'),
-    ('Afrobeat',    'afrobeat',    (255, 150, 50),  (140, 40, 20),   'onda'),
-    ('Boom Bap',    'boom-bap',    (230, 200, 150), (60, 45, 35),    'grao'),
-    ('Reggaeton',   'reggaeton',   (80, 230, 190),  (15, 70, 90),    'pulso'),
-    ('Melódico',    'melodico',    (190, 150, 255), (40, 25, 90),    'onda'),
-    ('Drum & Bass', 'drum-and-bass', (120, 255, 140), (15, 60, 45),  'lamina'),
+    ('Trap',        'Matuê',      'trap',        (250, 196, 60),  (120, 30, 140),  'grade'),
+    ('Drill',       'Teto',       'drill',       (90, 200, 255),  (10, 40, 110),   'lamina'),
+    ('Funk RJ',     'Cabelinho',  'funk-rj',     (255, 90, 160),  (70, 10, 90),    'pulso'),
+    ('Afrobeat',    'Burna Boy',  'afrobeat',    (255, 150, 50),  (140, 40, 20),   'onda'),
+    ('Boom Bap',    'Emicida',    'boom-bap',    (230, 200, 150), (60, 45, 35),    'grao'),
+    ('Reggaeton',   'Bad Bunny',  'reggaeton',   (80, 230, 190),  (15, 70, 90),    'pulso'),
+    ('Melódico',    'Veigh',      'melodico',    (190, 150, 255), (40, 25, 90),    'onda'),
+    ('Drum & Bass', 'Sub Focus',  'drum-and-bass', (120, 255, 140), (15, 60, 45),  'lamina'),
 ]
 
 
@@ -114,7 +118,7 @@ def fonte(tam, negrito=True):
     return ImageFont.load_default()
 
 
-def rotular(img, nome):
+def rotular(img, nome, artista):
     d = ImageDraw.Draw(img, 'RGBA')
     # Faixa escura no pé: o nome precisa continuar legível sobre qualquer arte.
     d.rectangle([0, LADO - 150, LADO, LADO], fill=(0, 0, 0, 0))
@@ -124,11 +128,12 @@ def rotular(img, nome):
 
     d.rectangle([46, LADO - 96, 46 + 44, LADO - 90], fill=(232, 185, 49, 255))
     d.text((46, LADO - 78), nome.upper(), font=fonte(46), fill=(255, 255, 255, 255))
-    d.text((48, LADO - 26), 'TYPE BEATS', font=fonte(19, False), fill=(232, 185, 49, 220))
+    d.text((48, LADO - 26), f'{artista.upper()} TYPE BEAT',
+           font=fonte(19, False), fill=(232, 185, 49, 225))
     return img
 
 
-for nome, arquivo, cor_a, cor_b, forma in RITMOS:
+for nome, artista, arquivo, cor_a, cor_b, forma in RITMOS:
     img = fundo(cor_a, cor_b)
     img = desenhar(img, forma, cor_a, semente=sum(map(ord, arquivo)))
     img = img.filter(ImageFilter.GaussianBlur(0.6))
@@ -140,9 +145,9 @@ for nome, arquivo, cor_a, cor_b, forma in RITMOS:
     escuro = Image.new('RGB', (LADO, LADO), (5, 6, 9))
     img = Image.composite(img, escuro, vin)
 
-    img = rotular(img, nome)
+    img = rotular(img, nome, artista)
     caminho = os.path.join(SAIDA, f'{arquivo}.jpg')
     img.convert('RGB').save(caminho, quality=84, optimize=True)
-    print(f'  {nome:14s} -> {caminho}  {os.path.getsize(caminho) // 1024} KB')
+    print(f'  {nome:14s} {artista:11s} -> {os.path.getsize(caminho) // 1024} KB')
 
 print(f'\n{len(RITMOS)} capas geradas em {SAIDA}')
