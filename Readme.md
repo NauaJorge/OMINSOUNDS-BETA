@@ -47,12 +47,13 @@ As senhas sorteadas ficam em `contas-de-teste.txt`, que está no `.gitignore`.
 
 - `DATABASE_URL` e `SESSAO_SEGREDO` só em `.env.local` e nas variáveis da Vercel. Nunca no git.
 - `contas-de-teste.txt` é local. Não commitar.
+- Pagamentos passam por checkout externo do PagBank. O site não coleta nem salva dados de cartão.
 - Sessão em cookie assinado com HMAC, `httpOnly`, `sameSite=lax`, `secure` em produção.
 - Login roda a conferência de senha mesmo quando o e-mail não existe, para o tempo de resposta não revelar quais e-mails estão cadastrados.
 
 ## O que ainda não entrou
 
 - Publicar e editar beat pelo painel: o catálogo vem do banco de teste.
-- Pagamento. Adiado por decisão do Diretor, o projeto não está sendo pago agora.
+- Pagamento real em produção: a integração PagBank está ativa com token de sandbox para validação técnica. Para receber pagamentos reais, trocar `PAGBANK_TOKEN` pelo token de produção e ajustar `PAGBANK_ENV=production` na Vercel.
 - Player global que continua tocando entre páginas.
 - Upload de áudio e capa.
