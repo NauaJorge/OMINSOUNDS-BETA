@@ -10,6 +10,18 @@ function real(centavos) {
   return (centavos / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+const IMAGENS_MAIS_TOCADOS = {
+  'Noite Alta': '/assents/img/artistas/matue.jpg',
+  'Rota 21': '/assents/img/artistas/teto.jpg',
+  Vitrine: '/assents/img/artistas/cabelinho.jpg',
+  'Sol de Verão': '/assents/img/artistas/burna-boy.jpg',
+  Calor: '/assents/img/artistas/bad-bunny.jpg',
+};
+
+function imagemMaisTocado(beat) {
+  return IMAGENS_MAIS_TOCADOS[beat.titulo] || beat.capa_url;
+}
+
 export default async function Home() {
   const destaques = await sql`
     SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom, b.genero, b.mood, b.preco_centavos,
@@ -142,7 +154,7 @@ export default async function Home() {
           {destaquesComPicos.map((b) => (
             <article className="cartao carrossel-item" key={b.id}>
               <div className="capa-com-play">
-                <img className="beat-capa" src={b.capa_url} alt="" width="600" height="600" loading="lazy" />
+                <img className="beat-capa" src={imagemMaisTocado(b)} alt="" width="600" height="600" loading="lazy" />
                 <BotaoTocar
                   faixa={{
                     id: b.id, titulo: b.titulo, produtor: b.produtor,
