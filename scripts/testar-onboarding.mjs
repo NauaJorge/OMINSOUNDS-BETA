@@ -25,7 +25,7 @@ ok(posicaoDoPasso('artista', 'gosto').total === 4, 'total de 4 no caminho do art
 ok(posicaoDoPasso('produtor', 'primeiro-beat').atual === 4, 'primeiro-beat é o passo 4');
 
 console.log('\n3. Destino final por papel');
-ok(destinoFinal('artista') === '/beats', 'artista termina no catálogo');
+ok(destinoFinal('artista') === '/feed', 'artista termina no feed, onde as respostas aparecem');
 ok(destinoFinal('produtor') === '/studio', 'produtor termina no Studio');
 
 console.log('\n4. Conta de teste percorrendo o fluxo');

@@ -19,7 +19,7 @@ export default async function Objetivo() {
       apoio="Uma resposta. Muda o que a gente coloca na frente."
       acao={guardarObjetivo}
       voltarPara="/comecar/gosto"
-      destinoPular="/beats"
+      destinoPular="/feed"
     >
       <div className="lista-radio">
         {OBJETIVOS.map((o) => (

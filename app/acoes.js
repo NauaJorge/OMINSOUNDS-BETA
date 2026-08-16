@@ -46,7 +46,7 @@ export async function entrar(_estadoAnterior, dadosForm) {
   await criarSessao(usuario.id);
   // Artista nao tem Studio, e quem nunca fez o onboarding vai para ele.
   if (!usuario.onboarding_em) redirect('/comecar');
-  redirect(usuario.papel === 'artista' ? '/beats' : '/studio');
+  redirect(usuario.papel === 'artista' ? '/feed' : '/studio');
 }
 
 export async function sair() {

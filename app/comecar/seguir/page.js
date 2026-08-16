@@ -66,7 +66,7 @@ export default async function Seguir() {
       )}
 
       <form action={terminar} className="comecar-acoes">
-        <input type="hidden" name="destino" value="/beats" />
+        <input type="hidden" name="destino" value="/feed" />
         <button className="btn btn-ouro" type="submit">
           {jaSegue > 0 ? `Entrar seguindo ${jaSegue}` : 'Entrar na OMINSOUNDS'}
         </button>

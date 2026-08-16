@@ -56,6 +56,21 @@ export async function guardarVitrine(dadosForm) {
   avancar('produtor', 'vitrine');
 }
 
+/** Seguir fora do onboarding, pelo perfil do produtor. */
+export async function seguirProdutor(produtorId) {
+  const usuario = await usuarioAtual();
+  if (!usuario) return { erro: 'entre' };
+
+  const alvo = Number(produtorId);
+  if (!Number.isInteger(alvo)) return { erro: 'invalido' };
+
+  const r = await alternarSeguir(usuario.id, alvo);
+  if (r.erro) return r;
+
+  revalidatePath('/feed');
+  return r;
+}
+
 export async function seguirNoOnboarding(dadosForm) {
   const usuario = await exigirSessao();
   const alvo = Number(dadosForm.get('produtor'));

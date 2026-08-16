@@ -43,6 +43,7 @@ export default async function RootLayout({ children }) {
             </Link>
 
             <nav className="menu" aria-label="Navegação principal">
+              {usuario?.papel === 'artista' && <Link href="/feed">Início</Link>}
               <Link href="/beats">Beats</Link>
               <Link href="/produtores">Produtores</Link>
               <Link href="/planos">Planos</Link>
@@ -108,7 +109,8 @@ export default async function RootLayout({ children }) {
 
               <nav className="rodape-coluna" aria-label="Links da plataforma">
                 <strong>Plataforma</strong>
-                <Link href="/beats">Beats</Link>
+                {usuario?.papel === 'artista' && <Link href="/feed">Início</Link>}
+              <Link href="/beats">Beats</Link>
                 <Link href="/produtores">Produtores</Link>
                 <Link href="/planos">Planos</Link>
                 <Link href="/entrar">Entrar</Link>

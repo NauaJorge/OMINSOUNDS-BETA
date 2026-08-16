@@ -5,6 +5,8 @@ import { usuarioAtual } from '../../../lib/sessao';
 import FormularioPedido from './FormularioPedido';
 import LinhaBeat from '../../player/LinhaBeat';
 import { codigoCamelot } from '../../../lib/harmonia';
+import { jaSegue, contarSeguidores } from '../../../lib/descoberta';
+import BotaoSeguir from './BotaoSeguir';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +44,10 @@ export default async function Produtor({ params }) {
   `;
 
   const visitanteFav = await usuarioAtual();
+  const [seguindo, seguidores] = await Promise.all([
+    visitanteFav ? jaSegue(visitanteFav.id, produtor.id) : false,
+    contarSeguidores(produtor.id),
+  ]);
   const meus = visitanteFav
     ? new Set((await sql`SELECT beat_id FROM favoritos WHERE usuario_id = ${visitanteFav.id}`).map((f) => f.beat_id))
     : new Set();
@@ -144,6 +150,22 @@ export default async function Produtor({ params }) {
           </div>
 
           <aside className="perfil-lado">
+            {visitanteFav?.id !== produtor.id && (
+              <div className="cartao" style={{ marginBottom: 14 }}>
+                <div className="cartao-corpo">
+                  <BotaoSeguir
+                    produtorId={produtor.id}
+                    seguindo={seguindo}
+                    total={seguidores}
+                    logado={!!visitanteFav}
+                  />
+                  <p className="mini" style={{ margin: '10px 0 0' }}>
+                    Quem segue vê os beats novos no próprio início.
+                  </p>
+                </div>
+              </div>
+            )}
+
             <div className="cartao">
               <div className="cartao-corpo">
                 <h2 style={{ fontSize: 19 }}>Falar com {produtor.nome.split(' ')[0]}</h2>

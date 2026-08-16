@@ -23,7 +23,7 @@ export default async function Gosto() {
       apoio="Marque o que te interessa. Serve para te mostrar beat que combina."
       acao={guardarGosto}
       voltarPara="/comecar"
-      destinoPular="/beats"
+      destinoPular="/feed"
     >
       <fieldset className="grupo-chips">
         <legend className="mini">Gêneros</legend>

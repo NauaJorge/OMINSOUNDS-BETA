@@ -612,6 +612,43 @@ body:has(.player) { padding-bottom: 84px; }
 .beat-cabecalho-onda { margin: 20px 0 18px; }
 .beat-cabecalho-acoes { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
+/* ---------- seletor de licença ---------- */
+
+.licencas-bloco { margin-top: 18px; }
+.licencas-topo {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; flex-wrap: wrap; margin-bottom: 16px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--linha);
+}
+.licencas-topo > div { display: flex; flex-direction: column; gap: 2px; }
+.licencas-total { font-size: 30px; color: var(--ouro); line-height: 1.1; letter-spacing: -.02em; }
+
+.licencas-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.licenca-op {
+  display: flex; flex-direction: column; gap: 3px; text-align: left; cursor: pointer;
+  padding: 15px 17px; border-radius: var(--raio-sm);
+  border: 1px solid var(--linha-forte); background: var(--superficie);
+  transition: border-color .15s ease, background .15s ease;
+}
+.licenca-op:hover { border-color: var(--texto-3); }
+.licenca-op.on { border-color: var(--ouro); background: rgba(232,185,49,.07); }
+.licenca-op.exclusiva .licenca-op-nome { color: var(--ouro-claro); }
+.licenca-op-nome { font-size: 14px; color: var(--texto-2); font-weight: 700; }
+.licenca-op.on .licenca-op-nome { color: var(--ouro); }
+.licenca-op-preco { font-size: 19px; }
+
+/* Os números do que a licença permite: comparação de relance. */
+.limites { display: flex; flex-wrap: wrap; gap: 26px; margin: 20px 0 14px; }
+.limite { display: flex; flex-direction: column; }
+.limite strong { font-size: 17px; line-height: 1.2; }
+.licenca-uso { color: var(--texto-2); font-size: 14.5px; margin: 0; }
+
+@media (max-width: 560px) {
+  .licencas-grade { grid-template-columns: minmax(0, 1fr); }
+  .licencas-topo { align-items: flex-start; }
+  .limites { gap: 18px; }
+}
+
 .licencas { display: grid; gap: 12px; margin-top: 18px; }
 .licenca {
   border: 1px solid var(--linha); border-radius: var(--raio);

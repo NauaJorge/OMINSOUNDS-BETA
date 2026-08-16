@@ -5,7 +5,7 @@ import { usuarioAtual } from '../../../lib/sessao';
 import { codigoCamelot, tonsCompativeis } from '../../../lib/harmonia';
 import LinhaBeat from '../../player/LinhaBeat';
 import CabecalhoBeat from './CabecalhoBeat';
-import { iniciarPagamentoLicenca } from '../../acoes';
+import Licencas from './Licencas';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,6 +43,17 @@ export default async function Beat({ params }) {
     SELECT id, nome, preco_centavos, formatos, uso, exclusiva
     FROM licencas WHERE beat_id = ${numero} ORDER BY ordem
   `;
+
+  // Os limites de cada degrau, para virarem número na tela em vez de texto
+  // corrido. Ficam aqui, e não no banco, porque valem para toda a plataforma.
+  const LIMITES = {
+    'Básica':    [{ valor: '100 mil', rotulo: 'execuções' }, { valor: '1', rotulo: 'videoclipe' }, { valor: 'MP3', rotulo: 'arquivo' }],
+    'Premium':   [{ valor: '500 mil', rotulo: 'execuções' }, { valor: '1', rotulo: 'videoclipe' }, { valor: 'WAV', rotulo: 'arquivo' }],
+    'Trackout':  [{ valor: 'Sem limite', rotulo: 'execuções' }, { valor: 'Stems', rotulo: 'separados' }, { valor: 'Sim', rotulo: 'uso comercial' }],
+    'Exclusiva': [{ valor: 'Sem limite', rotulo: 'execuções' }, { valor: 'Só seu', rotulo: 'sai do catálogo' }, { valor: 'Stems', rotulo: 'separados' }],
+    'Grátis':    [{ valor: 'Não comercial', rotulo: 'uso' }, { valor: 'Obrigatório', rotulo: 'crédito' }, { valor: 'MP3', rotulo: 'arquivo' }],
+  };
+  const comLimites = licencas.map((l) => ({ ...l, limites: LIMITES[l.nome] ?? [] }));
 
   const visitante = await usuarioAtual();
   const favoritado = visitante
@@ -107,32 +118,11 @@ export default async function Beat({ params }) {
               : 'O que muda de uma para outra é o arquivo que você recebe e o quanto pode usar. Escolha pela entrega, não só pelo preço.'}
           </p>
 
-          <div className="licencas">
-            {licencas.map((l) => (
-              <article className={`licenca ${l.exclusiva ? 'licenca-exclusiva' : ''}`} key={l.nome}>
-                <div className="licenca-topo">
-                  <h3>{l.nome}</h3>
-                  <strong className="preco">
-                    {l.preco_centavos === 0 ? 'Grátis' : real(l.preco_centavos)}
-                  </strong>
-                </div>
-                <p className="licenca-formatos">{l.formatos}</p>
-                <p className="mini" style={{ margin: 0 }}>{l.uso}</p>
-                {!beat.gratis && (
-                  <form action={iniciarPagamentoLicenca} style={{ marginTop: 14 }}>
-                    <input type="hidden" name="licenca" value={l.id} />
-                    <button
-                      className={`btn btn-bloco ${l.exclusiva ? 'btn-ouro' : 'btn-linha'}`}
-                      type="submit"
-                      disabled={!mercadoPagoConfigurado}
-                    >
-                      {mercadoPagoConfigurado ? 'Pagar com Pix ou cartão' : 'Pagamento em configuração'}
-                    </button>
-                  </form>
-                )}
-              </article>
-            ))}
-          </div>
+          <Licencas
+            licencas={comLimites}
+            gratis={beat.gratis}
+            pagamentoLigado={mercadoPagoConfigurado}
+          />
 
           <p className="cofre" style={{ marginTop: 18 }}>
             {beat.gratis
