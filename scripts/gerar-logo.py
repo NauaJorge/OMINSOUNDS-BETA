@@ -29,17 +29,30 @@ SAIDA = 'public/assents/img/marca'
 OURO = '#ECA700'
 TINTA = '#0B0C0E'   # o preto da marca, um grau acima do puro
 
-# --- proporcoes medidas do PNG original (900x547) ---------------------------
-P_TEXTO_ALTURA = 0.214     # altura da letra / altura do selo
-P_TEXTO_LARGURA = 0.810    # largura do bloco de texto / largura do selo
-P_BORDA = 0.0125           # traco da elipse externa / largura
-P_LENTE_PONTA = 0.373      # meia-largura da lente / largura
-P_LENTE_ALTA = 0.313       # meia-altura da lente / altura
-P_LENTE_GROSSA = 0.0167    # traco da lente / largura
-P_ANEL_RX = 0.397          # a elipse fina interna, medida do original
-P_ANEL_RY = 0.203
-P_ANEL_TRACO = 0.0072
-PROPORCAO = 1.647          # largura / altura do selo
+# --- proporcoes -------------------------------------------------------------
+# A primeira versao copiava as medidas do PNG antigo. Batia com o original em
+# 74% e, no site, ficou ruim — porque copiava tambem os defeitos dele.
+#
+# No cabecalho o selo tem 32px de altura. Com o texto valendo 0,214 dessa
+# altura, as letras saiam com 7px e viravam uma listra escura ilegivel, com
+# ouro morto em cima e embaixo. Junto da lente e da elipse fina, eram tres
+# listras concorrentes em 32px.
+#
+# O que muda, e o que fica:
+#   - o texto sobe de 0,214 para 0,32 da altura: 50% maior, e passa a ler
+#   - o selo encolhe de 1,647 para 1,45 de proporcao, cortando o ouro morto
+#   - a elipse fina interna sai. Em tamanho grande era um detalhe bonito;
+#     em 32px so empastava contra a lente
+#   - o texto continua transbordando a lente, como no antigo. Foi tentado o
+#     contrario, com a lente envolvendo o texto, e ela virava a protagonista:
+#     o que da energia aquele desenho e a palavra rasgando a lente
+P_TEXTO_ALTURA = 0.32      # altura da letra / altura do selo
+P_TEXTO_LARGURA = 0.84     # largura do bloco de texto / largura do selo
+P_BORDA = 0.014            # traco da elipse externa / largura
+P_LENTE_PONTA = 0.40       # meia-largura da lente / largura
+P_LENTE_ALTA = 0.34        # meia-altura da lente / altura
+P_LENTE_GROSSA = 0.019     # traco da lente / largura
+PROPORCAO = 1.45           # largura / altura do selo
 
 INCLINACAO = 10            # graus
 # O vao nao e gosto: com 8.4 a razao do bloco de texto fica em 6.23, que e a
@@ -133,7 +146,6 @@ def selo(largura=900, contorno=TINTA, ouro=OURO, rotulo='OMINSOUNDS'):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {largura:.0f} {altura:.0f}" role="img" aria-label="{rotulo}">
   <ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{cx - borda / 2:.1f}" ry="{cy - borda / 2:.1f}" fill="{ouro}" stroke="{contorno}" stroke-width="{borda:.1f}"/>
   {lente(cx, cy, largura * P_LENTE_PONTA, altura * P_LENTE_ALTA, contorno, largura * P_LENTE_GROSSA)}
-  <ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{largura * P_ANEL_RX:.1f}" ry="{altura * P_ANEL_RY:.1f}" fill="none" stroke="{contorno}" stroke-width="{largura * P_ANEL_TRACO:.1f}"/>
   <g transform="translate({cx - tw / 2:.1f} {cy - th / 2:.1f}) scale({escala:.4f})">{texto(contorno)}</g>
 </svg>'''
 
@@ -158,25 +170,26 @@ def selo_miudo(lado=64):
     Favicon e avatar. Nao e o selo reduzido: e a marca redesenhada para o
     tamanho, que e o que faz um icone de 16px continuar legivel.
 
-    Tres mudancas. O quadro vira quadrado, porque a aba do navegador e o
-    avatar sao quadrados e a elipse deitada se perderia neles. A elipse fina
-    interna sai — a 16px ela encosta na lente e as duas viram uma mancha so.
-    E o texto ganha traco, porque contorno fino desaparece antes de tudo.
+    O quadro vira quadrado, porque a aba do navegador e o avatar sao quadrados
+    e a elipse deitada se perderia neles. A lente afina, porque a 16px ela
+    engrossa contra o texto e as duas viram uma mancha so. E o texto ocupa mais
+    largura do que no selo grande, ja que aqui nao ha distancia de leitura para
+    gastar com margem.
 
     O 'O' sozinho foi tentado e descartado: dentro da elipse com a lente ele
     lia como um olho, e a marca virava outra coisa.
     """
     cx = cy = lado / 2
-    largura = lado * 0.96
+    largura = lado * 0.98
     altura = largura / PROPORCAO
-    borda = lado * 0.045
+    borda = lado * 0.042
 
-    escala = (largura * 0.80) / LARGURA_TEXTO
+    escala = (largura * 0.86) / LARGURA_TEXTO
     tw, th = LARGURA_TEXTO * escala, 100 * escala
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {lado:.0f} {lado:.0f}" role="img" aria-label="OMINSOUNDS">
   <ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{largura / 2 - borda / 2:.1f}" ry="{altura / 2 - borda / 2:.1f}" fill="{OURO}" stroke="{TINTA}" stroke-width="{borda:.1f}"/>
-  {lente(cx, cy, largura * P_LENTE_PONTA, altura * P_LENTE_ALTA, TINTA, largura * 0.022)}
+  {lente(cx, cy, largura * P_LENTE_PONTA, altura * P_LENTE_ALTA, TINTA, largura * 0.015)}
   <g transform="translate({cx - tw / 2:.1f} {cy - th / 2:.1f}) scale({escala:.4f})">{texto(TINTA)}</g>
 </svg>'''
 

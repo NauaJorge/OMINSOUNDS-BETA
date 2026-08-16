@@ -14,7 +14,7 @@ import Link from 'next/link';
 export default function Marca({ href = '/', className = 'marca' }) {
   return (
     <Link className={className} href={href}>
-      <img className="marca-selo" src="/assents/img/marca/omin-selo.svg" alt="" width="53" height="32" />
+      <img className="marca-selo" src="/assents/img/marca/omin-selo.svg" alt="" width="46" height="32" />
       <span>OMINSOUNDS</span>
     </Link>
   );
