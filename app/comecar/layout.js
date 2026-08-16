@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { sair } from '../acoes';
+import Marca from '../componentes/Marca';
 
 /*
   O onboarding não usa o menu do site. Com ele, a primeira tela oferecia
@@ -13,12 +13,7 @@ export default function LayoutComecar({ children }) {
     <>
       <header className="topo-comecar">
         <div className="topo-comecar-linha">
-          <Link className="marca" href="/">
-            <svg className="marca-sinal" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M2 12h3l2-6 3 13 3-17 3 20 2.5-10H22" />
-            </svg>
-            <span>OMINSOUNDS</span>
-          </Link>
+          <Marca />
           <form action={sair}>
             <button className="link-pular" type="submit">Sair</button>
           </form>

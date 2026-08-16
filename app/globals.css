@@ -96,11 +96,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   text-decoration: none; font-weight: 800; letter-spacing: .14em;
   font-size: 14px; text-transform: uppercase;
 }
-.marca-sinal {
-  width: 24px; height: 24px; flex: 0 0 auto;
-  fill: none; stroke: var(--ouro); stroke-width: 1.8;
-  stroke-linecap: round; stroke-linejoin: round;
-}
+/* O selo tem proporção 1,65:1. A altura é que manda: é ela que alinha o selo
+   com a altura da linha do texto ao lado. */
+.marca-selo { height: 32px; width: auto; flex: 0 0 auto; display: block; }
 .marca span { background: linear-gradient(96deg, var(--ouro-claro), var(--ouro)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 .menu { display: flex; gap: 4px; flex-wrap: wrap; margin-left: 6px; }

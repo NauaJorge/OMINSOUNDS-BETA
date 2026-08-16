@@ -5,6 +5,7 @@ import { usuarioAtual } from '../lib/sessao';
 import { contarPendentes } from '../lib/mensagens';
 import { sair } from './acoes';
 import Player from './player/Player';
+import Marca from './componentes/Marca';
 import { passarAVender } from './comecar/acoes';
 
 export const metadata = {
@@ -32,15 +33,7 @@ export default async function RootLayout({ children }) {
         {!noOnboarding && (
         <header className="topo">
           <div className="topo-linha">
-            <Link className="marca" href="/">
-              {/* Marca desenhada em SVG. A imagem que estava aqui era o selo
-                  "SMT" da Smooth, que saiu do site por decisao do Diretor, e
-                  ainda por cima era um PNG de 1 KB que aparecia serrilhado. */}
-              <svg className="marca-sinal" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M2 12h3l2-6 3 13 3-17 3 20 2.5-10H22" />
-              </svg>
-              <span>OMINSOUNDS</span>
-            </Link>
+            <Marca />
 
             <nav className="menu" aria-label="Navegação principal">
               {usuario?.papel === 'artista' && <Link href="/feed">Início</Link>}
@@ -95,12 +88,7 @@ export default async function RootLayout({ children }) {
           <footer className="rodape">
             <div className="container rodape-grade">
               <div className="rodape-marca">
-                <Link className="marca" href="/">
-                  <svg className="marca-sinal" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M2 12h3l2-6 3 13 3-17 3 20 2.5-10H22" />
-                  </svg>
-                  <span>OMINSOUNDS</span>
-                </Link>
+                <Marca />
                 <p>
                   Marketplace de beats para artistas encontrarem sons e produtores
                   venderem com vitrine própria.
