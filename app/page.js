@@ -22,6 +22,25 @@ function imagemMaisTocado(beat) {
   return IMAGENS_MAIS_TOCADOS[beat.titulo] || beat.capa_url;
 }
 
+const FAQ_COMPRADORES = [
+  {
+    pergunta: 'Como eu encontro o beat certo?',
+    resposta: 'Você pode navegar pelo catálogo, filtrar por gênero ou buscar uma referência de type beat. O player continua tocando enquanto você compara BPM, tom, preço e produtor.',
+  },
+  {
+    pergunta: 'O que acontece depois que eu escolho um beat?',
+    resposta: 'Nesta versão de demonstração, a compra ainda não fecha automaticamente. Você pode ouvir, avaliar os dados do beat e falar com o produtor quando quiser avançar.',
+  },
+  {
+    pergunta: 'Posso falar direto com o produtor?',
+    resposta: 'Sim. A mensagem passa por uma solicitação de aceite, então o produtor decide quando abrir a conversa. Isso mantém o contato mais organizado para os dois lados.',
+  },
+  {
+    pergunta: 'A licença e o download já estão ativos?',
+    resposta: 'Ainda não. A plataforma já prepara o catálogo, a vitrine e a comunicação; pagamento, licença automática e entrega final entram quando o fluxo comercial for liberado.',
+  },
+];
+
 export default async function Home() {
   const destaques = await sql`
     SELECT b.id, b.titulo, b.capa_url, b.audio_url, b.picos, b.bpm, b.tom, b.genero, b.mood, b.preco_centavos,
@@ -199,6 +218,52 @@ export default async function Home() {
             </Link>
           ))}
         </Carrossel>
+      </section>
+
+      <section className="container secao" style={{ paddingTop: 0 }}>
+        <div className="secao-titulo">
+          <div>
+            <span className="olho">FAQ</span>
+            <h2>Perguntas frequentes de compradores</h2>
+            <p className="leve" style={{ maxWidth: '60ch', margin: 0 }}>
+              Tudo que você precisa saber para ouvir, comparar e conversar com produtores na OMINSOUNDS.
+            </p>
+          </div>
+          <Link className="btn btn-fantasma" href="/beats">Explorar Beats</Link>
+        </div>
+
+        <div className="faq-lista">
+          {FAQ_COMPRADORES.map((item) => (
+            <details className="faq-item" key={item.pergunta}>
+              <summary>{item.pergunta}</summary>
+              <p>{item.resposta}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="container secao" style={{ paddingTop: 0 }}>
+        <div className="venda-banner">
+          <img
+            src="/assents/img/studio2.jpg"
+            alt=""
+            width="1200"
+            height="720"
+            loading="lazy"
+          />
+          <div className="venda-banner-veu" aria-hidden="true" />
+          <div className="venda-banner-conteudo">
+            <span className="olho">Para produtores</span>
+            <h2>Venda seus beats com uma vitrine que trabalha por você.</h2>
+            <p>
+              Publique catálogo, mostre preço, organize contato com aceite e deixe cada beat pronto para ser encontrado por quem já sabe o som que procura.
+            </p>
+            <div className="venda-banner-acoes">
+              <Link className="btn btn-ouro" href="/cadastrar">Começar como produtor</Link>
+              <Link className="btn btn-linha" href="/planos">Ver planos</Link>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );
