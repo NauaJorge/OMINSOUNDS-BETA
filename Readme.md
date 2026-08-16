@@ -54,6 +54,6 @@ As senhas sorteadas ficam em `contas-de-teste.txt`, que está no `.gitignore`.
 ## O que ainda não entrou
 
 - Publicar e editar beat pelo painel: o catálogo vem do banco de teste.
-- Pagamento real em produção: a integração PagBank está ativa com token de sandbox para validação técnica. Para receber pagamentos reais, trocar `PAGBANK_TOKEN` pelo token de produção e ajustar `PAGBANK_ENV=production` na Vercel.
+- Pagamento real em produção: a integração PagBank está ativa na Vercel com `PAGBANK_TOKEN`, `PAGBANK_WEBHOOK_TOKEN` e `PAGBANK_ENV=production`. O comprador vai para o checkout hospedado do PagBank.
 - Player global que continua tocando entre páginas.
 - Upload de áudio e capa.
